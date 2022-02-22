@@ -1,4 +1,4 @@
-ospgrid.grid.Grid
+﻿ospgrid.grid.Grid
 =================
 
 .. currentmodule:: ospgrid.grid
@@ -23,11 +23,26 @@ ospgrid.grid.Grid
       ~Grid.analyze
       ~Grid.clear
       ~Grid.get_displacement
+      ~Grid.get_member_forces
+      ~Grid.get_member_stiffness
       ~Grid.get_reactions
+      ~Grid.get_system_force
+      ~Grid.get_system_stiffness
+      ~Grid.plot_bmd
+      ~Grid.plot_dsd
+      ~Grid.plot_grid
       ~Grid.plot_results
+      ~Grid.plot_sfd
+      ~Grid.plot_tmd
    
    
 
    
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~Grid.FIGSIZE
    
    

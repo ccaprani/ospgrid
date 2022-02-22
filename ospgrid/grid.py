@@ -7,10 +7,12 @@ Created on Mon Feb 21 20:25:38 2022
 """
 
 from enum import Enum
-from typing import Union
+import itertools
+from typing import Union, Tuple, List
 import matplotlib.pyplot as plt
 import openseespy.opensees as ops
 import opsvis as opsv
+import numpy as np
 from .utils import save_figs
 
 
@@ -133,12 +135,45 @@ class Member:
         self.EI = EI
         self.GJ = GJ
 
+    def get_local_stiffness(self) -> np.ndarray:
+        """
+        Gives the element stiffness matrix in local member coordinates with DOFs
+        in the order DZ ('vertical' force), RX (torsion), RZ (bending moment).
+
+        Returns
+        -------
+        K : np.ndarray
+            Element stiffness matrix in local coordinates.
+
+        """
+        L = (self.node_i.x - self.node_j.x) ** 2 + (self.node_i.y - self.node_j.y) ** 2
+        L = np.sqrt(L)
+        k11 = 12 * self.EI / L ** 3
+        k13 = 6 * self.EI / L ** 2
+        k22 = self.GJ / L
+        k33 = 4 * self.EI / L
+        k36 = 2 * self.EI / L
+
+        K = np.array(
+            [
+                [k11, 0, k13, -k11, 0, k13],
+                [0, k22, 0, 0, -k22, 0],
+                [k13, 0, k33, -k13, 0, k36],
+                [-k11, 0, -k13, k11, 0, -k13],
+                [0, -k22, 0, 0, k22, 0],
+                [k13, 0, k36, -k13, 0, k33],
+            ]
+        )
+        return K
+
 
 class Grid:
     """
     A class that provides a user-friendly interface to OpenSeesPy for the analysis
     of plane elastic grids.
     """
+
+    FIGSIZE = (6.0, 6.0)
 
     def __init__(self):
         """
@@ -312,6 +347,53 @@ class Grid:
         # We should never get here
         raise ValueError("Either node object, label, or node id must be passed")
 
+    def _get_member(self, member=Union[Member, int, Tuple[str, str]]):
+        """
+        Gets the member from a member object, id, or a tuple of node labels.
+
+        Parameters
+        ----------
+        member : Union[Member,int, Tuple[str,str]], optional Member object, id, or
+            node labels.
+
+        Raises
+        ------
+        ValueError
+            If member object, or id not passed, or is multiple nodes match the
+            label, or no node found.
+
+        Returns
+        -------
+        None.
+
+        """
+        if isinstance(member, Member):
+            return member
+
+        if isinstance(member, int):
+            return self.members[member]
+
+        if isinstance(member, tuple):
+            node_i_lbl = [m.node_i.label for m in self.members]
+            node_j_lbl = [m.node_j.label for m in self.members]
+            for n_comb in itertools.product(node_i_lbl, node_j_lbl):
+                if sorted(member) == sorted(n_comb):
+                    # The combination exists, so now let's find the member
+                    the_member = [
+                        m
+                        for m in self.members
+                        if (m.node_i.label == member[0] and m.node_j.label == member[1])
+                        or (m.node_i.label == member[1] and m.node_j.label == member[0])
+                    ]
+                    return the_member[0]
+
+            raise ValueError(
+                f"Member with nodes {member[0]} and {member[1]} could not be found."
+            )
+
+        # We should never get here
+        raise ValueError("Either member object or id must be passed")
+
     def analyze(self):
         """
         Executes the analysis for the grid object using OpenSeesPy
@@ -459,8 +541,86 @@ class Grid:
         the_node = self._get_node(node)
         return ops.nodeReaction(the_node.idx, dof)
 
+    def get_system_stiffness(self) -> np.ndarray:
+        """
+        Returns the system global stiffness matrix after the imposition of boundary
+        conditions.
+
+        Returns
+        -------
+        K : np.ndarray
+            A square numpy array of the reduced global stiffness matrix
+
+        """
+        K = ops.printA("-ret")
+        n = ops.systemSize()
+        return np.reshape(K, (n, n))
+
+    def get_system_force(self) -> np.ndarray:
+        """
+        Returns the system global force vector after the imposition of boundary
+        conditions.
+
+        Returns
+        -------
+        F : np.ndarray
+            A numpy vector of the reduced global system force vector
+
+        """
+        #
+        raise NotImplementedError("Functionality not yet available")
+
+    def get_member_forces(
+        self, member: Union[Member, int, Tuple[str, str]], dof: int = -1
+    ) -> List[float]:
+        """
+        Returns the member end force for the indicated DOF.
+
+        Parameters
+        ----------
+        member : Union[Member, int, Tuple[str,str]]
+            Member object, id, or a tuple of node labels.
+        dof : int [optional]
+            The degree of freedom of interest. Defaults to all.
+
+        Returns
+        -------
+        F : List[float]
+            A 12 element list: 6 DOFs for node i, and 6 DOFs for node j, in the order
+            Fx, Fy, Fz, Mx, My, Mz.
+
+        """
+        the_member = self._get_member(member)
+        return ops.eleForce(the_member.idx, dof)
+
+    def get_member_stiffness(
+        self, member: Union[Member, int, Tuple[str, str]]
+    ) -> np.ndarray:
+        """
+        Returns the member stiffness matrix in local coordinates with nodal DOFs
+        in the order DZ ('vertical' force), RX (torsion), RZ (bending moment).
+
+        Parameters
+        ----------
+        member : Union[Member, int, Tuple[str, str]]
+            Member object, id, or a tuple of node labels.
+
+        Returns
+        -------
+        K : np.ndarray
+            Member stiffness matrix in local coordinates.
+
+        """
+
+        the_member = self._get_member(member)
+        return the_member.get_local_stiffness()
+
     def plot_results(
-        self, save_files: bool = False, axes_on: bool = True, sfac: float = 2e2
+        self,
+        save_files: bool = False,
+        figsize=None,
+        axes_on: bool = True,
+        scale_factor: float = 2e2,
     ):
         """
         Plot the results of the grid analysis including:
@@ -474,7 +634,7 @@ class Grid:
             Whether or not to save the plots to PDF. The default is False.
         axes_on : bool, optional
             Whether or not to have the axes on in the plots. The default is True.
-        sfac : float, optional
+        scale_factor : float, optional
             The scale factor to use for the deflected shape.
 
         Returns
@@ -483,37 +643,181 @@ class Grid:
 
         """
 
-        # Plotting
-        fig_wi_he = (10.0, 10.0)
-
-        opsv.plot_model(fig_wi_he=fig_wi_he)
-        plt.gcf().suptitle("Model")
-
-        opsv.plot_defo(sfac, endDispFlag=1, fig_wi_he=fig_wi_he)
-        plt.pause(1)  # We must wait for plot_defo to finish with the canvas
-        plt.gcf().suptitle("Displaced Shape (mm)")
-
-        opsv.fig_wi_he = fig_wi_he  # to set sizes for figs below
-
-        opsv.section_force_diagram_3d("My", Ew={}, sfac=-1.0e-3)
-        plt.gcf().suptitle("Bending Moment Diagram (My - kNm)")
-
-        opsv.section_force_diagram_3d("T", Ew={}, sfac=1.0e-3, dir_plt=2)
-        # opsv.section_force_diagram_3d("T", Ew={}, sfac=1.0e-3)
-        plt.gcf().suptitle("Torsion Moment Diagram (kNm)")
-
-        opsv.section_force_diagram_3d("Vz", Ew={}, sfac=1.0e-3)
-        plt.gcf().suptitle("Shear Force Diagram (Vz - kN)")
-
-        figs = [plt.figure(n) for n in plt.get_fignums()]
-        for fig in figs:
-            if not axes_on:
-                fig.axes[0].set_axis_off()
-            else:
-                fig.tight_layout()
+        self.plot_grid(figsize=figsize, axes_on=axes_on)
+        self.plot_dsd(scale_factor=scale_factor, figsize=figsize, axes_on=axes_on)
+        self.plot_bmd(figsize=figsize, axes_on=axes_on)
+        self.plot_tmd(figsize=figsize, axes_on=axes_on)
+        self.plot_sfd(figsize=figsize, axes_on=axes_on)
 
         if save_files:
             save_figs("ospy_plots.pdf")
             plt.close("all")
         else:
             plt.show()
+
+    def plot_grid(self, figsize=None, axes_on: bool = True):
+        """
+        Plot the grid, showing nodes & members, and their indices.
+
+        Parameters
+        ----------
+        figsize : TYPE, optional
+            The size of the figure in inches. The default is self.FIGSIZE.
+        axes_on : bool, optional
+            Whether or not to have the axes on in the plots. The default is True.
+
+        Returns
+        -------
+        None.
+
+        """
+        if figsize is None:
+            figsize = self.FIGSIZE
+
+        opsv.plot_model(fig_wi_he=figsize)
+        fig = plt.gcf()
+        fig.set_figwidth(figsize[0])
+        fig.set_figheight(figsize[1])
+        plt.gcf().suptitle("Model")
+
+        if not axes_on:
+            plt.gca().set_axis_off()
+        else:
+            fig.tight_layout()
+
+    def plot_dsd(self, scale_factor: float = 2e2, figsize=None, axes_on: bool = True):
+        """
+        Plot the deflected shape diagram.
+
+        Parameters
+        ----------
+        scale_factor : float
+            The scale of the deformations to use. The default is 200.
+        figsize : TYPE, optional
+            The size of the figure in inches. The default is self.FIGSIZE.
+        axes_on : bool, optional
+            Whether or not to have the axes on in the plots. The default is True.
+
+        Returns
+        -------
+        None.
+
+        """
+        if figsize is None:
+            figsize = self.FIGSIZE
+
+        opsv.plot_defo(sfac=scale_factor, endDispFlag=1)
+        fig = plt.gcf()
+        fig.set_figwidth(figsize[0])
+        fig.set_figheight(figsize[1])
+        plt.gcf().suptitle("Displaced Shape")
+        if not axes_on:
+            plt.gca().set_axis_off()
+        else:
+            fig.tight_layout()
+
+    def plot_bmd(
+        self, scale_factor: float = -1.0e-3, figsize=None, axes_on: bool = True
+    ):
+        """
+        Plot the bending moment diagram.
+
+        Parameters
+        ----------
+        scale_factor : float
+            The scale of the bending moment to use. The default is -1e3. The negative
+            sign means to flip the diagram so that it appears on the tension face,
+            per convention.
+        figsize : TYPE, optional
+            The size of the figure in inches. The default is self.FIGSIZE.
+        axes_on : bool, optional
+            Whether or not to have the axes on in the plots. The default is True.
+
+        Returns
+        -------
+        None.
+
+        """
+        if figsize is None:
+            figsize = self.FIGSIZE
+
+        opsv.section_force_diagram_3d("My", Ew={}, sfac=scale_factor)
+        fig = plt.gcf()
+        fig.set_figwidth(figsize[0])
+        fig.set_figheight(figsize[1])
+        fig.suptitle("Bending Moment Diagram")
+
+        if not axes_on:
+            plt.gca().set_axis_off()
+        else:
+            fig.tight_layout()
+
+    def plot_sfd(
+        self, scale_factor: float = 1.0e-3, figsize=None, axes_on: bool = True
+    ):
+        """
+        Plot the shear force diagram.
+
+        Parameters
+        ----------
+        scale_factor : float
+            The scale of the bending moment to use. The default is -1e3.
+        figsize : TYPE, optional
+            The size of the figure in inches. The default is self.FIGSIZE.
+        axes_on : bool, optional
+            Whether or not to have the axes on in the plots. The default is True.
+
+        Returns
+        -------
+        None.
+
+        """
+        if figsize is None:
+            figsize = self.FIGSIZE
+
+        opsv.section_force_diagram_3d("Vz", Ew={}, sfac=scale_factor)
+        fig = plt.gcf()
+        fig.set_figwidth(figsize[0])
+        fig.set_figheight(figsize[1])
+        plt.gcf().suptitle("Shear Force Diagram")
+
+        if not axes_on:
+            plt.gca().set_axis_off()
+        else:
+            fig.tight_layout()
+
+    def plot_tmd(
+        self, scale_factor: float = 1.0e-3, figsize=None, axes_on: bool = True
+    ):
+        """
+        Plot the torsion moment diagram.
+
+        Parameters
+        ----------
+        scale_factor : float
+            The scale of the bending moment to use. The default is -1e3. The negative
+            sign means to flip the diagram so that it appears on the tension face,
+            per convention.
+        figsize : TYPE, optional
+            The size of the figure in inches. The default is self.FIGSIZE.
+        axes_on : bool, optional
+            Whether or not to have the axes on in the plots. The default is True.
+
+        Returns
+        -------
+        None.
+
+        """
+        if figsize is None:
+            figsize = self.FIGSIZE
+
+        opsv.section_force_diagram_3d("T", Ew={}, sfac=scale_factor, dir_plt=2)
+        fig = plt.gcf()
+        fig.set_figwidth(figsize[0])
+        fig.set_figheight(figsize[1])
+        plt.gcf().suptitle("Torsion Moment Diagram")
+
+        if not axes_on:
+            plt.gca().set_axis_off()
+        else:
+            fig.tight_layout()

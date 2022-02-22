@@ -7,3 +7,4 @@ The easiest way to get started with `ospgrid` is to jump straight in and have a 
    :maxdepth: 1
 
    notebooks/intro
+   notebooks/edu

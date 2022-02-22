@@ -1,4 +1,4 @@
-ospgrid.grid.Member
+﻿ospgrid.grid.Member
 ===================
 
 .. currentmodule:: ospgrid.grid
@@ -16,6 +16,7 @@ ospgrid.grid.Member
    .. autosummary::
       :nosignatures:
    
+      ~Member.get_local_stiffness
    
    
 

@@ -28,16 +28,12 @@ Anaconda
 It's best to install OpenSeesPy into its own environment, due to its dependencies, and potential clashes with other packages.
 So in turn, execute: ::
 
-    conda create --name ospgrid python=3.8
-    pip install openseespy
-    pip install opsvis
-    pip install ospgrid
+    conda create --name ospgrid python=3.8  
 
-The last line can alternatively be `pip install -e .` for development.
+And then install as above.
 
 And as a reminder, if you are using `spyder` as your IDE, don't forget to also install the spyder kernels in the new environment: ::
 
-    pip install spyder-kernels
     conda install spyder-kernels=2.1
 
 
