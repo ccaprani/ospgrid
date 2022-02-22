@@ -1,4 +1,4 @@
-# ospgrid
+# ospgrid - An OpenSeesPy wrapper for plane grids
 
 ![ospgrid logo](https://raw.githubusercontent.com/ccaprani/ospgrid/main/docs/source/images/ospgrid_logo.png)
 
