@@ -148,8 +148,8 @@ class Member:
         """
         L = (self.node_i.x - self.node_j.x) ** 2 + (self.node_i.y - self.node_j.y) ** 2
         L = np.sqrt(L)
-        k11 = 12 * self.EI / L ** 3
-        k13 = 6 * self.EI / L ** 2
+        k11 = 12 * self.EI / L**3
+        k13 = 6 * self.EI / L**2
         k22 = self.GJ / L
         k33 = 4 * self.EI / L
         k36 = 2 * self.EI / L
@@ -260,7 +260,11 @@ class Grid:
         return member
 
     def add_load(
-        self, node: Union[Node, str, int], Fz: float = 0, Mx: float = 0, My: float = 0,
+        self,
+        node: Union[Node, str, int],
+        Fz: float = 0,
+        Mx: float = 0,
+        My: float = 0,
     ):
         """
         Add a load to the grid.
