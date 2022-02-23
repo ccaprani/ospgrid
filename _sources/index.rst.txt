@@ -14,7 +14,7 @@
 Welcome to ospgrid's documentation!
 ===================================
 
-ospgrid offers a user-friendly interface to OpenSeesPy for the analysis of plane grids.
+is a plane grid analysis wrapper for OpenSeesPy. It offers a user-friendly interface to OpenSeesPy for the analysis of plane grids subjected to nodal loading. It also produces output suitable for education (i.e. stiffness matrices, and force vectors).
 
 .. toctree::
    :maxdepth: 2
