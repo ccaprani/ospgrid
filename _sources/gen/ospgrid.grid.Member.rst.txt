@@ -16,7 +16,9 @@
    .. autosummary::
       :nosignatures:
    
+      ~Member.get_global_stiffness
       ~Member.get_local_stiffness
+      ~Member.get_transformation_matrix
    
    
 

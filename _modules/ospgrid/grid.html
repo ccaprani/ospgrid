@@ -163,8 +163,8 @@
 <span class="kn">import</span> <span class="nn">itertools</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Union</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">List</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">import</span> <span class="nn">openseespy.opensees</span> <span class="k">as</span> <span class="nn">ops</span>
-<span class="kn">import</span> <span class="nn">opsvis</span> <span class="k">as</span> <span class="nn">opsv</span>
+<span class="kn">import</span> <span class="nn">openseespy.opensees</span> <span class="k">as</span> <span class="nn">osp</span>
+<span class="kn">import</span> <span class="nn">opsvis</span> <span class="k">as</span> <span class="nn">ospv</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">.utils</span> <span class="kn">import</span> <span class="n">save_figs</span>
 
@@ -245,7 +245,7 @@
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
 <span class="sd">        support : Support</span>
-<span class="sd">            The support type.</span>
+<span class="sd">            The support type, a :class:`ospgrid.grid.Support` object.</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
@@ -287,25 +287,27 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">node_j</span> <span class="o">=</span> <span class="n">node_j</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">EI</span> <span class="o">=</span> <span class="n">EI</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">GJ</span> <span class="o">=</span> <span class="n">GJ</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">delta_x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">node_j</span><span class="o">.</span><span class="n">x</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">node_i</span><span class="o">.</span><span class="n">x</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">delta_y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">node_j</span><span class="o">.</span><span class="n">y</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">node_i</span><span class="o">.</span><span class="n">y</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">L</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">delta_x</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">delta_y</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
 
 <div class="viewcode-block" id="Member.get_local_stiffness"><a class="viewcode-back" href="../../gen/ospgrid.grid.Member.html#ospgrid.grid.Member.get_local_stiffness">[docs]</a>    <span class="k">def</span> <span class="nf">get_local_stiffness</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Gives the element stiffness matrix in local member coordinates with DOFs</span>
+<span class="sd">        Returns the member stiffness matrix in local coordinates with nodal DOFs</span>
 <span class="sd">        in the order DZ (&#39;vertical&#39; force), RX (torsion), RZ (bending moment).</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        K : np.ndarray</span>
-<span class="sd">            Element stiffness matrix in local coordinates.</span>
+<span class="sd">            Member stiffness matrix in local coordinates.</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">L</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">node_i</span><span class="o">.</span><span class="n">x</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">node_j</span><span class="o">.</span><span class="n">x</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">node_i</span><span class="o">.</span><span class="n">y</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">node_j</span><span class="o">.</span><span class="n">y</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span>
-        <span class="n">L</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">L</span><span class="p">)</span>
-        <span class="n">k11</span> <span class="o">=</span> <span class="mi">12</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">EI</span> <span class="o">/</span> <span class="n">L</span><span class="o">**</span><span class="mi">3</span>
-        <span class="n">k13</span> <span class="o">=</span> <span class="mi">6</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">EI</span> <span class="o">/</span> <span class="n">L</span><span class="o">**</span><span class="mi">2</span>
-        <span class="n">k22</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GJ</span> <span class="o">/</span> <span class="n">L</span>
-        <span class="n">k33</span> <span class="o">=</span> <span class="mi">4</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">EI</span> <span class="o">/</span> <span class="n">L</span>
-        <span class="n">k36</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">EI</span> <span class="o">/</span> <span class="n">L</span>
+
+        <span class="n">k11</span> <span class="o">=</span> <span class="mi">12</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">EI</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">L</span> <span class="o">**</span> <span class="mi">3</span>
+        <span class="n">k13</span> <span class="o">=</span> <span class="mi">6</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">EI</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">L</span> <span class="o">**</span> <span class="mi">2</span>
+        <span class="n">k22</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GJ</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">L</span>
+        <span class="n">k33</span> <span class="o">=</span> <span class="mi">4</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">EI</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">L</span>
+        <span class="n">k36</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">EI</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">L</span>
 
         <span class="n">K</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
             <span class="p">[</span>
@@ -317,7 +319,44 @@
                 <span class="p">[</span><span class="n">k13</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">k36</span><span class="p">,</span> <span class="o">-</span><span class="n">k13</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">k33</span><span class="p">],</span>
             <span class="p">]</span>
         <span class="p">)</span>
-        <span class="k">return</span> <span class="n">K</span></div></div>
+        <span class="k">return</span> <span class="n">K</span></div>
+
+<div class="viewcode-block" id="Member.get_transformation_matrix"><a class="viewcode-back" href="../../gen/ospgrid.grid.Member.html#ospgrid.grid.Member.get_transformation_matrix">[docs]</a>    <span class="k">def</span> <span class="nf">get_transformation_matrix</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gives the transformation matrix relating the member dgrees of freedom from</span>
+<span class="sd">        local to global coordinate system.</span>
+
+<span class="sd">        It considers only the grid member DOFs, per :func:`get_local_stiffness`</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        T : np.ndarray</span>
+<span class="sd">            Tranformation matrix</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">delta_x</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">L</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">delta_y</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">L</span>
+
+        <span class="n">T</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">kron</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">s</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="n">s</span><span class="p">,</span> <span class="n">c</span><span class="p">]]))</span>
+        <span class="k">return</span> <span class="n">T</span></div>
+
+<div class="viewcode-block" id="Member.get_global_stiffness"><a class="viewcode-back" href="../../gen/ospgrid.grid.Member.html#ospgrid.grid.Member.get_global_stiffness">[docs]</a>    <span class="k">def</span> <span class="nf">get_global_stiffness</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the member stiffness matrix in global coordinates with nodal DOFs</span>
+<span class="sd">        in the order DZ (&#39;vertical&#39; force), RX (torsion), RZ (bending moment). This</span>
+<span class="sd">        shows the stiffness</span>
+<span class="sd">        contributions of the member to the global DOFs.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        Kg : np.ndarray</span>
+<span class="sd">            Member stiffness matrix in global coordinates.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">K</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_local_stiffness</span><span class="p">()</span>
+        <span class="n">T</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_transformation_matrix</span><span class="p">()</span>
+        <span class="n">Kg</span> <span class="o">=</span> <span class="n">T</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">K</span> <span class="o">@</span> <span class="n">T</span>
+        <span class="k">return</span> <span class="n">Kg</span></div></div>
 
 
 <div class="viewcode-block" id="Grid"><a class="viewcode-back" href="../../gen/ospgrid.grid.Grid.html#ospgrid.grid.Grid">[docs]</a><span class="k">class</span> <span class="nc">Grid</span><span class="p">:</span>
@@ -406,18 +445,14 @@
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">no_members</span> <span class="o">+=</span> <span class="mi">1</span>
-        <span class="n">the_node_i</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_node</span><span class="p">(</span><span class="n">node_i</span><span class="p">)</span>
-        <span class="n">the_node_j</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_node</span><span class="p">(</span><span class="n">node_j</span><span class="p">)</span>
+        <span class="n">the_node_i</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_node</span><span class="p">(</span><span class="n">node_i</span><span class="p">)</span>
+        <span class="n">the_node_j</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_node</span><span class="p">(</span><span class="n">node_j</span><span class="p">)</span>
         <span class="n">member</span> <span class="o">=</span> <span class="n">Member</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">no_members</span><span class="p">,</span> <span class="n">the_node_i</span><span class="p">,</span> <span class="n">the_node_j</span><span class="p">,</span> <span class="n">EI</span><span class="p">,</span> <span class="n">GJ</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">members</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">member</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">member</span></div>
 
 <div class="viewcode-block" id="Grid.add_load"><a class="viewcode-back" href="../../gen/ospgrid.grid.Grid.html#ospgrid.grid.Grid.add_load">[docs]</a>    <span class="k">def</span> <span class="nf">add_load</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span>
-        <span class="n">node</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Node</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span>
-        <span class="n">Fz</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
-        <span class="n">Mx</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
-        <span class="n">My</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Node</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span> <span class="n">Fz</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">Mx</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">My</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
     <span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Add a load to the grid.</span>
@@ -444,7 +479,7 @@
 <span class="sd">        None.</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">the_node</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_node</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+        <span class="n">the_node</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_node</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
         <span class="n">the_node</span><span class="o">.</span><span class="n">set_load</span><span class="p">(</span><span class="n">Fz</span><span class="p">,</span> <span class="n">Mx</span><span class="p">,</span> <span class="n">My</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Grid.add_support"><a class="viewcode-back" href="../../gen/ospgrid.grid.Grid.html#ospgrid.grid.Grid.add_support">[docs]</a>    <span class="k">def</span> <span class="nf">add_support</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Node</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span> <span class="n">support</span><span class="p">:</span> <span class="n">Support</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
@@ -463,10 +498,10 @@
 <span class="sd">        None.</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">the_node</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_node</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+        <span class="n">the_node</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_node</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
         <span class="n">the_node</span><span class="o">.</span><span class="n">set_support</span><span class="p">(</span><span class="n">support</span><span class="p">)</span></div>
 
-    <span class="k">def</span> <span class="nf">_get_node</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="o">=</span><span class="n">Union</span><span class="p">[</span><span class="n">Node</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]):</span>
+<div class="viewcode-block" id="Grid.get_node"><a class="viewcode-back" href="../../gen/ospgrid.grid.Grid.html#ospgrid.grid.Grid.get_node">[docs]</a>    <span class="k">def</span> <span class="nf">get_node</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="o">=</span><span class="n">Union</span><span class="p">[</span><span class="n">Node</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets the node from an node object, id or label.</span>
 
@@ -502,9 +537,9 @@
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">nodes</span><span class="p">[</span><span class="n">node</span><span class="p">]</span>
 
         <span class="c1"># We should never get here</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Either node object, label, or node id must be passed&quot;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Either node object, label, or node id must be passed&quot;</span><span class="p">)</span></div>
 
-    <span class="k">def</span> <span class="nf">_get_member</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">member</span><span class="o">=</span><span class="n">Union</span><span class="p">[</span><span class="n">Member</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]):</span>
+<div class="viewcode-block" id="Grid.get_member"><a class="viewcode-back" href="../../gen/ospgrid.grid.Grid.html#ospgrid.grid.Grid.get_member">[docs]</a>    <span class="k">def</span> <span class="nf">get_member</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">member</span><span class="o">=</span><span class="n">Union</span><span class="p">[</span><span class="n">Member</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets the member from a member object, id, or a tuple of node labels.</span>
 
@@ -549,41 +584,41 @@
             <span class="p">)</span>
 
         <span class="c1"># We should never get here</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Either member object or id must be passed&quot;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Either member object or id must be passed&quot;</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Grid.analyze"><a class="viewcode-back" href="../../gen/ospgrid.grid.Grid.html#ospgrid.grid.Grid.analyze">[docs]</a>    <span class="k">def</span> <span class="nf">analyze</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Grid.analyze"><a class="viewcode-back" href="../../gen/ospgrid.grid.Grid.html#ospgrid.grid.Grid.analyze">[docs]</a>    <span class="k">def</span> <span class="nf">analyze</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">osp</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Executes the analysis for the grid object using OpenSeesPy</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
-<span class="sd">        ops : OpenSeesPy instance</span>
+<span class="sd">        osp : OpenSeesPy instance</span>
 <span class="sd">            The OpenSeesPy instance, which can be used for querying results directly</span>
 <span class="sd">            or otherwise manipulating the model further.</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># remove any existing model</span>
-        <span class="n">ops</span><span class="o">.</span><span class="n">wipe</span><span class="p">()</span>
+        <span class="n">osp</span><span class="o">.</span><span class="n">wipe</span><span class="p">()</span>
 
         <span class="c1"># set modelbuilder, 3 dims, 6 DOF</span>
-        <span class="n">ops</span><span class="o">.</span><span class="n">model</span><span class="p">(</span><span class="s2">&quot;basic&quot;</span><span class="p">,</span> <span class="s2">&quot;-ndm&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;-ndf&quot;</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span>
+        <span class="n">osp</span><span class="o">.</span><span class="n">model</span><span class="p">(</span><span class="s2">&quot;basic&quot;</span><span class="p">,</span> <span class="s2">&quot;-ndm&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;-ndf&quot;</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span>
 
         <span class="c1"># create nodes &amp; add support, load, if any</span>
         <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">nodes</span><span class="p">:</span>
-            <span class="n">ops</span><span class="o">.</span><span class="n">node</span><span class="p">(</span><span class="n">n</span><span class="o">.</span><span class="n">idx</span><span class="p">,</span> <span class="n">n</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">n</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
+            <span class="n">osp</span><span class="o">.</span><span class="n">node</span><span class="p">(</span><span class="n">n</span><span class="o">.</span><span class="n">idx</span><span class="p">,</span> <span class="n">n</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">n</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">n</span><span class="o">.</span><span class="n">support</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="n">ops</span><span class="o">.</span><span class="n">fix</span><span class="p">(</span><span class="n">n</span><span class="o">.</span><span class="n">idx</span><span class="p">,</span> <span class="o">*</span><span class="n">n</span><span class="o">.</span><span class="n">support</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+                <span class="n">osp</span><span class="o">.</span><span class="n">fix</span><span class="p">(</span><span class="n">n</span><span class="o">.</span><span class="n">idx</span><span class="p">,</span> <span class="o">*</span><span class="n">n</span><span class="o">.</span><span class="n">support</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
 
         <span class="c1"># Nominal E and G</span>
         <span class="n">E</span> <span class="o">=</span> <span class="mf">200e9</span>  <span class="c1"># GPa</span>
         <span class="n">G</span> <span class="o">=</span> <span class="mf">80e9</span>  <span class="c1"># GPa</span>
 
         <span class="c1"># define materials</span>
-        <span class="n">ops</span><span class="o">.</span><span class="n">uniaxialMaterial</span><span class="p">(</span><span class="s2">&quot;Elastic&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">E</span><span class="p">)</span>
+        <span class="n">osp</span><span class="o">.</span><span class="n">uniaxialMaterial</span><span class="p">(</span><span class="s2">&quot;Elastic&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">E</span><span class="p">)</span>
 
         <span class="c1"># Define geometry transforms</span>
         <span class="n">vecxz</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
-        <span class="n">ops</span><span class="o">.</span><span class="n">geomTransf</span><span class="p">(</span><span class="s2">&quot;Linear&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">*</span><span class="n">vecxz</span><span class="p">)</span>
+        <span class="n">osp</span><span class="o">.</span><span class="n">geomTransf</span><span class="p">(</span><span class="s2">&quot;Linear&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">*</span><span class="n">vecxz</span><span class="p">)</span>
 
         <span class="c1"># define elements</span>
         <span class="c1"># tag   *[ndI ndJ]  A  E  G  Jx  Iy   Iz  transfOBJs</span>
@@ -591,7 +626,7 @@
             <span class="n">I</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">EI</span> <span class="o">/</span> <span class="n">E</span>
             <span class="n">J</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">GJ</span> <span class="o">/</span> <span class="n">G</span>
             <span class="n">A</span> <span class="o">=</span> <span class="n">I</span> <span class="o">/</span> <span class="mf">1e6</span>  <span class="c1"># rough</span>
-            <span class="n">ops</span><span class="o">.</span><span class="n">element</span><span class="p">(</span>
+            <span class="n">osp</span><span class="o">.</span><span class="n">element</span><span class="p">(</span>
                 <span class="s2">&quot;elasticBeamColumn&quot;</span><span class="p">,</span>
                 <span class="n">m</span><span class="o">.</span><span class="n">idx</span><span class="p">,</span>
                 <span class="n">m</span><span class="o">.</span><span class="n">node_i</span><span class="o">.</span><span class="n">idx</span><span class="p">,</span>
@@ -606,47 +641,47 @@
             <span class="p">)</span>
 
         <span class="c1"># create TimeSeries</span>
-        <span class="n">ops</span><span class="o">.</span><span class="n">timeSeries</span><span class="p">(</span><span class="s2">&quot;Constant&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">osp</span><span class="o">.</span><span class="n">timeSeries</span><span class="p">(</span><span class="s2">&quot;Constant&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
 
         <span class="c1"># create a plain load pattern</span>
-        <span class="n">ops</span><span class="o">.</span><span class="n">pattern</span><span class="p">(</span><span class="s2">&quot;Plain&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">osp</span><span class="o">.</span><span class="n">pattern</span><span class="p">(</span><span class="s2">&quot;Plain&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
 
         <span class="c1"># Create the nodal load: nodeID loadvals</span>
         <span class="c1"># xForce yForce zForce xMoment yMoment zMoment</span>
         <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">nodes</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">n</span><span class="o">.</span><span class="n">Fz</span> <span class="o">!=</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">n</span><span class="o">.</span><span class="n">Mx</span> <span class="o">!=</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">n</span><span class="o">.</span><span class="n">My</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
                 <span class="n">loadVals</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">n</span><span class="o">.</span><span class="n">Fz</span><span class="p">,</span> <span class="n">n</span><span class="o">.</span><span class="n">Mx</span><span class="p">,</span> <span class="n">n</span><span class="o">.</span><span class="n">My</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
-                <span class="n">ops</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">n</span><span class="o">.</span><span class="n">idx</span><span class="p">,</span> <span class="o">*</span><span class="n">loadVals</span><span class="p">)</span>
+                <span class="n">osp</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">n</span><span class="o">.</span><span class="n">idx</span><span class="p">,</span> <span class="o">*</span><span class="n">loadVals</span><span class="p">)</span>
 
         <span class="c1"># ------------------------------</span>
         <span class="c1"># Start of analysis generation</span>
         <span class="c1"># ------------------------------</span>
 
         <span class="c1"># create SOE</span>
-        <span class="n">ops</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s2">&quot;FullGeneral&quot;</span><span class="p">)</span>
+        <span class="n">osp</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s2">&quot;FullGeneral&quot;</span><span class="p">)</span>
 
         <span class="c1"># create DOF number</span>
-        <span class="n">ops</span><span class="o">.</span><span class="n">numberer</span><span class="p">(</span><span class="s2">&quot;RCM&quot;</span><span class="p">)</span>
+        <span class="n">osp</span><span class="o">.</span><span class="n">numberer</span><span class="p">(</span><span class="s2">&quot;RCM&quot;</span><span class="p">)</span>
 
         <span class="c1"># create constraint handler</span>
-        <span class="n">ops</span><span class="o">.</span><span class="n">constraints</span><span class="p">(</span><span class="s2">&quot;Plain&quot;</span><span class="p">)</span>
+        <span class="n">osp</span><span class="o">.</span><span class="n">constraints</span><span class="p">(</span><span class="s2">&quot;Plain&quot;</span><span class="p">)</span>
 
         <span class="c1"># create integrator</span>
-        <span class="n">ops</span><span class="o">.</span><span class="n">integrator</span><span class="p">(</span><span class="s2">&quot;LoadControl&quot;</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)</span>
+        <span class="n">osp</span><span class="o">.</span><span class="n">integrator</span><span class="p">(</span><span class="s2">&quot;LoadControl&quot;</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)</span>
 
         <span class="c1"># create algorithm</span>
-        <span class="n">ops</span><span class="o">.</span><span class="n">algorithm</span><span class="p">(</span><span class="s2">&quot;Linear&quot;</span><span class="p">)</span>
+        <span class="n">osp</span><span class="o">.</span><span class="n">algorithm</span><span class="p">(</span><span class="s2">&quot;Linear&quot;</span><span class="p">)</span>
 
         <span class="c1"># create analysis object</span>
-        <span class="n">ops</span><span class="o">.</span><span class="n">analysis</span><span class="p">(</span><span class="s2">&quot;Static&quot;</span><span class="p">)</span>
+        <span class="n">osp</span><span class="o">.</span><span class="n">analysis</span><span class="p">(</span><span class="s2">&quot;Static&quot;</span><span class="p">)</span>
 
         <span class="c1"># perform the analysis</span>
-        <span class="n">ops</span><span class="o">.</span><span class="n">analyze</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">osp</span><span class="o">.</span><span class="n">analyze</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 
         <span class="c1"># calculate reactions</span>
-        <span class="n">ops</span><span class="o">.</span><span class="n">reactions</span><span class="p">()</span>
+        <span class="n">osp</span><span class="o">.</span><span class="n">reactions</span><span class="p">()</span>
 
-        <span class="k">return</span> <span class="n">ops</span></div>
+        <span class="k">return</span> <span class="n">osp</span></div>
 
 <div class="viewcode-block" id="Grid.get_displacement"><a class="viewcode-back" href="../../gen/ospgrid.grid.Grid.html#ospgrid.grid.Grid.get_displacement">[docs]</a>    <span class="k">def</span> <span class="nf">get_displacement</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="o">=</span><span class="n">Union</span><span class="p">[</span><span class="n">Node</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span> <span class="n">dof</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -670,8 +705,8 @@
 <span class="sd">        None.</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">the_node</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_node</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">ops</span><span class="o">.</span><span class="n">nodeDisp</span><span class="p">(</span><span class="n">the_node</span><span class="o">.</span><span class="n">idx</span><span class="p">,</span> <span class="n">dof</span><span class="p">)</span></div>
+        <span class="n">the_node</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_node</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">osp</span><span class="o">.</span><span class="n">nodeDisp</span><span class="p">(</span><span class="n">the_node</span><span class="o">.</span><span class="n">idx</span><span class="p">,</span> <span class="n">dof</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Grid.get_reactions"><a class="viewcode-back" href="../../gen/ospgrid.grid.Grid.html#ospgrid.grid.Grid.get_reactions">[docs]</a>    <span class="k">def</span> <span class="nf">get_reactions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="o">=</span><span class="n">Union</span><span class="p">[</span><span class="n">Node</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span> <span class="n">dof</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -695,8 +730,8 @@
 <span class="sd">        None.</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">the_node</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_node</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">ops</span><span class="o">.</span><span class="n">nodeReaction</span><span class="p">(</span><span class="n">the_node</span><span class="o">.</span><span class="n">idx</span><span class="p">,</span> <span class="n">dof</span><span class="p">)</span></div>
+        <span class="n">the_node</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_node</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">osp</span><span class="o">.</span><span class="n">nodeReaction</span><span class="p">(</span><span class="n">the_node</span><span class="o">.</span><span class="n">idx</span><span class="p">,</span> <span class="n">dof</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Grid.get_system_stiffness"><a class="viewcode-back" href="../../gen/ospgrid.grid.Grid.html#ospgrid.grid.Grid.get_system_stiffness">[docs]</a>    <span class="k">def</span> <span class="nf">get_system_stiffness</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -709,8 +744,8 @@
 <span class="sd">            A square numpy array of the reduced global stiffness matrix</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">K</span> <span class="o">=</span> <span class="n">ops</span><span class="o">.</span><span class="n">printA</span><span class="p">(</span><span class="s2">&quot;-ret&quot;</span><span class="p">)</span>
-        <span class="n">n</span> <span class="o">=</span> <span class="n">ops</span><span class="o">.</span><span class="n">systemSize</span><span class="p">()</span>
+        <span class="n">K</span> <span class="o">=</span> <span class="n">osp</span><span class="o">.</span><span class="n">printA</span><span class="p">(</span><span class="s2">&quot;-ret&quot;</span><span class="p">)</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="n">osp</span><span class="o">.</span><span class="n">systemSize</span><span class="p">()</span>
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">K</span><span class="p">,</span> <span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">n</span><span class="p">))</span></div>
 
 <div class="viewcode-block" id="Grid.get_system_force"><a class="viewcode-back" href="../../gen/ospgrid.grid.Grid.html#ospgrid.grid.Grid.get_system_force">[docs]</a>    <span class="k">def</span> <span class="nf">get_system_force</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
@@ -731,7 +766,8 @@
         <span class="bp">self</span><span class="p">,</span> <span class="n">member</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Member</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]],</span> <span class="n">dof</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Returns the member end force for the indicated DOF.</span>
+<span class="sd">        Returns the member end forces for the indicated DOF in the global coordinate</span>
+<span class="sd">        system.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -742,35 +778,13 @@
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
-<span class="sd">        F : List[float]</span>
+<span class="sd">        F : np.array</span>
 <span class="sd">            A 12 element list: 6 DOFs for node i, and 6 DOFs for node j, in the order</span>
 <span class="sd">            Fx, Fy, Fz, Mx, My, Mz.</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">the_member</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_member</span><span class="p">(</span><span class="n">member</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">ops</span><span class="o">.</span><span class="n">eleForce</span><span class="p">(</span><span class="n">the_member</span><span class="o">.</span><span class="n">idx</span><span class="p">,</span> <span class="n">dof</span><span class="p">)</span></div>
-
-<div class="viewcode-block" id="Grid.get_member_stiffness"><a class="viewcode-back" href="../../gen/ospgrid.grid.Grid.html#ospgrid.grid.Grid.get_member_stiffness">[docs]</a>    <span class="k">def</span> <span class="nf">get_member_stiffness</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span> <span class="n">member</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Member</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Returns the member stiffness matrix in local coordinates with nodal DOFs</span>
-<span class="sd">        in the order DZ (&#39;vertical&#39; force), RX (torsion), RZ (bending moment).</span>
-
-<span class="sd">        Parameters</span>
-<span class="sd">        ----------</span>
-<span class="sd">        member : Union[Member, int, Tuple[str, str]]</span>
-<span class="sd">            Member object, id, or a tuple of node labels.</span>
-
-<span class="sd">        Returns</span>
-<span class="sd">        -------</span>
-<span class="sd">        K : np.ndarray</span>
-<span class="sd">            Member stiffness matrix in local coordinates.</span>
-
-<span class="sd">        &quot;&quot;&quot;</span>
-
-        <span class="n">the_member</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_member</span><span class="p">(</span><span class="n">member</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">the_member</span><span class="o">.</span><span class="n">get_local_stiffness</span><span class="p">()</span></div>
+        <span class="n">the_member</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_member</span><span class="p">(</span><span class="n">member</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">osp</span><span class="o">.</span><span class="n">eleForce</span><span class="p">(</span><span class="n">the_member</span><span class="o">.</span><span class="n">idx</span><span class="p">,</span> <span class="n">dof</span><span class="p">))</span></div>
 
 <div class="viewcode-block" id="Grid.plot_results"><a class="viewcode-back" href="../../gen/ospgrid.grid.Grid.html#ospgrid.grid.Grid.plot_results">[docs]</a>    <span class="k">def</span> <span class="nf">plot_results</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
@@ -831,7 +845,7 @@
         <span class="k">if</span> <span class="n">figsize</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">figsize</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">FIGSIZE</span>
 
-        <span class="n">opsv</span><span class="o">.</span><span class="n">plot_model</span><span class="p">(</span><span class="n">fig_wi_he</span><span class="o">=</span><span class="n">figsize</span><span class="p">)</span>
+        <span class="n">ospv</span><span class="o">.</span><span class="n">plot_model</span><span class="p">(</span><span class="n">fig_wi_he</span><span class="o">=</span><span class="n">figsize</span><span class="p">)</span>
         <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">gcf</span><span class="p">()</span>
         <span class="n">fig</span><span class="o">.</span><span class="n">set_figwidth</span><span class="p">(</span><span class="n">figsize</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
         <span class="n">fig</span><span class="o">.</span><span class="n">set_figheight</span><span class="p">(</span><span class="n">figsize</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
@@ -863,28 +877,26 @@
         <span class="k">if</span> <span class="n">figsize</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">figsize</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">FIGSIZE</span>
 
-        <span class="n">opsv</span><span class="o">.</span><span class="n">plot_defo</span><span class="p">(</span><span class="n">sfac</span><span class="o">=</span><span class="n">scale_factor</span><span class="p">,</span> <span class="n">endDispFlag</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">ospv</span><span class="o">.</span><span class="n">plot_defo</span><span class="p">(</span><span class="n">sfac</span><span class="o">=</span><span class="n">scale_factor</span><span class="p">,</span> <span class="n">endDispFlag</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
         <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">gcf</span><span class="p">()</span>
         <span class="n">fig</span><span class="o">.</span><span class="n">set_figwidth</span><span class="p">(</span><span class="n">figsize</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
         <span class="n">fig</span><span class="o">.</span><span class="n">set_figheight</span><span class="p">(</span><span class="n">figsize</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
-        <span class="n">plt</span><span class="o">.</span><span class="n">gcf</span><span class="p">()</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s2">&quot;Displaced Shape&quot;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">gcf</span><span class="p">()</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Displaced Shape</span><span class="se">\n</span><span class="s2">(Scale: </span><span class="si">{scale_factor}</span><span class="s2">)&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">axes_on</span><span class="p">:</span>
             <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">set_axis_off</span><span class="p">()</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="Grid.plot_bmd"><a class="viewcode-back" href="../../gen/ospgrid.grid.Grid.html#ospgrid.grid.Grid.plot_bmd">[docs]</a>    <span class="k">def</span> <span class="nf">plot_bmd</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span> <span class="n">scale_factor</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="o">-</span><span class="mf">1.0e-3</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">axes_on</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
-    <span class="p">):</span>
+<div class="viewcode-block" id="Grid.plot_bmd"><a class="viewcode-back" href="../../gen/ospgrid.grid.Grid.html#ospgrid.grid.Grid.plot_bmd">[docs]</a>    <span class="k">def</span> <span class="nf">plot_bmd</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scale_factor</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">axes_on</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Plot the bending moment diagram.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
 <span class="sd">        scale_factor : float</span>
-<span class="sd">            The scale of the bending moment to use. The default is -1e3. The negative</span>
-<span class="sd">            sign means to flip the diagram so that it appears on the tension face,</span>
-<span class="sd">            per convention.</span>
+<span class="sd">            The scale of the bending moment to use. The default is 1.0. A negative</span>
+<span class="sd">            sign is then applied to flip the diagram so that it appears on the tension</span>
+<span class="sd">            face, per convention.</span>
 <span class="sd">        figsize : TYPE, optional</span>
 <span class="sd">            The size of the figure in inches. The default is self.FIGSIZE.</span>
 <span class="sd">        axes_on : bool, optional</span>
@@ -898,27 +910,26 @@
         <span class="k">if</span> <span class="n">figsize</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">figsize</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">FIGSIZE</span>
 
-        <span class="n">opsv</span><span class="o">.</span><span class="n">section_force_diagram_3d</span><span class="p">(</span><span class="s2">&quot;My&quot;</span><span class="p">,</span> <span class="n">Ew</span><span class="o">=</span><span class="p">{},</span> <span class="n">sfac</span><span class="o">=</span><span class="n">scale_factor</span><span class="p">)</span>
+        <span class="n">ospv</span><span class="o">.</span><span class="n">section_force_diagram_3d</span><span class="p">(</span><span class="s2">&quot;My&quot;</span><span class="p">,</span> <span class="n">Ew</span><span class="o">=</span><span class="p">{},</span> <span class="n">sfac</span><span class="o">=-</span><span class="n">scale_factor</span><span class="p">)</span>
         <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">gcf</span><span class="p">()</span>
         <span class="n">fig</span><span class="o">.</span><span class="n">set_figwidth</span><span class="p">(</span><span class="n">figsize</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
         <span class="n">fig</span><span class="o">.</span><span class="n">set_figheight</span><span class="p">(</span><span class="n">figsize</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
-        <span class="n">fig</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s2">&quot;Bending Moment Diagram&quot;</span><span class="p">)</span>
+        <span class="n">fig</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Bending Moment Diagram</span><span class="se">\n</span><span class="s2">(Scale: </span><span class="si">{scale_factor}</span><span class="s2">)&quot;</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="ow">not</span> <span class="n">axes_on</span><span class="p">:</span>
             <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">set_axis_off</span><span class="p">()</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="Grid.plot_sfd"><a class="viewcode-back" href="../../gen/ospgrid.grid.Grid.html#ospgrid.grid.Grid.plot_sfd">[docs]</a>    <span class="k">def</span> <span class="nf">plot_sfd</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span> <span class="n">scale_factor</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0e-3</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">axes_on</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
-    <span class="p">):</span>
+<div class="viewcode-block" id="Grid.plot_sfd"><a class="viewcode-back" href="../../gen/ospgrid.grid.Grid.html#ospgrid.grid.Grid.plot_sfd">[docs]</a>    <span class="k">def</span> <span class="nf">plot_sfd</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scale_factor</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">axes_on</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Plot the shear force diagram.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
 <span class="sd">        scale_factor : float</span>
-<span class="sd">            The scale of the bending moment to use. The default is -1e3.</span>
+<span class="sd">            The scale of the bending moment to use. The default is 1.0. A negative</span>
+<span class="sd">            sign is then applied to flip the diagram so that it appears per convention.</span>
 <span class="sd">        figsize : TYPE, optional</span>
 <span class="sd">            The size of the figure in inches. The default is self.FIGSIZE.</span>
 <span class="sd">        axes_on : bool, optional</span>
@@ -932,29 +943,26 @@
         <span class="k">if</span> <span class="n">figsize</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">figsize</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">FIGSIZE</span>
 
-        <span class="n">opsv</span><span class="o">.</span><span class="n">section_force_diagram_3d</span><span class="p">(</span><span class="s2">&quot;Vz&quot;</span><span class="p">,</span> <span class="n">Ew</span><span class="o">=</span><span class="p">{},</span> <span class="n">sfac</span><span class="o">=</span><span class="n">scale_factor</span><span class="p">)</span>
+        <span class="n">ospv</span><span class="o">.</span><span class="n">section_force_diagram_3d</span><span class="p">(</span><span class="s2">&quot;Vz&quot;</span><span class="p">,</span> <span class="n">Ew</span><span class="o">=</span><span class="p">{},</span> <span class="n">sfac</span><span class="o">=-</span><span class="n">scale_factor</span><span class="p">)</span>
         <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">gcf</span><span class="p">()</span>
         <span class="n">fig</span><span class="o">.</span><span class="n">set_figwidth</span><span class="p">(</span><span class="n">figsize</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
         <span class="n">fig</span><span class="o">.</span><span class="n">set_figheight</span><span class="p">(</span><span class="n">figsize</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
-        <span class="n">plt</span><span class="o">.</span><span class="n">gcf</span><span class="p">()</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s2">&quot;Shear Force Diagram&quot;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">gcf</span><span class="p">()</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Shear Force Diagram</span><span class="se">\n</span><span class="s2">(Scale: </span><span class="si">{scale_factor}</span><span class="s2">)&quot;</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="ow">not</span> <span class="n">axes_on</span><span class="p">:</span>
             <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">set_axis_off</span><span class="p">()</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="Grid.plot_tmd"><a class="viewcode-back" href="../../gen/ospgrid.grid.Grid.html#ospgrid.grid.Grid.plot_tmd">[docs]</a>    <span class="k">def</span> <span class="nf">plot_tmd</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span> <span class="n">scale_factor</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0e-3</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">axes_on</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
-    <span class="p">):</span>
+<div class="viewcode-block" id="Grid.plot_tmd"><a class="viewcode-back" href="../../gen/ospgrid.grid.Grid.html#ospgrid.grid.Grid.plot_tmd">[docs]</a>    <span class="k">def</span> <span class="nf">plot_tmd</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scale_factor</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">axes_on</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Plot the torsion moment diagram.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
 <span class="sd">        scale_factor : float</span>
-<span class="sd">            The scale of the bending moment to use. The default is -1e3. The negative</span>
-<span class="sd">            sign means to flip the diagram so that it appears on the tension face,</span>
-<span class="sd">            per convention.</span>
+<span class="sd">            The scale of the bending moment to use. The default is 1.0.  A negative</span>
+<span class="sd">            sign is then applied to flip the diagram so that it appears per convention.</span>
 <span class="sd">        figsize : TYPE, optional</span>
 <span class="sd">            The size of the figure in inches. The default is self.FIGSIZE.</span>
 <span class="sd">        axes_on : bool, optional</span>
@@ -968,11 +976,11 @@
         <span class="k">if</span> <span class="n">figsize</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">figsize</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">FIGSIZE</span>
 
-        <span class="n">opsv</span><span class="o">.</span><span class="n">section_force_diagram_3d</span><span class="p">(</span><span class="s2">&quot;T&quot;</span><span class="p">,</span> <span class="n">Ew</span><span class="o">=</span><span class="p">{},</span> <span class="n">sfac</span><span class="o">=</span><span class="n">scale_factor</span><span class="p">,</span> <span class="n">dir_plt</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">ospv</span><span class="o">.</span><span class="n">section_force_diagram_3d</span><span class="p">(</span><span class="s2">&quot;T&quot;</span><span class="p">,</span> <span class="n">Ew</span><span class="o">=</span><span class="p">{},</span> <span class="n">sfac</span><span class="o">=-</span><span class="n">scale_factor</span><span class="p">,</span> <span class="n">dir_plt</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
         <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">gcf</span><span class="p">()</span>
         <span class="n">fig</span><span class="o">.</span><span class="n">set_figwidth</span><span class="p">(</span><span class="n">figsize</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
         <span class="n">fig</span><span class="o">.</span><span class="n">set_figheight</span><span class="p">(</span><span class="n">figsize</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
-        <span class="n">plt</span><span class="o">.</span><span class="n">gcf</span><span class="p">()</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s2">&quot;Torsion Moment Diagram&quot;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">gcf</span><span class="p">()</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Torsion Moment Diagram</span><span class="se">\n</span><span class="s2">(Scale: </span><span class="si">{scale_factor}</span><span class="s2">)&quot;</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="ow">not</span> <span class="n">axes_on</span><span class="p">:</span>
             <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">set_axis_off</span><span class="p">()</span>

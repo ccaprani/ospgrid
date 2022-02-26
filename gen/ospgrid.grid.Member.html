@@ -253,19 +253,58 @@
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#ospgrid.grid.Member.get_local_stiffness" title="ospgrid.grid.Member.get_local_stiffness"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_local_stiffness</span></code></a></p></td>
-<td><p>Gives the element stiffness matrix in local member coordinates with DOFs in the order DZ ('vertical' force), RX (torsion), RZ (bending moment).</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#ospgrid.grid.Member.get_global_stiffness" title="ospgrid.grid.Member.get_global_stiffness"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_global_stiffness</span></code></a></p></td>
+<td><p>Returns the member stiffness matrix in global coordinates with nodal DOFs in the order DZ ('vertical' force), RX (torsion), RZ (bending moment).</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#ospgrid.grid.Member.get_local_stiffness" title="ospgrid.grid.Member.get_local_stiffness"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_local_stiffness</span></code></a></p></td>
+<td><p>Returns the member stiffness matrix in local coordinates with nodal DOFs in the order DZ ('vertical' force), RX (torsion), RZ (bending moment).</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#ospgrid.grid.Member.get_transformation_matrix" title="ospgrid.grid.Member.get_transformation_matrix"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_transformation_matrix</span></code></a></p></td>
+<td><p>Gives the transformation matrix relating the member dgrees of freedom from local to global coordinate system.</p></td>
 </tr>
 </tbody>
 </table>
 <dl class="py method">
 <dt class="sig sig-object py" id="ospgrid.grid.Member.get_local_stiffness">
 <span class="sig-name descname"><span class="pre">get_local_stiffness</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ospgrid/grid.html#Member.get_local_stiffness"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ospgrid.grid.Member.get_local_stiffness" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gives the element stiffness matrix in local member coordinates with DOFs
+<dd><p>Returns the member stiffness matrix in local coordinates with nodal DOFs
 in the order DZ (‘vertical’ force), RX (torsion), RZ (bending moment).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p><strong>K</strong> – Element stiffness matrix in local coordinates.</p>
+<dd class="field-odd"><p><strong>K</strong> – Member stiffness matrix in local coordinates.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ospgrid.grid.Member.get_transformation_matrix">
+<span class="sig-name descname"><span class="pre">get_transformation_matrix</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ospgrid/grid.html#Member.get_transformation_matrix"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ospgrid.grid.Member.get_transformation_matrix" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gives the transformation matrix relating the member dgrees of freedom from
+local to global coordinate system.</p>
+<p>It considers only the grid member DOFs, per <a class="reference internal" href="#ospgrid.grid.Member.get_local_stiffness" title="ospgrid.grid.Member.get_local_stiffness"><code class="xref py py-func docutils literal notranslate"><span class="pre">get_local_stiffness()</span></code></a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><strong>T</strong> – Tranformation matrix</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ospgrid.grid.Member.get_global_stiffness">
+<span class="sig-name descname"><span class="pre">get_global_stiffness</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ospgrid/grid.html#Member.get_global_stiffness"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ospgrid.grid.Member.get_global_stiffness" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the member stiffness matrix in global coordinates with nodal DOFs
+in the order DZ (‘vertical’ force), RX (torsion), RZ (bending moment). This
+shows the stiffness
+contributions of the member to the global DOFs.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><strong>Kg</strong> – Member stiffness matrix in global coordinates.</p>
 </dd>
 <dt class="field-even">Return type</dt>
 <dd class="field-even"><p>np.ndarray</p>

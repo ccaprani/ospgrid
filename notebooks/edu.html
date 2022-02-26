@@ -175,18 +175,50 @@
 <nav id="bd-toc-nav">
     <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#Member-Forces">
-   Member Forces
+  <a class="reference internal nav-link" href="#Example-1">
+   Example 1
   </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#Member-Forces">
+     Member Forces
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#Global-Stifness-Matrix">
+     Global Stifness Matrix
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#Member-&amp;-Node-Objects">
+     Member &amp; Node Objects
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#Member-Stiffness-Matrix-(Local-Coordinates)">
+     Member Stiffness Matrix (Local Coordinates)
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#Member-Stiffness-Matrix-(Global-Coordinates)">
+     Member Stiffness Matrix (Global Coordinates)
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#OpenSeesPy-object">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       OpenSeesPy
+      </span>
+     </code>
+     object
+    </a>
+   </li>
+  </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#Global-Stifness-Matrix">
-   Global Stifness Matrix
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#Member-Stiffness-Matrix">
-   Member Stiffness Matrix
+  <a class="reference internal nav-link" href="#Example-2">
+   Example 2
   </a>
  </li>
 </ul>
@@ -486,15 +518,21 @@ sys.path.append(&quot;../../..&quot;)
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Basic imports
 import ospgrid as ospg  # The main package
 from IPython import display  # For images in this notebook
+
+# And just to make printed outputs easier to read
+import numpy as np
+np.set_printoptions(precision=2, suppress=True)
 </pre></div>
 </div>
 </div>
-<p>Let’s use the grid from Example 1 of the Introduction tutorial, repeated here for convenience:</p>
+<div class="section" id="Example-1">
+<h2>Example 1<a class="headerlink" href="#Example-1" title="Permalink to this headline">¶</a></h2>
+<p>Here we use the <em>Example 2</em> grid from <em>CIV4280 Bridge Design &amp; Assessment</em></p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>display.Image(&quot;./images/intro_ex_1.png&quot;,width=800)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>display.Image(&quot;./images/edu_ex_1.png&quot;,width=800)
 </pre></div>
 </div>
 </div>
@@ -509,6 +547,358 @@ from IPython import display  # For images in this notebook
 <p>And quickly build the grid (see the Introduction tutorial for details):</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>grid = ospg.Grid()
+
+grid.add_node(&quot;C&quot;, 0, 0)
+grid.add_node(&quot;D&quot;, -2, 0)
+grid.add_node(&quot;E&quot;, 0, 2)
+grid.add_node(&quot;F&quot;, 4, 0)
+grid.add_node(&quot;G&quot;, 0, -3)
+
+EI = 200e9 * 50e6 / 1e15
+GJ = 80e9 * 200e6 / 1e15
+grid.add_member(&quot;C&quot;, &quot;D&quot;, EI, GJ)
+grid.add_member(&quot;C&quot;, &quot;E&quot;, EI, GJ)
+grid.add_member(&quot;C&quot;, &quot;F&quot;, EI, GJ)
+grid.add_member(&quot;C&quot;, &quot;G&quot;, EI, GJ)
+
+grid.add_load(&quot;C&quot;, Fz=-100)
+
+grid.add_support(&quot;D&quot;, ospg.Support.FIXED)
+grid.add_support(&quot;E&quot;, ospg.Support.FIXED)
+grid.add_support(&quot;F&quot;, ospg.Support.FIXED)
+grid.add_support(&quot;G&quot;, ospg.Support.FIXED)
+
+osp = grid.analyze()
+</pre></div>
+</div>
+</div>
+<p>Notice that we have now returned the <code class="docutils literal notranslate"><span class="pre">OpenSeesPy</span></code> object <code class="docutils literal notranslate"><span class="pre">osp</span></code> created during the analysis - we will return to this.</p>
+<p>Now the grid is analyzed and stored, we can examine aspects that should match the theory or a calculation.</p>
+<div class="section" id="Member-Forces">
+<h3>Member Forces<a class="headerlink" href="#Member-Forces" title="Permalink to this headline">¶</a></h3>
+<p>Rather than just working off the plots, we can get the member end forces values. The DOFs are in the order translation about the <span class="math notranslate nohighlight">\(x\)</span>-, <span class="math notranslate nohighlight">\(y\)</span>-, and <span class="math notranslate nohighlight">\(z\)</span>-axes, and rotation about the <span class="math notranslate nohighlight">\(x\)</span>-, <span class="math notranslate nohighlight">\(y\)</span>-, and <span class="math notranslate nohighlight">\(z\)</span>-axes. With 6 DOFs per node, this is a <span class="math notranslate nohighlight">\(12\times1\)</span> vector, with the <span class="math notranslate nohighlight">\(i\)</span>-node and <span class="math notranslate nohighlight">\(j\)</span>-node as created (not necessarily as passed in the tuple):</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>Fcd = grid.get_member_forces((&quot;C&quot;, &quot;D&quot;))
+print(Fcd)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[  0.     0.   -34.85   4.61 -30.78   0.     0.     0.    34.85  -4.61
+ -38.92   0.  ]
+</pre></div></div>
+</div>
+<p>and as expected for grids, the forces in the <span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(y\)</span> directions, and the moment about <span class="math notranslate nohighlight">\(z\)</span> are zero at each node.</p>
+</div>
+<div class="section" id="Global-Stifness-Matrix">
+<h3>Global Stifness Matrix<a class="headerlink" href="#Global-Stifness-Matrix" title="Permalink to this headline">¶</a></h3>
+<p>We can extract the reudced global stiffness matrix (i.e. after the boundary conditions have been applied). For this grid, only node <span class="math notranslate nohighlight">\(C\)</span> can move. Since <code class="docutils literal notranslate"><span class="pre">OpenSeesPy</span></code> uses a general 3D frame element, each node has 6 DOFs and so we will have a <span class="math notranslate nohighlight">\(6\times6\)</span> matrix in this instance.</p>
+<p>Again, the DOFs are in the order translation about the <span class="math notranslate nohighlight">\(x\)</span>-, <span class="math notranslate nohighlight">\(y\)</span>-, and <span class="math notranslate nohighlight">\(z\)</span>-axes, and rotation about the <span class="math notranslate nohighlight">\(x\)</span>-, <span class="math notranslate nohighlight">\(y\)</span>-, and <span class="math notranslate nohighlight">\(z\)</span>-axes.</p>
+<p>Of the 6 DOFs at node <span class="math notranslate nohighlight">\(C\)</span> here, because it is a grid, we know that the translations in <span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(y\)</span>, and the rotation about <span class="math notranslate nohighlight">\(z\)</span> will be zero.</p>
+<p>As noted, <code class="docutils literal notranslate"><span class="pre">OpenSeesPy</span></code> uses a full 3D elastic frame element for its analysis. For hand analysis, we can suppress those DOFs we already know are not relevant, and so for grids we can work off stiffness matrices and force vectors corresponding to just translation in <span class="math notranslate nohighlight">\(z\)</span>, and rotation about the <span class="math notranslate nohighlight">\(x\)</span>- and <span class="math notranslate nohighlight">\(y\)</span>-axes.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>K = grid.get_system_stiffness()
+print(K)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[[ 1944.45     0.       0.       0.       0.    -833.33]
+ [    0.    1687.51     0.       0.       0.   -1125.  ]
+ [    0.       0.   36319.44  8333.33 11250.       0.  ]
+ [    0.       0.    8333.33 45333.33     0.       0.  ]
+ [    0.       0.   11250.       0.   43333.33     0.  ]
+ [ -833.33 -1125.       0.       0.       0.    6333.33]]
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="Member-&amp;-Node-Objects">
+<h3>Member &amp; Node Objects<a class="headerlink" href="#Member-&-Node-Objects" title="Permalink to this headline">¶</a></h3>
+<p>While the use of the <code class="docutils literal notranslate"><span class="pre">grid</span></code> object gives access to the key outputs for an analysis, we can use the member and node objects to interrogate the underlying details. So let’s get the object for member <span class="math notranslate nohighlight">\(CD\)</span>:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>member_CD = grid.get_member((&quot;C&quot;, &quot;D&quot;))
+</pre></div>
+</div>
+</div>
+<p>And it’s interesting to see what properties and methods are available in this object. Here we filter out the built-in methods for clarity:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>[x for x in dir(member_CD) if not x.startswith(&#39;__&#39;)]
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[&#39;EI&#39;,
+ &#39;GJ&#39;,
+ &#39;L&#39;,
+ &#39;delta_x&#39;,
+ &#39;delta_y&#39;,
+ &#39;get_global_stiffness&#39;,
+ &#39;get_local_stiffness&#39;,
+ &#39;get_transformation_matrix&#39;,
+ &#39;idx&#39;,
+ &#39;node_i&#39;,
+ &#39;node_j&#39;]
+</pre></div></div>
+</div>
+<p>And so we can retrieve some member properties:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>[member_CD.EI, member_CD.GJ, member_CD.L]
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[10000.0, 16000.0, 2.0]
+</pre></div></div>
+</div>
+<p>And get its node objects:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>node_D = member_CD.node_j
+</pre></div>
+</div>
+</div>
+<p>which in turn have their own properties:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>[x for x in dir(node_D) if not x.startswith(&#39;__&#39;)]
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[&#39;Fz&#39;,
+ &#39;Mx&#39;,
+ &#39;My&#39;,
+ &#39;idx&#39;,
+ &#39;label&#39;,
+ &#39;set_load&#39;,
+ &#39;set_support&#39;,
+ &#39;support&#39;,
+ &#39;x&#39;,
+ &#39;y&#39;]
+</pre></div></div>
+</div>
+<p>Adn for example, we can see the type of support assigned to <code class="docutils literal notranslate"><span class="pre">node_D</span></code>:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>node_D.support
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&lt;Support.FIXED: [1, 1, 1, 1, 1, 1]&gt;
+</pre></div></div>
+</div>
+<p>The documentation explains <a class="reference internal" href="../api.html"><span class="doc">the complete API</span></a> in detail.</p>
+</div>
+<div class="section" id="Member-Stiffness-Matrix-(Local-Coordinates)">
+<h3>Member Stiffness Matrix (Local Coordinates)<a class="headerlink" href="#Member-Stiffness-Matrix-(Local-Coordinates)" title="Permalink to this headline">¶</a></h3>
+<p>The member stiffness matrix in the local coordinate system for a grid element (omitting the rows and columns corresponding to translations in <span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(y\)</span> and rotation about <span class="math notranslate nohighlight">\(z\)</span>) is:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}k =
+\left[
+\begin{array}{cccccc}
+\dfrac{12EI}{L^3} &amp; 0 &amp; \dfrac{6EI}{L^2}&amp; \dfrac{-12EI}{L^3}&amp;0 &amp; \dfrac{6EI}{L^2} \\[10pt]
+0 &amp; \dfrac{GJ}{L} &amp; 0 &amp; 0 &amp; \dfrac{-GJ}{L} &amp; 0  \\[10pt]
+\dfrac{6EI}{L^2} &amp; 0 &amp; \dfrac{4EI}{L} &amp;  \dfrac{-6EI}{L^2}&amp;0 &amp; \dfrac{2EI}{L} \\[10pt]
+\dfrac{-12EI}{L^3} &amp; 0 &amp; \dfrac{-6EI}{L^2} &amp; \dfrac{12EI}{L^3}&amp;0 &amp; \dfrac{-6EI}{L^2} \\[10pt]
+0 &amp; \dfrac{-GJ}{L} &amp; 0 &amp; 0 &amp; \dfrac{GJ}{L} &amp; 0  \\[10pt]
+\dfrac{6EI}{L^2} &amp; 0 &amp;  \dfrac{2EI}{L}  &amp;  \dfrac{-6EI}{L^2}&amp;0&amp;  \dfrac{4EI}{L} \\[10pt]
+\end{array}
+\right]\end{split}\]</div>
+<p>We can retrieve this for member <span class="math notranslate nohighlight">\(CD\)</span> as follows:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>k_eb = member_CD.get_local_stiffness()
+print(k_eb)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[[ 15000.      0.  15000. -15000.      0.  15000.]
+ [     0.   8000.      0.      0.  -8000.      0.]
+ [ 15000.      0.  20000. -15000.      0.  10000.]
+ [-15000.      0. -15000.  15000.      0. -15000.]
+ [     0.  -8000.      0.      0.   8000.      0.]
+ [ 15000.      0.  10000. -15000.      0.  20000.]]
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="Member-Stiffness-Matrix-(Global-Coordinates)">
+<h3>Member Stiffness Matrix (Global Coordinates)<a class="headerlink" href="#Member-Stiffness-Matrix-(Global-Coordinates)" title="Permalink to this headline">¶</a></h3>
+<p>The coordinate transformation matrix for a grid element is:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}T =
+\left[
+\begin{array}{cccccc}
+1 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 \\[10pt]
+0 &amp; C &amp; S &amp; 0 &amp; 0 &amp; 0  \\[10pt]
+0 &amp; -S &amp; C &amp;  0 &amp; 0 &amp; 0  \\[10pt]
+0 &amp; 0 &amp; 0 &amp; 1 &amp; 0 &amp; 0 \\[10pt]
+0 &amp; 0 &amp; 0 &amp; 0 &amp; C &amp; S  \\[10pt]
+0 &amp; 0 &amp; 0 &amp; 0 &amp; -S &amp; C \\[10pt]
+\end{array}
+\right]\end{split}\]</div>
+<p>where the direction cosines are:</p>
+<div class="math notranslate nohighlight">
+\[C = \frac{x_j - x_i}{L} \hskip{1cm} S = \frac{y_j - y_i}{L}\]</div>
+<p>and with this definition, the member stiffness matrix in the global coordinates is given by:</p>
+<div class="math notranslate nohighlight">
+\[K_g = T^T K T\]</div>
+<p>Note that in the <em>Direct Stiffness Method</em>, the transofrmation matrix is not explicitly evaluated, but the resulting stiffness terms are summed with the contributions of other members to yield those in <span class="math notranslate nohighlight">\(K_g\)</span>.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>T = member_CD.get_transformation_matrix()
+print(T)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[[ 1.  0.  0.  0.  0.  0.]
+ [ 0. -1.  0.  0. -0.  0.]
+ [ 0. -0. -1.  0. -0. -0.]
+ [ 0.  0.  0.  1.  0.  0.]
+ [ 0. -0.  0.  0. -1.  0.]
+ [ 0. -0. -0.  0. -0. -1.]]
+</pre></div></div>
+</div>
+<p>And the resulting member stiffness matrix in global coordinates is then:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>Kg = member_CD.get_global_stiffness()
+print(Kg)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[[ 15000.      0. -15000. -15000.      0. -15000.]
+ [     0.   8000.      0.      0.  -8000.      0.]
+ [-15000.      0.  20000.  15000.      0.  10000.]
+ [-15000.      0.  15000.  15000.      0.  15000.]
+ [     0.  -8000.      0.      0.   8000.      0.]
+ [-15000.      0.  10000.  15000.      0.  20000.]]
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="OpenSeesPy-object">
+<h3><code class="docutils literal notranslate"><span class="pre">OpenSeesPy</span></code> object<a class="headerlink" href="#OpenSeesPy-object" title="Permalink to this headline">¶</a></h3>
+<p>As noted, :func:<code class="docutils literal notranslate"><span class="pre">ospgrid.grid.analyze</span></code> returns the <a class="reference external" href="https://openseespydoc.readthedocs.io/en/latest/">OpenSeesPy</a> object of the analysis. Any of its methods can be used to interrogate the analysis further.</p>
+<p>For example, the system’s residual force vector at the end of the first analysis step should be zero for an linear elastic and geometrical analysis, and it can be found using the <code class="docutils literal notranslate"><span class="pre">`OpenSeesPy</span></code> printB &lt;<a class="reference external" href="https://openseespydoc.readthedocs.io/en/latest/src/printB.html">https://openseespydoc.readthedocs.io/en/latest/src/printB.html</a>&gt;`__ command:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>osp.printB(&#39;-ret&#39;)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[0.0,
+ 0.0,
+ -1.4210854715202004e-14,
+ 3.552713678800501e-15,
+ 5.329070518200751e-15,
+ 0.0]
+</pre></div></div>
+</div>
+</div>
+</div>
+<div class="section" id="Example-2">
+<h2>Example 2<a class="headerlink" href="#Example-2" title="Permalink to this headline">¶</a></h2>
+<p>Returning to <a class="reference internal" href="intro.html#Example-1"><span class="std std-ref">Example 2</span></a> from the <a class="reference internal" href="intro.html"><span class="doc">Introduction</span></a> to <code class="docutils literal notranslate"><span class="pre">ospgrid</span></code>, we will further illustrate the DOFs of the global stiffnes matrix.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>display.Image(&quot;./images/intro_ex_2.png&quot;,width=800)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_edu_35_0.png" class="no-scaled-link" src="../_images/notebooks_edu_35_0.png" style="width: 800px;" />
+</div>
+</div>
+<p>First, quickly create the grid:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>grid = ospg.Grid()
@@ -532,68 +922,17 @@ grid.add_support(&quot;B&quot;, ospg.Support.FIXED)
 grid.add_support(&quot;C&quot;, ospg.Support.FIXED)
 grid.add_support(&quot;D&quot;, ospg.Support.FIXED)
 
-ops = grid.analyze()
+osp = grid.analyze()
 </pre></div>
 </div>
 </div>
-<p>Now the grid is analyzed and stored, we can examine aspects that should match the theory or a calculation.</p>
-<div class="section" id="Member-Forces">
-<h2>Member Forces<a class="headerlink" href="#Member-Forces" title="Permalink to this headline">¶</a></h2>
-<p>Similarly to the stiffness matrix, we can get the member end forces for the member. Note that with 6 DOFs per node, this is a <span class="math notranslate nohighlight">\(12\times1\)</span> vector, with the <span class="math notranslate nohighlight">\(i\)</span>-node and <span class="math notranslate nohighlight">\(j\)</span>-node as created (not necessarily as passed in the tuple):</p>
+<p>Now extract the reudced global stiffness matrix (i.e. after the boundary conditions have been applied):</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>Fbe = grid.get_member_forces((&quot;E&quot;, &quot;B&quot;))
-print(Fbe)
-</pre></div>
-</div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-[0.0, 0.0, 20.155184539095423, -48.84891084428332, 0.9967472446340149, 0.0, 0.0, 0.0, -20.155184539095423, -46.88821571641994, -0.9967472446340149, 0.0]
-</pre></div></div>
-</div>
-</div>
-<div class="section" id="Global-Stifness-Matrix">
-<h2>Global Stifness Matrix<a class="headerlink" href="#Global-Stifness-Matrix" title="Permalink to this headline">¶</a></h2>
-<p>We can extract the reudced global stiffness matrix (i.e. after the boundary conditions have been applied). For this grid, only nodes <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(E\)</span> can move, and all 6 DOFs are free at each, so we will have a <span class="math notranslate nohighlight">\(12\times12\)</span> matrix.</p>
-<p>The DOFs are in the order translation about the <span class="math notranslate nohighlight">\(x\)</span>-, <span class="math notranslate nohighlight">\(y\)</span>-, and <span class="math notranslate nohighlight">\(z\)</span>-axes, and rotation about the <span class="math notranslate nohighlight">\(x\)</span>-, <span class="math notranslate nohighlight">\(y\)</span>-, and <span class="math notranslate nohighlight">\(z\)</span>-axes.</p>
-<p>Note that the 6 DOFs per node here are those for a general 3D frame structure. For grids, we will know that the translations in <span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(y\)</span>, and the rotation about <span class="math notranslate nohighlight">\(z\)</span> will be zero.</p>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>K = grid.get_system_stiffness()
-</pre></div>
-</div>
-</div>
-</div>
-<div class="section" id="Member-Stiffness-Matrix">
-<h2>Member Stiffness Matrix<a class="headerlink" href="#Member-Stiffness-Matrix" title="Permalink to this headline">¶</a></h2>
-<p>The member stiffness matrix for a grid element (omitting the rows and columns corresponding to translations in <span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(y\)</span> and rotation about <span class="math notranslate nohighlight">\(z\)</span>) is:</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}k =
-\left[
-\begin{array}{cccccc}
-\dfrac{12EI}{L^3} &amp; 0 &amp; \dfrac{6EI}{L^2}&amp; \dfrac{-12EI}{L^3}&amp;0 &amp; \dfrac{6EI}{L^2} \\[10pt]
-0 &amp; \dfrac{GJ}{L} &amp; 0 &amp; 0 &amp; \dfrac{-GJ}{L} &amp; 0  \\[10pt]
-\dfrac{6EI}{L^2} &amp; 0 &amp; \dfrac{4EI}{L} &amp;  \dfrac{-6EI}{L^2}&amp;0 &amp; \dfrac{2EI}{L} \\[10pt]
-\dfrac{-12EI}{L^3} &amp; 0 &amp; \dfrac{-6EI}{L^2} &amp; \dfrac{12EI}{L^3}&amp;0 &amp; \dfrac{-6EI}{L^2} \\[10pt]
-0 &amp; \dfrac{-GJ}{L} &amp; 0 &amp; 0 &amp; \dfrac{GJ}{L} &amp; 0  \\[10pt]
-\dfrac{6EI}{L^2} &amp; 0 &amp;  \dfrac{2EI}{L}  &amp;  \dfrac{-6EI}{L^2}&amp;0&amp;  \dfrac{4EI}{L} \\[10pt]
-\end{array}
-\right]\end{split}\]</div>
-<p>And we can find this by passing a tuple of the two node labels (or member ID, or member object):</p>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>k_eb = grid.get_member_stiffness((&quot;E&quot;, &quot;B&quot;))
-print(k_eb)
+print(K)
 </pre></div>
 </div>
 </div>
@@ -602,20 +941,33 @@ print(k_eb)
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-[[ 1119.6967488      0.          2659.27977839 -1119.6967488
-      0.          2659.27977839]
- [    0.          1052.63157895     0.             0.
-  -1052.63157895     0.        ]
- [ 2659.27977839     0.          8421.05263158 -2659.27977839
-      0.          4210.52631579]
- [-1119.6967488      0.         -2659.27977839  1119.6967488
-      0.         -2659.27977839]
- [    0.         -1052.63157895     0.             0.
-   1052.63157895     0.        ]
- [ 2659.27977839     0.          4210.52631579 -2659.27977839
-      0.          8421.05263158]]
+[[   299.48      0.        0.        0.        0.      109.07     -0.
+       0.        0.        0.        0.        0.  ]
+ [     0.     1687.5       0.        0.        0.    -1125.        0.
+   -1500.        0.        0.        0.    -1500.  ]
+ [     0.        0.    19869.7   -1090.72  11250.        0.        0.
+       0.   -15000.        0.    15000.        0.  ]
+ [     0.        0.    -1090.72  22171.05      0.        0.        0.
+       0.        0.    -2500.        0.        0.  ]
+ [     0.        0.    11250.        0.    32302.63      0.        0.
+       0.   -15000.        0.    10000.        0.  ]
+ [   109.07  -1125.        0.        0.        0.     4842.11      0.
+    1500.        0.        0.        0.     1000.  ]
+ [    -0.        0.        0.        0.        0.        0.        0.
+       0.        0.        0.        0.        0.  ]
+ [     0.    -1500.        0.        0.        0.     1500.        0.
+    1500.        0.        0.        0.     1500.  ]
+ [     0.        0.   -15000.        0.   -15000.        0.        0.
+       0.    15000.        0.   -15000.        0.  ]
+ [     0.        0.        0.    -2500.        0.        0.        0.
+       0.        0.     2500.        0.        0.  ]
+ [     0.        0.    15000.        0.    10000.        0.        0.
+       0.   -15000.        0.    20000.        0.  ]
+ [     0.    -1500.        0.        0.        0.     1000.        0.
+    1500.        0.        0.        0.     2000.  ]]
 </pre></div></div>
 </div>
+<p>Since only nodes <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(E\)</span> can move, and all 6 DOFs are free at each, we obtain a <span class="math notranslate nohighlight">\(12\times12\)</span> matrix. From before, we know the DOFs are in the order translation about the <span class="math notranslate nohighlight">\(x\)</span>-, <span class="math notranslate nohighlight">\(y\)</span>-, and <span class="math notranslate nohighlight">\(z\)</span>-axes, and rotation about the <span class="math notranslate nohighlight">\(x\)</span>-, <span class="math notranslate nohighlight">\(y\)</span>-, and <span class="math notranslate nohighlight">\(z\)</span>-axes. Due to the suppoort conditions, we see entries in the rows/columns corresponding to DOFs <span class="math notranslate nohighlight">\(\delta_{xA}\)</span>, <span class="math notranslate nohighlight">\(\theta_{xE}\)</span>, <span class="math notranslate nohighlight">\(\theta_{yE}\)</span>.</p>
 </div>
 </div>
 

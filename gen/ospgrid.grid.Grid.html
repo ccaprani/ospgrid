@@ -266,37 +266,40 @@ of plane elastic grids.</p>
 <tr class="row-odd"><td><p><a class="reference internal" href="#ospgrid.grid.Grid.get_displacement" title="ospgrid.grid.Grid.get_displacement"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_displacement</span></code></a></p></td>
 <td><p>Returns the displacements for a node</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#ospgrid.grid.Grid.get_member_forces" title="ospgrid.grid.Grid.get_member_forces"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_member_forces</span></code></a></p></td>
-<td><p>Returns the member end force for the indicated DOF.</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#ospgrid.grid.Grid.get_member" title="ospgrid.grid.Grid.get_member"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_member</span></code></a></p></td>
+<td><p>Gets the member from a member object, id, or a tuple of node labels.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#ospgrid.grid.Grid.get_member_stiffness" title="ospgrid.grid.Grid.get_member_stiffness"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_member_stiffness</span></code></a></p></td>
-<td><p>Returns the member stiffness matrix in local coordinates with nodal DOFs in the order DZ ('vertical' force), RX (torsion), RZ (bending moment).</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#ospgrid.grid.Grid.get_member_forces" title="ospgrid.grid.Grid.get_member_forces"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_member_forces</span></code></a></p></td>
+<td><p>Returns the member end forces for the indicated DOF in the global coordinate system.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#ospgrid.grid.Grid.get_reactions" title="ospgrid.grid.Grid.get_reactions"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_reactions</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#ospgrid.grid.Grid.get_node" title="ospgrid.grid.Grid.get_node"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_node</span></code></a></p></td>
+<td><p>Gets the node from an node object, id or label.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#ospgrid.grid.Grid.get_reactions" title="ospgrid.grid.Grid.get_reactions"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_reactions</span></code></a></p></td>
 <td><p>Returns the reactions for a node</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#ospgrid.grid.Grid.get_system_force" title="ospgrid.grid.Grid.get_system_force"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_system_force</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#ospgrid.grid.Grid.get_system_force" title="ospgrid.grid.Grid.get_system_force"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_system_force</span></code></a></p></td>
 <td><p>Returns the system global force vector after the imposition of boundary conditions.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#ospgrid.grid.Grid.get_system_stiffness" title="ospgrid.grid.Grid.get_system_stiffness"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_system_stiffness</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#ospgrid.grid.Grid.get_system_stiffness" title="ospgrid.grid.Grid.get_system_stiffness"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_system_stiffness</span></code></a></p></td>
 <td><p>Returns the system global stiffness matrix after the imposition of boundary conditions.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#ospgrid.grid.Grid.plot_bmd" title="ospgrid.grid.Grid.plot_bmd"><code class="xref py py-obj docutils literal notranslate"><span class="pre">plot_bmd</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#ospgrid.grid.Grid.plot_bmd" title="ospgrid.grid.Grid.plot_bmd"><code class="xref py py-obj docutils literal notranslate"><span class="pre">plot_bmd</span></code></a></p></td>
 <td><p>Plot the bending moment diagram.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#ospgrid.grid.Grid.plot_dsd" title="ospgrid.grid.Grid.plot_dsd"><code class="xref py py-obj docutils literal notranslate"><span class="pre">plot_dsd</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#ospgrid.grid.Grid.plot_dsd" title="ospgrid.grid.Grid.plot_dsd"><code class="xref py py-obj docutils literal notranslate"><span class="pre">plot_dsd</span></code></a></p></td>
 <td><p>Plot the deflected shape diagram.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#ospgrid.grid.Grid.plot_grid" title="ospgrid.grid.Grid.plot_grid"><code class="xref py py-obj docutils literal notranslate"><span class="pre">plot_grid</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#ospgrid.grid.Grid.plot_grid" title="ospgrid.grid.Grid.plot_grid"><code class="xref py py-obj docutils literal notranslate"><span class="pre">plot_grid</span></code></a></p></td>
 <td><p>Plot the grid, showing nodes &amp; members, and their indices.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#ospgrid.grid.Grid.plot_results" title="ospgrid.grid.Grid.plot_results"><code class="xref py py-obj docutils literal notranslate"><span class="pre">plot_results</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#ospgrid.grid.Grid.plot_results" title="ospgrid.grid.Grid.plot_results"><code class="xref py py-obj docutils literal notranslate"><span class="pre">plot_results</span></code></a></p></td>
 <td><p>Plot the results of the grid analysis including:</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#ospgrid.grid.Grid.plot_sfd" title="ospgrid.grid.Grid.plot_sfd"><code class="xref py py-obj docutils literal notranslate"><span class="pre">plot_sfd</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#ospgrid.grid.Grid.plot_sfd" title="ospgrid.grid.Grid.plot_sfd"><code class="xref py py-obj docutils literal notranslate"><span class="pre">plot_sfd</span></code></a></p></td>
 <td><p>Plot the shear force diagram.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#ospgrid.grid.Grid.plot_tmd" title="ospgrid.grid.Grid.plot_tmd"><code class="xref py py-obj docutils literal notranslate"><span class="pre">plot_tmd</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#ospgrid.grid.Grid.plot_tmd" title="ospgrid.grid.Grid.plot_tmd"><code class="xref py py-obj docutils literal notranslate"><span class="pre">plot_tmd</span></code></a></p></td>
 <td><p>Plot the torsion moment diagram.</p></td>
 </tr>
 </tbody>
@@ -408,12 +411,48 @@ of plane elastic grids.</p>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="ospgrid.grid.Grid.get_node">
+<span class="sig-name descname"><span class="pre">get_node</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">typing.Union[ospgrid.grid.Node,</span> <span class="pre">str,</span> <span class="pre">int]</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ospgrid/grid.html#Grid.get_node"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ospgrid.grid.Grid.get_node" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the node from an node object, id or label.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>node</strong> (<em>Union</em><em>[</em><a class="reference internal" href="ospgrid.grid.Node.html#ospgrid.grid.Node" title="ospgrid.grid.Node"><em>Node</em></a><em>,</em><em>str</em><em>,</em><em>int</em><em>]</em>) – Node object, label, or id</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If node object, label, or id not passed, or is multiple nodes match the
+    label, or no node found.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Node object.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ospgrid.grid.Grid.get_member">
+<span class="sig-name descname"><span class="pre">get_member</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">member</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">typing.Union[ospgrid.grid.Member,</span> <span class="pre">int,</span> <span class="pre">typing.Tuple[str,</span> <span class="pre">str]]</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ospgrid/grid.html#Grid.get_member"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ospgrid.grid.Grid.get_member" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the member from a member object, id, or a tuple of node labels.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>member</strong> (<em>Union</em><em>[</em><a class="reference internal" href="ospgrid.grid.Member.html#ospgrid.grid.Member" title="ospgrid.grid.Member"><em>Member</em></a><em>,</em><em>int</em><em>, </em><em>Tuple</em><em>[</em><em>str</em><em>,</em><em>str</em><em>]</em><em>]</em><em>, </em><em>optional Member object</em><em>, </em><em>id</em><em>, </em><em>or</em>) – node labels.</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If member object, or id not passed, or is multiple nodes match the
+    label, or no node found.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>None.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="ospgrid.grid.Grid.analyze">
 <span class="sig-name descname"><span class="pre">analyze</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ospgrid/grid.html#Grid.analyze"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ospgrid.grid.Grid.analyze" title="Permalink to this definition">¶</a></dt>
 <dd><p>Executes the analysis for the grid object using OpenSeesPy</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p><strong>ops</strong> – The OpenSeesPy instance, which can be used for querying results directly
+<dd class="field-odd"><p><strong>osp</strong> – The OpenSeesPy instance, which can be used for querying results directly
 or otherwise manipulating the model further.</p>
 </dd>
 <dt class="field-even">Return type</dt>
@@ -497,7 +536,8 @@ conditions.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="ospgrid.grid.Grid.get_member_forces">
 <span class="sig-name descname"><span class="pre">get_member_forces</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">member</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dof</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-</span> <span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ospgrid/grid.html#Grid.get_member_forces"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ospgrid.grid.Grid.get_member_forces" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns the member end force for the indicated DOF.</p>
+<dd><p>Returns the member end forces for the indicated DOF in the global coordinate
+system.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -510,25 +550,7 @@ conditions.</p>
 Fx, Fy, Fz, Mx, My, Mz.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>List[float]</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="ospgrid.grid.Grid.get_member_stiffness">
-<span class="sig-name descname"><span class="pre">get_member_stiffness</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">member</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ospgrid/grid.html#Grid.get_member_stiffness"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ospgrid.grid.Grid.get_member_stiffness" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns the member stiffness matrix in local coordinates with nodal DOFs
-in the order DZ (‘vertical’ force), RX (torsion), RZ (bending moment).</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>member</strong> (<em>Union</em><em>[</em><a class="reference internal" href="ospgrid.grid.Member.html#ospgrid.grid.Member" title="ospgrid.grid.Member"><em>Member</em></a><em>, </em><em>int</em><em>, </em><em>Tuple</em><em>[</em><em>str</em><em>, </em><em>str</em><em>]</em><em>]</em>) – Member object, id, or a tuple of node labels.</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>K</strong> – Member stiffness matrix in local coordinates.</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>np.ndarray</p>
+<dd class="field-odd"><p>np.array</p>
 </dd>
 </dl>
 </dd></dl>
@@ -595,14 +617,14 @@ in the order DZ (‘vertical’ force), RX (torsion), RZ (bending moment).</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ospgrid.grid.Grid.plot_bmd">
-<span class="sig-name descname"><span class="pre">plot_bmd</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scale_factor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-</span> <span class="pre">0.001</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axes_on</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ospgrid/grid.html#Grid.plot_bmd"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ospgrid.grid.Grid.plot_bmd" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">plot_bmd</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scale_factor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axes_on</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ospgrid/grid.html#Grid.plot_bmd"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ospgrid.grid.Grid.plot_bmd" title="Permalink to this definition">¶</a></dt>
 <dd><p>Plot the bending moment diagram.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>scale_factor</strong> (<em>float</em>) – The scale of the bending moment to use. The default is -1e3. The negative
-sign means to flip the diagram so that it appears on the tension face,
-per convention.</p></li>
+<li><p><strong>scale_factor</strong> (<em>float</em>) – The scale of the bending moment to use. The default is 1.0. A negative
+sign is then applied to flip the diagram so that it appears on the tension
+face, per convention.</p></li>
 <li><p><strong>figsize</strong> (<em>TYPE</em><em>, </em><em>optional</em>) – The size of the figure in inches. The default is self.FIGSIZE.</p></li>
 <li><p><strong>axes_on</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether or not to have the axes on in the plots. The default is True.</p></li>
 </ul>
@@ -615,12 +637,13 @@ per convention.</p></li>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ospgrid.grid.Grid.plot_sfd">
-<span class="sig-name descname"><span class="pre">plot_sfd</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scale_factor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.001</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axes_on</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ospgrid/grid.html#Grid.plot_sfd"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ospgrid.grid.Grid.plot_sfd" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">plot_sfd</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scale_factor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axes_on</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ospgrid/grid.html#Grid.plot_sfd"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ospgrid.grid.Grid.plot_sfd" title="Permalink to this definition">¶</a></dt>
 <dd><p>Plot the shear force diagram.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>scale_factor</strong> (<em>float</em>) – The scale of the bending moment to use. The default is -1e3.</p></li>
+<li><p><strong>scale_factor</strong> (<em>float</em>) – The scale of the bending moment to use. The default is 1.0. A negative
+sign is then applied to flip the diagram so that it appears per convention.</p></li>
 <li><p><strong>figsize</strong> (<em>TYPE</em><em>, </em><em>optional</em>) – The size of the figure in inches. The default is self.FIGSIZE.</p></li>
 <li><p><strong>axes_on</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether or not to have the axes on in the plots. The default is True.</p></li>
 </ul>
@@ -633,14 +656,13 @@ per convention.</p></li>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ospgrid.grid.Grid.plot_tmd">
-<span class="sig-name descname"><span class="pre">plot_tmd</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scale_factor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.001</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axes_on</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ospgrid/grid.html#Grid.plot_tmd"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ospgrid.grid.Grid.plot_tmd" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">plot_tmd</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scale_factor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axes_on</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ospgrid/grid.html#Grid.plot_tmd"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ospgrid.grid.Grid.plot_tmd" title="Permalink to this definition">¶</a></dt>
 <dd><p>Plot the torsion moment diagram.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>scale_factor</strong> (<em>float</em>) – The scale of the bending moment to use. The default is -1e3. The negative
-sign means to flip the diagram so that it appears on the tension face,
-per convention.</p></li>
+<li><p><strong>scale_factor</strong> (<em>float</em>) – The scale of the bending moment to use. The default is 1.0.  A negative
+sign is then applied to flip the diagram so that it appears per convention.</p></li>
 <li><p><strong>figsize</strong> (<em>TYPE</em><em>, </em><em>optional</em>) – The size of the figure in inches. The default is self.FIGSIZE.</p></li>
 <li><p><strong>axes_on</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether or not to have the axes on in the plots. The default is True.</p></li>
 </ul>
