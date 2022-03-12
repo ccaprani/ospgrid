@@ -533,9 +533,9 @@
    "source": [
     "### `OpenSeesPy` object\n",
     "\n",
-    "As noted, :func:`ospgrid.grid.analyze` returns the [OpenSeesPy](https://openseespydoc.readthedocs.io/en/latest/) object of the analysis. Any of its methods can be used to interrogate the analysis further.\n",
+    "As noted, [ospgrid.grid.analyze()](../gen/ospgrid.grid.Grid.rst#ospgrid.grid.Grid.analyze) returns the [OpenSeesPy](https://openseespydoc.readthedocs.io/en/latest/) object of the analysis. Any of its methods can be used to interrogate the analysis further.\n",
     "\n",
-    "For example, the system's residual force vector at the end of the first analysis step should be zero for an linear elastic and geometrical analysis, and it can be found using the [`OpenSeesPy` printB](https://openseespydoc.readthedocs.io/en/latest/src/printB.html) command:"
+    "For example, the system's residual force vector at the end of the first analysis step should be zero for an linear elastic and geometrical analysis, and it can be found using the [OpenSeesPy printB](https://openseespydoc.readthedocs.io/en/latest/src/printB.html) command:"
    ]
   },
   {

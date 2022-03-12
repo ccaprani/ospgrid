@@ -184,6 +184,11 @@
    Example 2
   </a>
  </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#Example-3">
+   Example 3
+  </a>
+ </li>
 </ul>
 
 </nav>
@@ -587,7 +592,7 @@ print(dE)
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-[0.0, 0.0, -0.019106528912442664, 0.0004656650928675513, -0.0009469098824023142, 0.0]
+[0.0, 0.0, -0.01910652891244266, 0.00046566509286755174, -0.0009469098824023108, 0.0]
 </pre></div></div>
 </div>
 <p>We can also get the reactions at a node, and here we get just one we are interested in (vertical force reaction):</p>
@@ -605,7 +610,7 @@ print(rB)
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-20.155184539095423
+20.155184539095416
 </pre></div></div>
 </div>
 <p>Finally, we can plot the results:</p>
@@ -723,16 +728,24 @@ grid.add_load(&quot;E&quot;, Mx=10, My=20)
 </pre></div>
 </div>
 </div>
-<p>And supports are defined by adding a pre-defined support type to a node. Note that a <code class="docutils literal notranslate"><span class="pre">PROP</span></code> is different to a <code class="docutils literal notranslate"><span class="pre">PINNED</span></code> support as it only restrains translation in the <span class="math notranslate nohighlight">\(z\)</span>-axis. In contrast, a <code class="docutils literal notranslate"><span class="pre">PINNED</span></code> support also restrains the twist of the connecting member (hence <code class="docutils literal notranslate"><span class="pre">PINNED_X</span></code> and <code class="docutils literal notranslate"><span class="pre">PINNED_Y</span></code>).</p>
+<p>Next, we can use single character short-cuts to define the supports, as follows:</p>
+<ul class="simple">
+<li><p>“X” = <code class="docutils literal notranslate"><span class="pre">ospg.Support.PINNED_X</span></code></p></li>
+<li><p>“Y” = <code class="docutils literal notranslate"><span class="pre">ospg.Support.PINNED_Y</span></code></p></li>
+<li><p>“F” = <code class="docutils literal notranslate"><span class="pre">ospg.Support.FIXED</span></code></p></li>
+<li><p>“V” = <code class="docutils literal notranslate"><span class="pre">ospg.Support.FIXED_V_ROLLER</span></code></p></li>
+<li><p>“P” = <code class="docutils literal notranslate"><span class="pre">ospg.Support.PROP</span></code></p></li>
+</ul>
+<p>Note that a <code class="docutils literal notranslate"><span class="pre">PROP</span></code> is different to a <code class="docutils literal notranslate"><span class="pre">PINNED</span></code> support as it only restrains translation in the <span class="math notranslate nohighlight">\(z\)</span>-axis. In contrast, a <code class="docutils literal notranslate"><span class="pre">PINNED</span></code> support also restrains the twist of the connecting member (hence <code class="docutils literal notranslate"><span class="pre">PINNED_X</span></code> and <code class="docutils literal notranslate"><span class="pre">PINNED_Y</span></code>).</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>grid.add_support(&quot;A&quot;, ospg.Support.FIXED_V_ROLLER)
-grid.add_support(&quot;B&quot;, ospg.Support.FIXED)
-grid.add_support(&quot;C&quot;, ospg.Support.FIXED)
-grid.add_support(&quot;D&quot;, ospg.Support.FIXED)
-grid.add_support(&quot;E&quot;, ospg.Support.PROP)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>grid.add_support(&quot;A&quot;, &quot;V&quot;)
+grid.add_support(&quot;B&quot;, &quot;F&quot;)
+grid.add_support(&quot;C&quot;, &quot;F&quot;)
+grid.add_support(&quot;D&quot;, &quot;F&quot;)
+grid.add_support(&quot;E&quot;, &quot;P&quot;)
 </pre></div>
 </div>
 </div>
@@ -774,6 +787,82 @@ grid.add_support(&quot;E&quot;, ospg.Support.PROP)
 </div>
 <div class="output_area docutils container">
 <img alt="../_images/notebooks_intro_39_0.png" src="../_images/notebooks_intro_39_0.png" />
+</div>
+</div>
+</div>
+<div class="section" id="Example-3">
+<h2>Example 3<a class="headerlink" href="#Example-3" title="Permalink to this headline">¶</a></h2>
+<p>A utility function <code class="docutils literal notranslate"><span class="pre">make_grid</span></code> is included in <code class="docutils literal notranslate"><span class="pre">ospgrid</span></code>, which accepts a single string describing the grid. The string follows the grid specification described in the <code class="docutils literal notranslate"><span class="pre">make_grid()</span></code> <a class="reference internal" href="../gen/ospgrid.grid.make_grid.html#ospgrid.grid.make_grid"><span class="std std-ref">documentation</span></a>. It is useful for saving grid definitions, for example.</p>
+<p>Here, we analyze the following grid:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>display.Image(&quot;./images/intro_ex_3.png&quot;,width=800)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_intro_41_0.png" class="no-scaled-link" src="../_images/notebooks_intro_41_0.png" style="width: 800px;" />
+</div>
+</div>
+<p>Following the grid specification, this grid is encoded as:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>grid_str = &quot;AF-5:0,BX0:-5,CN0:0,DY2:0_C0:-50:-50_AC,CD,BC&quot;
+</pre></div>
+</div>
+</div>
+<p>And we can make the grid using this string, and analyze as follows:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>grid = ospg.make_grid(grid_str)
+grid.analyze()
+grid.plot_results()
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_intro_45_0.png" src="../_images/notebooks_intro_45_0.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_intro_45_1.png" src="../_images/notebooks_intro_45_1.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_intro_45_2.png" src="../_images/notebooks_intro_45_2.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_intro_45_3.png" src="../_images/notebooks_intro_45_3.png" />
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_intro_45_4.png" src="../_images/notebooks_intro_45_4.png" />
 </div>
 </div>
 </div>

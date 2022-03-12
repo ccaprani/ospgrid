@@ -1,0 +1,6 @@
+ospgrid.grid.make\_grid
+=======================
+
+.. currentmodule:: ospgrid.grid
+
+.. autofunction:: make_grid

@@ -1,4 +1,4 @@
-﻿ospgrid.grid.Grid
+ospgrid.grid.Grid
 =================
 
 .. currentmodule:: ospgrid.grid

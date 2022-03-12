@@ -35,7 +35,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="ospgrid.grid.Member" href="ospgrid.grid.Member.html" />
-    <link rel="prev" title="ospgrid.grid" href="ospgrid.grid.html" />
+    <link rel="prev" title="ospgrid.grid.make_grid" href="ospgrid.grid.make_grid.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -139,6 +139,11 @@
    </i>
   </label>
   <ul class="current">
+   <li class="toctree-l2">
+    <a class="reference internal" href="ospgrid.grid.make_grid.html">
+     ospgrid.grid.make_grid
+    </a>
+   </li>
    <li class="toctree-l2 current active">
     <a class="current reference internal" href="#">
      ospgrid.grid.Grid
@@ -401,7 +406,19 @@ of plane elastic grids.</p>
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>node</strong> (<em>Union</em><em>[</em><a class="reference internal" href="ospgrid.grid.Node.html#ospgrid.grid.Node" title="ospgrid.grid.Node"><em>Node</em></a><em>,</em><em>str</em><em>,</em><em>int</em><em>]</em>) – Node object, label, or id</p></li>
-<li><p><strong>support</strong> (<a class="reference internal" href="ospgrid.grid.Support.html#ospgrid.grid.Support" title="ospgrid.grid.Support"><em>Support</em></a>) – The support type for the node.</p></li>
+<li><p><strong>support</strong> (<em>Union</em><em>[</em><a class="reference internal" href="ospgrid.grid.Support.html#ospgrid.grid.Support" title="ospgrid.grid.Support"><em>Support</em></a><em>,</em><em>str</em><em>]</em>) – <p>The support type, a <a class="reference internal" href="ospgrid.grid.Support.html#ospgrid.grid.Support" title="ospgrid.grid.Support"><code class="xref py py-class docutils literal notranslate"><span class="pre">ospgrid.grid.Support</span></code></a> object. Alternatively,
+a single character support descriptor as a <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code> can be used as
+follows:</p>
+<blockquote>
+<div><ul>
+<li><p><cite>X</cite> = <code class="xref py py-attr docutils literal notranslate"><span class="pre">ospgrid.grid.Support.PINNED_X</span></code></p></li>
+<li><p><cite>Y</cite> = <code class="xref py py-attr docutils literal notranslate"><span class="pre">ospgrid.grid.Support.PINNED_Y</span></code></p></li>
+<li><p><cite>F</cite> = <code class="xref py py-attr docutils literal notranslate"><span class="pre">ospgrid.grid.Support.FIXED</span></code></p></li>
+<li><p><cite>V</cite> = <code class="xref py py-attr docutils literal notranslate"><span class="pre">ospgrid.grid.Support.FIXED_V_ROLLER</span></code></p></li>
+<li><p><cite>P</cite> = <code class="xref py py-attr docutils literal notranslate"><span class="pre">ospgrid.grid.Support.PROP</span></code></p></li>
+</ul>
+</div></blockquote>
+</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type</dt>
@@ -683,11 +700,11 @@ sign is then applied to flip the diagram so that it appears per convention.</p><
               
               <!-- Previous / next buttons -->
 <div class='prev-next-area'>
-    <a class='left-prev' id="prev-link" href="ospgrid.grid.html" title="previous page">
+    <a class='left-prev' id="prev-link" href="ospgrid.grid.make_grid.html" title="previous page">
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
             <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">ospgrid.grid</p>
+            <p class="prev-next-title">ospgrid.grid.make_grid</p>
         </div>
     </a>
     <a class='right-next' id="next-link" href="ospgrid.grid.Member.html" title="next page">

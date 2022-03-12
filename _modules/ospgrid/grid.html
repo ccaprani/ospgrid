@@ -245,7 +245,7 @@
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
 <span class="sd">        support : Support</span>
-<span class="sd">            The support type, a :class:`ospgrid.grid.Support` object.</span>
+<span class="sd">            The support type, a :class:`ospgrid.grid.Support` object</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
@@ -452,7 +452,11 @@
         <span class="k">return</span> <span class="n">member</span></div>
 
 <div class="viewcode-block" id="Grid.add_load"><a class="viewcode-back" href="../../gen/ospgrid.grid.Grid.html#ospgrid.grid.Grid.add_load">[docs]</a>    <span class="k">def</span> <span class="nf">add_load</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Node</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span> <span class="n">Fz</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">Mx</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">My</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">node</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Node</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span>
+        <span class="n">Fz</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="n">Mx</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="n">My</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
     <span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Add a load to the grid.</span>
@@ -482,7 +486,9 @@
         <span class="n">the_node</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_node</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
         <span class="n">the_node</span><span class="o">.</span><span class="n">set_load</span><span class="p">(</span><span class="n">Fz</span><span class="p">,</span> <span class="n">Mx</span><span class="p">,</span> <span class="n">My</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Grid.add_support"><a class="viewcode-back" href="../../gen/ospgrid.grid.Grid.html#ospgrid.grid.Grid.add_support">[docs]</a>    <span class="k">def</span> <span class="nf">add_support</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Node</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span> <span class="n">support</span><span class="p">:</span> <span class="n">Support</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="Grid.add_support"><a class="viewcode-back" href="../../gen/ospgrid.grid.Grid.html#ospgrid.grid.Grid.add_support">[docs]</a>    <span class="k">def</span> <span class="nf">add_support</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Node</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span> <span class="n">support</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Support</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Add a support to a node in the grid.</span>
 
@@ -490,8 +496,16 @@
 <span class="sd">        ----------</span>
 <span class="sd">        node : Union[Node,str,int]</span>
 <span class="sd">            Node object, label, or id</span>
-<span class="sd">        support : Support</span>
-<span class="sd">            The support type for the node.</span>
+<span class="sd">        support : Union[Support,str]</span>
+<span class="sd">            The support type, a :class:`ospgrid.grid.Support` object. Alternatively,</span>
+<span class="sd">            a single character support descriptor as a :class:`str` can be used as</span>
+<span class="sd">            follows:</span>
+
+<span class="sd">                - `X` = :attr:`ospgrid.grid.Support.PINNED_X`</span>
+<span class="sd">                - `Y` = :attr:`ospgrid.grid.Support.PINNED_Y`</span>
+<span class="sd">                - `F` = :attr:`ospgrid.grid.Support.FIXED`</span>
+<span class="sd">                - `V` = :attr:`ospgrid.grid.Support.FIXED_V_ROLLER`</span>
+<span class="sd">                - `P` = :attr:`ospgrid.grid.Support.PROP`</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
@@ -499,7 +513,19 @@
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">the_node</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_node</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
-        <span class="n">the_node</span><span class="o">.</span><span class="n">set_support</span><span class="p">(</span><span class="n">support</span><span class="p">)</span></div>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">support</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">support</span> <span class="o">==</span> <span class="s2">&quot;F&quot;</span><span class="p">:</span>
+                <span class="n">the_node</span><span class="o">.</span><span class="n">set_support</span><span class="p">(</span><span class="n">Support</span><span class="o">.</span><span class="n">FIXED</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">support</span> <span class="o">==</span> <span class="s2">&quot;X&quot;</span><span class="p">:</span>
+                <span class="n">the_node</span><span class="o">.</span><span class="n">set_support</span><span class="p">(</span><span class="n">Support</span><span class="o">.</span><span class="n">PINNED_X</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">support</span> <span class="o">==</span> <span class="s2">&quot;Y&quot;</span><span class="p">:</span>
+                <span class="n">the_node</span><span class="o">.</span><span class="n">set_support</span><span class="p">(</span><span class="n">Support</span><span class="o">.</span><span class="n">PINNED_Y</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">support</span> <span class="o">==</span> <span class="s2">&quot;P&quot;</span><span class="p">:</span>
+                <span class="n">the_node</span><span class="o">.</span><span class="n">set_support</span><span class="p">(</span><span class="n">Support</span><span class="o">.</span><span class="n">PROP</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">support</span> <span class="o">==</span> <span class="s2">&quot;V&quot;</span><span class="p">:</span>
+                <span class="n">the_node</span><span class="o">.</span><span class="n">set_support</span><span class="p">(</span><span class="n">Support</span><span class="o">.</span><span class="n">FIXED_V_ROLLER</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">the_node</span><span class="o">.</span><span class="n">set_support</span><span class="p">(</span><span class="n">support</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Grid.get_node"><a class="viewcode-back" href="../../gen/ospgrid.grid.Grid.html#ospgrid.grid.Grid.get_node">[docs]</a>    <span class="k">def</span> <span class="nf">get_node</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="o">=</span><span class="n">Union</span><span class="p">[</span><span class="n">Node</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -986,6 +1012,130 @@
             <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">set_axis_off</span><span class="p">()</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span></div></div>
+
+
+<div class="viewcode-block" id="make_grid"><a class="viewcode-back" href="../../gen/ospgrid.grid.make_grid.html#ospgrid.grid.make_grid">[docs]</a><span class="k">def</span> <span class="nf">make_grid</span><span class="p">(</span><span class="n">grid_str</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Grid</span><span class="p">:</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This function creates a grid object from a grid string specification. This</span>
+<span class="sd">    functionality is particularly useful for the bulk generation of grids, and the</span>
+<span class="sd">    grid specification is useful for the easy storage or communication of a grid.</span>
+
+<span class="sd">    .. note:: The grid is taken as lying in the `x`-`y` plane.</span>
+
+<span class="sd">    At a high level, the grid string specification has three parts, and looks as</span>
+<span class="sd">    follows:</span>
+
+<span class="sd">        ``&quot;N_L_M&quot;``</span>
+
+<span class="sd">    where ``N`` is a string specifying the nodes; ``L`` specifies</span>
+<span class="sd">    the nodal loads, and; ``M`` specifies the member connectivity. These parts are</span>
+<span class="sd">    described next.</span>
+
+<span class="sd">    The **node string** comprises a comma-separated list of sub-strings, each describing</span>
+<span class="sd">    its node as follows:</span>
+
+<span class="sd">        ``LSX:Y``</span>
+
+<span class="sd">    in which ``L`` is the node identifying letter (e.g. &quot;A&quot;); ``S`` is the nodal condition</span>
+<span class="sd">    which is one of &quot;N&quot; for no support, or one of the single character support descriptors</span>
+<span class="sd">    acceptable by :py:meth:`~.Grid.add_support`; ``X`` and ``Y`` define the `(x,y)`</span>
+<span class="sd">    coordinates of the node (note the separating colon &quot;:&quot;).</span>
+
+<span class="sd">    The **load string** comprises a comma-separated list of substrings, each describing</span>
+<span class="sd">    the nodal loads as follows:</span>
+
+<span class="sd">        ``LFx:Mx:My``</span>
+
+<span class="sd">    in which ``L`` is the node identifier to which the loads are applied; ``Fx``, ``Mx``,</span>
+<span class="sd">    and ``My`` are the nodal loads as per :py:meth:`~.Grid.add_load`. Note the</span>
+<span class="sd">    separating colons between the nodal load components and that all 3 components</span>
+<span class="sd">    must be defined (even if zero &quot;0&quot;). Nodes with no loads applied do not need to</span>
+<span class="sd">    be included here.</span>
+
+<span class="sd">    The **member connectivity** substring describes the members, and comprises a</span>
+<span class="sd">    comma-separated list of two character nodal identifiers, the *i*- and *j*-node of</span>
+<span class="sd">    each member following :py:meth:`~.Grid.add_member`. These characters must be</span>
+<span class="sd">    from the list passed in the *node string*.</span>
+
+<span class="sd">    For clarity, the hierarchy of separators is:</span>
+
+<span class="sd">        - ``&quot;_&quot;`` separates the node, load, and member connectivity sub-strings;</span>
+<span class="sd">        - ``&quot;,&quot;`` separates entries in the lists for each of the node, load, and member sub-strings;</span>
+<span class="sd">        - ``&quot;:&quot;`` separates coordinates or load components in a node or load definition.</span>
+
+
+<span class="sd">    **Example**::</span>
+
+<span class="sd">        import ospgrid as ospg</span>
+
+<span class="sd">        grid_str = &quot;AF-5:0,BX0:-5,CN0:0,DY2:0_C0:-50:-50_AC,CD,BC&quot;</span>
+<span class="sd">        grid = ospg.make_grid(grid_str)</span>
+<span class="sd">        grid.analyze()</span>
+<span class="sd">        grid.plot_results()</span>
+
+<span class="sd">    This is a 4-node, 3-member grid. Node `A` is at `(-5,0)` and has a :attr:`~.Support.FIXED`</span>
+<span class="sd">    support (``AF-5:0``); `B` is at `(0,-5)` and has a :attr:`~.Support.PINNED_X` support</span>
+<span class="sd">    (``BX0:-5``); `C` is at the origin and is unsupported (``CN0:0``); while `D` is at</span>
+<span class="sd">    `(2,0)` and has a :attr:`~.Support.PINNED_Y` support (``DY2:0``). The grid is</span>
+<span class="sd">    loaded at node `C` with :math:`M_x = -50` kNm and :math:`M_y = -50` kNm (``C0:-10:-10``)</span>
+<span class="sd">    and the members connect as follows: `AC`, `CD`, and `BC` (``AC,CD,BC``).</span>
+
+<span class="sd">    .. note::</span>
+<span class="sd">        This function assigns :math:`EI = 10\times10^3` kNm\ :sup:`2`, and :math:`GJ = 5\times10^3`</span>
+<span class="sd">        kNm\ :sup:`2`. This should be reasonable for member lengths &lt;10 m and loads of the order</span>
+<span class="sd">        &lt;10\ :sup:`2` kN or kNm.</span>
+
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    grid_str : str</span>
+<span class="sd">        The string describing the grid, formatted as described here.</span>
+
+<span class="sd">    Raises</span>
+<span class="sd">    ------</span>
+<span class="sd">    ValueError</span>
+<span class="sd">        If the string contains inconsistent information.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    Grid</span>
+<span class="sd">        The ospgrid object.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="p">(</span><span class="n">nodes</span><span class="p">,</span> <span class="n">loads</span><span class="p">,</span> <span class="n">mbrs</span><span class="p">)</span> <span class="o">=</span> <span class="n">grid_str</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;_&quot;</span><span class="p">)</span>
+
+    <span class="n">grid</span> <span class="o">=</span> <span class="n">Grid</span><span class="p">()</span>
+    <span class="n">EI</span> <span class="o">=</span> <span class="mf">10e3</span>  <span class="c1"># kNm2</span>
+    <span class="n">GJ</span> <span class="o">=</span> <span class="mf">5e3</span>
+
+    <span class="n">node</span> <span class="o">=</span> <span class="n">nodes</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">node</span><span class="p">:</span>
+        <span class="n">letter</span> <span class="o">=</span> <span class="n">n</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">cond</span> <span class="o">=</span> <span class="n">n</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">coords</span> <span class="o">=</span> <span class="n">n</span><span class="p">[</span><span class="mi">2</span><span class="p">:]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">)</span>
+
+        <span class="n">grid</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="n">letter</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="n">coords</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="nb">float</span><span class="p">(</span><span class="n">coords</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+        <span class="k">if</span> <span class="n">cond</span> <span class="o">!=</span> <span class="s2">&quot;N&quot;</span><span class="p">:</span>  <span class="c1"># N = None support</span>
+            <span class="n">grid</span><span class="o">.</span><span class="n">add_support</span><span class="p">(</span><span class="n">letter</span><span class="p">,</span> <span class="n">cond</span><span class="p">)</span>
+
+    <span class="n">mbr</span> <span class="o">=</span> <span class="n">mbrs</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">mbr</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">grid</span><span class="o">.</span><span class="n">add_member</span><span class="p">(</span><span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">m</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">EI</span><span class="p">,</span> <span class="n">GJ</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Node letters </span><span class="si">{m}</span><span class="s2">, member definition error&quot;</span><span class="p">)</span>
+
+    <span class="n">load</span> <span class="o">=</span> <span class="n">loads</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">ld</span> <span class="ow">in</span> <span class="n">load</span><span class="p">:</span>
+        <span class="n">letter</span> <span class="o">=</span> <span class="n">ld</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">vals</span> <span class="o">=</span> <span class="n">ld</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">vals</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">3</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Insufficient nodal load values&quot;</span><span class="p">)</span>
+
+        <span class="n">grid</span><span class="o">.</span><span class="n">add_load</span><span class="p">(</span><span class="n">letter</span><span class="p">,</span> <span class="n">Fz</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="n">vals</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">Mx</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="n">vals</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span> <span class="n">My</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="n">vals</span><span class="p">[</span><span class="mi">2</span><span class="p">]))</span>
+
+    <span class="k">return</span> <span class="n">grid</span></div>
 </pre></div>
 
               </div>
