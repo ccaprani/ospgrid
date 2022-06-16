@@ -13,7 +13,7 @@ import matplotlib.pyplot as plt
 import openseespy.opensees as osp
 import opsvis as ospv
 import numpy as np
-from .utils import save_figs
+from .utils import save_figs_to_file
 
 
 class Support(Enum):
@@ -136,7 +136,7 @@ class Member:
         self.GJ = GJ
         self.delta_x = self.node_j.x - self.node_i.x
         self.delta_y = self.node_j.y - self.node_i.y
-        self.L = np.sqrt(self.delta_x ** 2 + self.delta_y ** 2)
+        self.L = np.sqrt(self.delta_x**2 + self.delta_y**2)
 
     def get_local_stiffness(self) -> np.ndarray:
         """
@@ -150,8 +150,8 @@ class Member:
 
         """
 
-        k11 = 12 * self.EI / self.L ** 3
-        k13 = 6 * self.EI / self.L ** 2
+        k11 = 12 * self.EI / self.L**3
+        k13 = 6 * self.EI / self.L**2
         k22 = self.GJ / self.L
         k33 = 4 * self.EI / self.L
         k36 = 2 * self.EI / self.L
@@ -637,7 +637,7 @@ class Grid:
 
     def get_member_forces(
         self, member: Union[Member, int, Tuple[str, str]], dof: int = -1
-    ) -> List[float]:
+    ) -> np.ndarray:
         """
         Returns the member end forces for the indicated DOF in the global coordinate
         system.
@@ -661,10 +661,16 @@ class Grid:
 
     def plot_results(
         self,
-        save_files: bool = False,
         figsize=None,
         axes_on: bool = True,
-        scale_factor: float = 2e2,
+        scale_factor: Union[float, List[float]] = 0.0,
+        axis_title: bool = True,
+        save_figs: bool = False,
+        filename: str = "ospgrid_results.pdf",
+        transparent: bool = False,
+        bbox: bool = False,
+        pad: int = 20,
+        values: bool = True,
     ):
         """
         Plot the results of the grid analysis including:
@@ -674,12 +680,29 @@ class Grid:
 
         Parameters
         ----------
-        save_files : bool, optional
-            Whether or not to save the plots to PDF. The default is False.
         axes_on : bool, optional
             Whether or not to have the axes on in the plots. The default is True.
-        scale_factor : float, optional
-            The scale factor to use for the deflected shape.
+        scale_factor : float, List[float] optional
+            If a single float: the scale of the deformations to use. When this value is
+            zero, auto-scaling is done. The default is 0.
+            If a list of floats of size 4, then the scale factors are applied in the order
+            deformations; bending; shear; torsion.
+        axis_title : bool, optional
+            Whether or not to have the axes title in the plots. The default is True.
+        save_figs : bool, optional
+            Whether or not to save the plots to PDF. The default is False.
+        filename : string
+            The file to which the results are saved.
+        transparent : bool, optional
+            Whether or not the plots should be transparent. The default is False.
+        bbox : bool, optional
+            Whether or not to crop the figure to a bounding box of its contents. Only
+            applies to image files, e.g., png, jpg, etc (not PDF)
+        pad : int, optional
+            If applying the bbox cropping to an image, a padding to apply to the
+            contents. Defaults to 20 px.
+        values : bool, optional
+            Whether or not to print the salient values on the force diagrams
 
         Returns
         -------
@@ -687,19 +710,58 @@ class Grid:
 
         """
 
-        self.plot_grid(figsize=figsize, axes_on=axes_on)
-        self.plot_dsd(scale_factor=scale_factor, figsize=figsize, axes_on=axes_on)
-        self.plot_bmd(figsize=figsize, axes_on=axes_on)
-        self.plot_tmd(figsize=figsize, axes_on=axes_on)
-        self.plot_sfd(figsize=figsize, axes_on=axes_on)
+        if type(scale_factor) == float:
+            sf_dsd = scale_factor
+            sf_bmd = 1.0
+            sf_sfd = 1.0
+            sf_tmd = 1.0
+        else:
+            sf_dsd = scale_factor[0]
+            sf_bmd = scale_factor[1]
+            sf_sfd = scale_factor[2]
+            sf_tmd = scale_factor[3]
 
-        if save_files:
-            save_figs("ospy_plots.pdf")
+        self.plot_grid(figsize=figsize, axes_on=axes_on, axis_title=axis_title)
+        self.plot_dsd(
+            scale_factor=sf_dsd,
+            figsize=figsize,
+            axes_on=axes_on,
+            axis_title=axis_title,
+        )
+        self.plot_bmd(
+            figsize=figsize,
+            scale_factor=sf_bmd,
+            axes_on=axes_on,
+            axis_title=axis_title,
+            values=values,
+        )
+        self.plot_sfd(
+            figsize=figsize,
+            scale_factor=sf_sfd,
+            axes_on=axes_on,
+            axis_title=axis_title,
+            values=values,
+        )
+        self.plot_tmd(
+            figsize=figsize,
+            scale_factor=sf_tmd,
+            axes_on=axes_on,
+            axis_title=axis_title,
+            values=values,
+        )
+
+        if save_figs:
+            save_figs_to_file(filename, transparent=transparent, bbox=bbox, pad=pad)
             plt.close("all")
         else:
             plt.show()
 
-    def plot_grid(self, figsize=None, axes_on: bool = True):
+    def plot_grid(
+        self,
+        figsize=None,
+        axes_on: bool = True,
+        axis_title: bool = True,
+    ):
         """
         Plot the grid, showing nodes & members, and their indices.
 
@@ -709,6 +771,8 @@ class Grid:
             The size of the figure in inches. The default is self.FIGSIZE.
         axes_on : bool, optional
             Whether or not to have the axes on in the plots. The default is True.
+        axis_title : bool, optional
+            Whether or not to have the axes title in the plots. The default is True.
 
         Returns
         -------
@@ -722,25 +786,35 @@ class Grid:
         fig = plt.gcf()
         fig.set_figwidth(figsize[0])
         fig.set_figheight(figsize[1])
-        plt.gcf().suptitle("Model")
+        if axis_title:
+            plt.gcf().suptitle("Model")
 
         if not axes_on:
             plt.gca().set_axis_off()
-        else:
-            fig.tight_layout()
 
-    def plot_dsd(self, scale_factor: float = 2e2, figsize=None, axes_on: bool = True):
+        fig.tight_layout()
+
+    def plot_dsd(
+        self,
+        scale_factor: float = 0,
+        figsize=None,
+        axes_on: bool = True,
+        axis_title: bool = True,
+    ):
         """
         Plot the deflected shape diagram.
 
         Parameters
         ----------
         scale_factor : float
-            The scale of the deformations to use. The default is 200.
+            The scale of the deformations to use. When this value is zero, auto-scaling
+            is done. The default is 0.
         figsize : TYPE, optional
             The size of the figure in inches. The default is self.FIGSIZE.
         axes_on : bool, optional
             Whether or not to have the axes on in the plots. The default is True.
+        axis_title : bool, optional
+            Whether or not to have the axes title in the plots. The default is True.
 
         Returns
         -------
@@ -750,30 +824,55 @@ class Grid:
         if figsize is None:
             figsize = self.FIGSIZE
 
+        if scale_factor == 0:
+            disps = {n.label: self.get_displacement(n, 3) for n in self.nodes}
+            max_disp = max(abs(min(disps.values())), abs(max(disps.values())))
+            x = [n.x for n in self.nodes]
+            y = [n.y for n in self.nodes]
+            grid_size = max(max(x) - min(x), max(y) - min(y))
+
+            # in case of very small values
+            max_disp = max(max_disp, 1e-9)
+            # target about 1/3 the dimension of the grid
+            sf = 0.33 * grid_size / max_disp
+            # But round to some sensible values
+            mag = 10 ** int(np.ceil(np.log10(sf)))
+            scale_factor = round(10 * sf / mag) * mag / 10
+
         ospv.plot_defo(sfac=scale_factor, endDispFlag=1)
         fig = plt.gcf()
         fig.set_figwidth(figsize[0])
         fig.set_figheight(figsize[1])
-        plt.gcf().suptitle(f"Displaced Shape\n(Scale: {scale_factor})")
+        if axis_title:
+            plt.gcf().suptitle(f"Displaced Shape\n(Scale: {scale_factor})")
         if not axes_on:
             plt.gca().set_axis_off()
-        else:
-            fig.tight_layout()
 
-    def plot_bmd(self, scale_factor: float = 1.0, figsize=None, axes_on: bool = True):
+        fig.tight_layout()
+
+    def plot_bmd(
+        self,
+        scale_factor: float = 1.0,
+        figsize=None,
+        axes_on: bool = True,
+        axis_title: bool = True,
+        values: bool = True,
+    ):
         """
         Plot the bending moment diagram.
 
         Parameters
         ----------
         scale_factor : float
-            The scale of the bending moment to use. The default is 1.0. A negative
-            sign is then applied to flip the diagram so that it appears on the tension
-            face, per convention.
+            The scale of the bending moment to use. The default is 1.0.
         figsize : TYPE, optional
             The size of the figure in inches. The default is self.FIGSIZE.
         axes_on : bool, optional
             Whether or not to have the axes on in the plots. The default is True.
+        axis_title : bool, optional
+            Whether or not to have the axes title in the plots. The default is True.
+        values : bool optional
+            Wether or not to print the values at the member ends
 
         Returns
         -------
@@ -783,18 +882,27 @@ class Grid:
         if figsize is None:
             figsize = self.FIGSIZE
 
-        ospv.section_force_diagram_3d("My", Ew={}, sfac=-scale_factor)
+        ospv.section_force_diagram_3d("My", sfac=scale_factor, end_max_values=values)
         fig = plt.gcf()
         fig.set_figwidth(figsize[0])
         fig.set_figheight(figsize[1])
-        fig.suptitle(f"Bending Moment Diagram\n(Scale: {scale_factor})")
+        plt.gca().set_box_aspect(None)
+        if axis_title:
+            fig.suptitle(f"Bending Moment Diagram\n(Scale: {scale_factor})")
 
         if not axes_on:
             plt.gca().set_axis_off()
-        else:
-            fig.tight_layout()
 
-    def plot_sfd(self, scale_factor: float = 1.0, figsize=None, axes_on: bool = True):
+        fig.tight_layout()
+
+    def plot_sfd(
+        self,
+        scale_factor: float = 1.0,
+        figsize=None,
+        axes_on: bool = True,
+        axis_title: bool = True,
+        values: bool = True,
+    ):
         """
         Plot the shear force diagram.
 
@@ -807,6 +915,10 @@ class Grid:
             The size of the figure in inches. The default is self.FIGSIZE.
         axes_on : bool, optional
             Whether or not to have the axes on in the plots. The default is True.
+        axis_title : bool, optional
+            Whether or not to have the axes title in the plots. The default is True.
+        values : bool optional
+            Wether or not to print the values at the member ends
 
         Returns
         -------
@@ -816,18 +928,27 @@ class Grid:
         if figsize is None:
             figsize = self.FIGSIZE
 
-        ospv.section_force_diagram_3d("Vz", Ew={}, sfac=-scale_factor)
+        ospv.section_force_diagram_3d("Vz", sfac=-scale_factor, end_max_values=values)
         fig = plt.gcf()
         fig.set_figwidth(figsize[0])
         fig.set_figheight(figsize[1])
-        plt.gcf().suptitle(f"Shear Force Diagram\n(Scale: {scale_factor})")
+        plt.gca().set_box_aspect(None)
+        if axis_title:
+            plt.gcf().suptitle(f"Shear Force Diagram\n(Scale: {scale_factor})")
 
         if not axes_on:
             plt.gca().set_axis_off()
-        else:
-            fig.tight_layout()
 
-    def plot_tmd(self, scale_factor: float = 1.0, figsize=None, axes_on: bool = True):
+        fig.tight_layout()
+
+    def plot_tmd(
+        self,
+        scale_factor: float = 1.0,
+        figsize=None,
+        axes_on: bool = True,
+        axis_title: bool = True,
+        values: bool = True,
+    ):
         """
         Plot the torsion moment diagram.
 
@@ -840,6 +961,10 @@ class Grid:
             The size of the figure in inches. The default is self.FIGSIZE.
         axes_on : bool, optional
             Whether or not to have the axes on in the plots. The default is True.
+        axis_title : bool, optional
+            Whether or not to have the axes title in the plots. The default is True.
+        values : bool optional
+            Wether or not to print the values at the member ends
 
         Returns
         -------
@@ -849,137 +974,17 @@ class Grid:
         if figsize is None:
             figsize = self.FIGSIZE
 
-        ospv.section_force_diagram_3d("T", Ew={}, sfac=-scale_factor, dir_plt=2)
+        ospv.section_force_diagram_3d(
+            "T", sfac=-scale_factor, dir_plt=2, end_max_values=values
+        )
         fig = plt.gcf()
         fig.set_figwidth(figsize[0])
         fig.set_figheight(figsize[1])
-        plt.gcf().suptitle(f"Torsion Moment Diagram\n(Scale: {scale_factor})")
+        plt.gca().set_box_aspect(None)
+        if axis_title:
+            plt.gcf().suptitle(f"Torsion Moment Diagram\n(Scale: {scale_factor})")
 
         if not axes_on:
             plt.gca().set_axis_off()
-        else:
-            fig.tight_layout()
 
-
-def make_grid(grid_str: str) -> Grid:
-    r"""
-    This function creates a grid object from a grid string specification. This
-    functionality is particularly useful for the bulk generation of grids, and the
-    grid specification is useful for the easy storage or communication of a grid.
-
-    .. note:: The grid is taken as lying in the `x`-`y` plane.
-
-    At a high level, the grid string specification has three parts, and looks as
-    follows:
-
-        ``"N_L_M"``
-
-    where ``N`` is a string specifying the nodes; ``L`` specifies
-    the nodal loads, and; ``M`` specifies the member connectivity. These parts are
-    described next.
-
-    The **node string** comprises a comma-separated list of sub-strings, each describing
-    its node as follows:
-
-        ``LSX:Y``
-
-    in which ``L`` is the node identifying letter (e.g. "A"); ``S`` is the nodal condition
-    which is one of "N" for no support, or one of the single character support descriptors
-    acceptable by :py:meth:`~.Grid.add_support`; ``X`` and ``Y`` define the `(x,y)`
-    coordinates of the node (note the separating colon ":").
-
-    The **load string** comprises a comma-separated list of substrings, each describing
-    the nodal loads as follows:
-
-        ``LFx:Mx:My``
-
-    in which ``L`` is the node identifier to which the loads are applied; ``Fx``, ``Mx``,
-    and ``My`` are the nodal loads as per :py:meth:`~.Grid.add_load`. Note the
-    separating colons between the nodal load components and that all 3 components
-    must be defined (even if zero "0"). Nodes with no loads applied do not need to
-    be included here.
-
-    The **member connectivity** substring describes the members, and comprises a
-    comma-separated list of two character nodal identifiers, the *i*- and *j*-node of
-    each member following :py:meth:`~.Grid.add_member`. These characters must be
-    from the list passed in the *node string*.
-
-    For clarity, the hierarchy of separators is:
-
-        - ``"_"`` separates the node, load, and member connectivity sub-strings;
-        - ``","`` separates entries in the lists for each of the node, load, and member sub-strings;
-        - ``":"`` separates coordinates or load components in a node or load definition.
-
-
-    **Example**::
-
-        import ospgrid as ospg
-
-        grid_str = "AF-5:0,BX0:-5,CN0:0,DY2:0_C0:-50:-50_AC,CD,BC"
-        grid = ospg.make_grid(grid_str)
-        grid.analyze()
-        grid.plot_results()
-
-    This is a 4-node, 3-member grid. Node `A` is at `(-5,0)` and has a :attr:`~.Support.FIXED`
-    support (``AF-5:0``); `B` is at `(0,-5)` and has a :attr:`~.Support.PINNED_X` support
-    (``BX0:-5``); `C` is at the origin and is unsupported (``CN0:0``); while `D` is at
-    `(2,0)` and has a :attr:`~.Support.PINNED_Y` support (``DY2:0``). The grid is
-    loaded at node `C` with :math:`M_x = -50` kNm and :math:`M_y = -50` kNm (``C0:-10:-10``)
-    and the members connect as follows: `AC`, `CD`, and `BC` (``AC,CD,BC``).
-
-    .. note::
-        This function assigns :math:`EI = 10\times10^3` kNm\ :sup:`2`, and :math:`GJ = 5\times10^3`
-        kNm\ :sup:`2`. This should be reasonable for member lengths <10 m and loads of the order
-        <10\ :sup:`2` kN or kNm.
-
-
-    Parameters
-    ----------
-    grid_str : str
-        The string describing the grid, formatted as described here.
-
-    Raises
-    ------
-    ValueError
-        If the string contains inconsistent information.
-
-    Returns
-    -------
-    Grid
-        The ospgrid object.
-
-    """
-    (nodes, loads, mbrs) = grid_str.split("_")
-
-    grid = Grid()
-    EI = 10e3  # kNm2
-    GJ = 5e3
-
-    node = nodes.split(",")
-    for n in node:
-        letter = n[0]
-        cond = n[1]
-        coords = n[2:].split(":")
-
-        grid.add_node(letter, float(coords[0]), float(coords[1]))
-        if cond != "N":  # N = None support
-            grid.add_support(letter, cond)
-
-    mbr = mbrs.split(",")
-    for m in mbr:
-        try:
-            grid.add_member(m[0], m[1], EI, GJ)
-        except Exception:
-            raise ValueError(f"Node letters {m}, member definition error")
-
-    load = loads.split(",")
-    for ld in load:
-        letter = ld[0]
-        vals = ld[1:].split(":")
-
-        if len(vals) != 3:
-            raise ValueError("Insufficient nodal load values")
-
-        grid.add_load(letter, Fz=float(vals[0]), Mx=float(vals[1]), My=float(vals[2]))
-
-    return grid
+        fig.tight_layout()
