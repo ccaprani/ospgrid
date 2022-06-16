@@ -1,35 +1,37 @@
 
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Introduction to ospgrid &#8212; ospgrid 0.1 documentation</title>
-    
-    <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
-  
-    
-    <link rel="stylesheet"
-      href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
-    <link rel="preload" as="font" type="font/woff2" crossorigin
-      href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
-    <link rel="preload" as="font" type="font/woff2" crossorigin
-      href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
-  
-    
-      
-  
-    
+<script>
+  document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+  document.documentElement.dataset.theme = localStorage.getItem("theme") || "light"
+</script>
+
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=92025949c220c2e29695" rel="stylesheet">
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=92025949c220c2e29695" rel="stylesheet">
+
+
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/pydata-sphinx-theme.css" />
-    
-    <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
-  
+
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=92025949c220c2e29695">
+
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../_static/doctools.js"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
@@ -38,34 +40,41 @@
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="ospgrid Educational" href="edu.html" />
     <link rel="prev" title="Tutorial" href="../tutorials.html" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="docsearch:language" content="None">
-    
-
-    <!-- Google Analytics -->
-    
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="docsearch:language" content="en">
   </head>
-  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
-    
-    <div class="container-fluid" id="banner"></div>
+  
+  
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="180" data-default-mode="">
+    <div class="bd-header-announcement container-fluid" id="banner">
+      
+
+    </div>
 
     
-    <nav class="navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main"><div class="container-xl">
+    <nav class="bd-header navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main"><div class="bd-header__inner container-xl">
 
   <div id="navbar-start">
     
     
+  
 
-<a class="navbar-brand" href="../index.html">
-  <img src="../_static/ospgrid_logo.png" class="logo" alt="logo">
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+    <img src="../_static/ospgrid_logo.png" class="logo__image only-light" alt="Logo image">
+    <img src="../_static/ospgrid_logo.png" class="logo__image only-dark" alt="Logo image">
+  
+  
 </a>
-
-
     
   </div>
 
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapsible" aria-controls="navbar-collapsible" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
+    <span class="fas fa-bars"></span>
   </button>
 
   
@@ -101,6 +110,14 @@
     <div id="navbar-end">
       
       <div class="navbar-end-item">
+        <span id="theme-switch" class="btn btn-sm btn-outline-primary navbar-btn rounded-circle">
+    <a class="theme-switch" data-mode="light"><i class="fas fa-sun"></i></a>
+    <a class="theme-switch" data-mode="dark"><i class="far fa-moon"></i></a>
+    <a class="theme-switch" data-mode="auto"><i class="fas fa-adjust"></i></a>
+</span>
+      </div>
+      
+      <div class="navbar-end-item">
         <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
         <li class="nav-item">
           <a class="nav-link" href="https://github.com/ccaprani/ospgrid" rel="noopener" target="_blank" title="GitHub"><span><i class="fab fa-github-square"></i></span>
@@ -119,13 +136,13 @@
     </nav>
     
 
-    <div class="container-xl">
-      <div class="row">
+    <div class="bd-container container-xl">
+      <div class="bd-container__inner row">
           
-            
-            <!-- Only show if we have sidebars configured, else just a small margin  -->
-            <div class="col-12 col-md-3 bd-sidebar">
-              <div class="sidebar-start-items"><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+
+<!-- Only show if we have sidebars configured, else just a small margin  -->
+<div class="bd-sidebar-primary col-12 col-md-3 bd-sidebar">
+  <div class="sidebar-start-items"><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
   <i class="icon fas fa-search"></i>
   <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
 </form><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
@@ -155,20 +172,21 @@
 
   </div>
 </nav>
-              </div>
-              <div class="sidebar-end-items">
-              </div>
-            </div>
-            
-          
+  </div>
+  <div class="sidebar-end-items">
+  </div>
+</div>
+
 
           
-          <div class="d-none d-xl-block col-xl-2 bd-toc">
-            
-              
-              <div class="toc-item">
-                
-<div class="tocsection onthispage pt-5 pb-3">
+
+
+<div class="bd-sidebar-secondary d-none d-xl-block col-xl-2 bd-toc">
+  
+    
+    <div class="toc-item">
+      
+<div class="tocsection onthispage mt-5 pt-1 pb-3">
     <i class="fas fa-list"></i> On this page
 </div>
 
@@ -192,10 +210,10 @@
 </ul>
 
 </nav>
-              </div>
-              
-              <div class="toc-item">
-                
+    </div>
+    
+    <div class="toc-item">
+      
 
 <div class="tocsection editthispage">
     <a href="https://github.com/ccaprani/ospgrid/edit/main/docs/source/notebooks/intro.ipynb">
@@ -203,19 +221,17 @@
     </a>
 </div>
 
-              </div>
-              
-            
-          </div>
-          
+    </div>
+    
+  
+</div>
+
 
           
           
-            
-          
-          <main class="col-12 col-md-9 col-xl-7 py-md-5 pl-md-5 pr-md-4 bd-content" role="main">
+          <div class="bd-content col-12 col-md-9 col-xl-7">
               
-              <div>
+              <article class="bd-article" role="main">
                 
   
 <style>
@@ -432,6 +448,7 @@ div.nboutput.container div.output_area > div[class^='highlight']{
 }
 
 /* Some additional styling taken form the Jupyter notebook CSS */
+.jp-RenderedHTMLCommon table,
 div.rendered_html table {
   border: none;
   border-collapse: collapse;
@@ -440,10 +457,14 @@ div.rendered_html table {
   font-size: 12px;
   table-layout: fixed;
 }
+.jp-RenderedHTMLCommon thead,
 div.rendered_html thead {
   border-bottom: 1px solid black;
   vertical-align: bottom;
 }
+.jp-RenderedHTMLCommon tr,
+.jp-RenderedHTMLCommon th,
+.jp-RenderedHTMLCommon td,
 div.rendered_html tr,
 div.rendered_html th,
 div.rendered_html td {
@@ -455,31 +476,24 @@ div.rendered_html td {
   max-width: none;
   border: none;
 }
+.jp-RenderedHTMLCommon th,
 div.rendered_html th {
   font-weight: bold;
 }
+.jp-RenderedHTMLCommon tbody tr:nth-child(odd),
 div.rendered_html tbody tr:nth-child(odd) {
   background: #f5f5f5;
 }
+.jp-RenderedHTMLCommon tbody tr:hover,
 div.rendered_html tbody tr:hover {
   background: rgba(66, 165, 245, 0.2);
 }
 </style>
 <div class="section" id="Introduction-to-ospgrid">
-<h1>Introduction to <code class="docutils literal notranslate"><span class="pre">ospgrid</span></code><a class="headerlink" href="#Introduction-to-ospgrid" title="Permalink to this headline">¶</a></h1>
+<h1>Introduction to <code class="docutils literal notranslate"><span class="pre">ospgrid</span></code><a class="headerlink" href="#Introduction-to-ospgrid" title="Permalink to this heading">#</a></h1>
 <p><code class="docutils literal notranslate"><span class="pre">ospgrid</span></code> provides a user-friendly interface to OpenSeesPy for the analysis of elastic plane grids. This tutorial shows its basic use.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># This cell not necessary once ospgrid is installed
-import sys
-sys.path.append(&quot;../../..&quot;)
-</pre></div>
-</div>
-</div>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Basic imports
@@ -489,7 +503,7 @@ from IPython import display  # For images in this notebook
 </div>
 </div>
 <div class="section" id="Example-1">
-<h2>Example 1<a class="headerlink" href="#Example-1" title="Permalink to this headline">¶</a></h2>
+<h2>Example 1<a class="headerlink" href="#Example-1" title="Permalink to this heading">#</a></h2>
 <p>This example is based on the Semester 1 2021 Exam question for the class <em>CIV4280 Bridge Design &amp; Assessment</em> at Monash University, Melbourne.</p>
 <p>We consider the following grid, taking the following for all members:</p>
 <ul class="simple">
@@ -498,7 +512,7 @@ from IPython import display  # For images in this notebook
 </ul>
 <p>To keep units consistent, we will maintain forces in kN and distances in m.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>grid = ospg.Grid()
@@ -506,24 +520,24 @@ from IPython import display  # For images in this notebook
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>display.Image(&quot;./images/intro_ex_1.png&quot;,width=800)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>display.Image(&quot;./images/intro_ex_1.png&quot;,width=600)
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/notebooks_intro_6_0.png" class="no-scaled-link" src="../_images/notebooks_intro_6_0.png" style="width: 800px;" />
+<img alt="../_images/notebooks_intro_5_0.png" class="no-scaled-link" src="../_images/notebooks_intro_5_0.png" style="width: 600px;" />
 </div>
 </div>
 <p>Taking node <span class="math notranslate nohighlight">\(E\)</span> as the origin of the coordinate system, using user-friendly labels, we define the nodes then as:</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>grid.add_node(&quot;A&quot;, -2.0, 0.0)
@@ -536,7 +550,7 @@ grid.add_node(&quot;E&quot;, 0.0, 0.0);
 </div>
 <p>And similarly, for the members, we set the flexural and torsional rigidities and add members connecting the relevant nodes, using the nice labelling.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>EI = 10e3 # kNm2
@@ -550,7 +564,7 @@ grid.add_member(&quot;D&quot;, &quot;E&quot;, EI, GJ);
 </div>
 <p>The loads are added similarly, using intuitive arguments:</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>grid.add_load(&quot;E&quot;, Fz=-90, Mx=30, My=60)
@@ -559,7 +573,7 @@ grid.add_member(&quot;D&quot;, &quot;E&quot;, EI, GJ);
 </div>
 <p>And supports are defined by adding a pre-defined support type to a node.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>grid.add_support(&quot;B&quot;, ospg.Support.FIXED)
@@ -570,7 +584,7 @@ grid.add_support(&quot;D&quot;, ospg.Support.FIXED)
 </div>
 <p>And now we can run the analysis:</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>ops = grid.analyze()
@@ -579,7 +593,7 @@ grid.add_support(&quot;D&quot;, ospg.Support.FIXED)
 </div>
 <p>And extract all of the displacements for a node:</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>dE = grid.get_displacement(&quot;E&quot;)
@@ -597,7 +611,7 @@ print(dE)
 </div>
 <p>We can also get the reactions at a node, and here we get just one we are interested in (vertical force reaction):</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>rB = grid.get_reactions(&quot;B&quot;, dof=3)
@@ -613,9 +627,9 @@ print(rB)
 20.155184539095416
 </pre></div></div>
 </div>
-<p>Finally, we can plot the results:</p>
+<p>Finally, we can plot the results, providing scale factors in the order deformation (0 means use auto-scaling), bending, shear, torsion:</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>grid.plot_results();
@@ -626,40 +640,40 @@ print(rB)
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/notebooks_intro_22_0.png" src="../_images/notebooks_intro_22_0.png" />
+<img alt="../_images/notebooks_intro_21_0.png" src="../_images/notebooks_intro_21_0.png" />
 </div>
 </div>
 <div class="nboutput docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/notebooks_intro_22_1.png" src="../_images/notebooks_intro_22_1.png" />
+<img alt="../_images/notebooks_intro_21_1.png" src="../_images/notebooks_intro_21_1.png" />
 </div>
 </div>
 <div class="nboutput docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/notebooks_intro_22_2.png" src="../_images/notebooks_intro_22_2.png" />
+<img alt="../_images/notebooks_intro_21_2.png" src="../_images/notebooks_intro_21_2.png" />
 </div>
 </div>
 <div class="nboutput docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/notebooks_intro_22_3.png" src="../_images/notebooks_intro_22_3.png" />
+<img alt="../_images/notebooks_intro_21_3.png" src="../_images/notebooks_intro_21_3.png" />
 </div>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/notebooks_intro_22_4.png" src="../_images/notebooks_intro_22_4.png" />
+<img alt="../_images/notebooks_intro_21_4.png" src="../_images/notebooks_intro_21_4.png" />
 </div>
 </div>
 </div>
 <div class="section" id="Example-2">
-<h2>Example 2<a class="headerlink" href="#Example-2" title="Permalink to this headline">¶</a></h2>
+<h2>Example 2<a class="headerlink" href="#Example-2" title="Permalink to this heading">#</a></h2>
 <p>This example is based on the Semester 1 2020 Exam question for the same class as <em>Example 1</em>.</p>
 <p>We consider the following grid, taking the following for all members:</p>
 <ul class="simple">
@@ -667,7 +681,7 @@ print(rB)
 <li><p><span class="math notranslate nohighlight">\(GJ = 5\times 10^3\)</span> kNm2</p></li>
 </ul>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>display.Image(&quot;./images/intro_ex_2.png&quot;,width=800)
@@ -675,16 +689,16 @@ print(rB)
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/notebooks_intro_24_0.png" class="no-scaled-link" src="../_images/notebooks_intro_24_0.png" style="width: 800px;" />
+<img alt="../_images/notebooks_intro_23_0.png" class="no-scaled-link" src="../_images/notebooks_intro_23_0.png" style="width: 800px;" />
 </div>
 </div>
 <p>Make a new grid object</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>grid = ospg.Grid()
@@ -693,7 +707,7 @@ print(rB)
 </div>
 <p>As before, taking node <span class="math notranslate nohighlight">\(E\)</span> as the origin of the coordinate system, the nodes are defined as:</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>grid.add_node(&quot;A&quot;, -2.5, 0.0)
@@ -706,7 +720,7 @@ grid.add_node(&quot;E&quot;, 0.0, 0.0);
 </div>
 <p>And similarly, for the members, we set the flexural and torsional rigidities and add members connecting the relevant nodes, using the nice labelling.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>EI = 30e3 # kNm2
@@ -720,7 +734,7 @@ grid.add_member(&quot;D&quot;, &quot;E&quot;, EI, GJ);
 </div>
 <p>The loads are added similarly, using intuitive arguments in consistent units (kN and kNm):</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>grid.add_load(&quot;A&quot;, Fz=-130)
@@ -738,7 +752,7 @@ grid.add_load(&quot;E&quot;, Mx=10, My=20)
 </ul>
 <p>Note that a <code class="docutils literal notranslate"><span class="pre">PROP</span></code> is different to a <code class="docutils literal notranslate"><span class="pre">PINNED</span></code> support as it only restrains translation in the <span class="math notranslate nohighlight">\(z\)</span>-axis. In contrast, a <code class="docutils literal notranslate"><span class="pre">PINNED</span></code> support also restrains the twist of the connecting member (hence <code class="docutils literal notranslate"><span class="pre">PINNED_X</span></code> and <code class="docutils literal notranslate"><span class="pre">PINNED_Y</span></code>).</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>grid.add_support(&quot;A&quot;, &quot;V&quot;)
@@ -751,7 +765,7 @@ grid.add_support(&quot;E&quot;, &quot;P&quot;)
 </div>
 <p>And now we can run the analysis:</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>ops = grid.analyze()
@@ -760,7 +774,7 @@ grid.add_support(&quot;E&quot;, &quot;P&quot;)
 </div>
 <p>Finally, we can selectively plot the grid and bending moment diagram, changing some plotting parameters too, for example:</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>grid.plot_grid(figsize=(6,6),axes_on=True);
@@ -771,11 +785,11 @@ grid.add_support(&quot;E&quot;, &quot;P&quot;)
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/notebooks_intro_38_0.png" src="../_images/notebooks_intro_38_0.png" />
+<img alt="../_images/notebooks_intro_37_0.png" src="../_images/notebooks_intro_37_0.png" />
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>grid.plot_bmd(figsize=(8,8),axes_on=False);
@@ -786,16 +800,16 @@ grid.add_support(&quot;E&quot;, &quot;P&quot;)
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/notebooks_intro_39_0.png" src="../_images/notebooks_intro_39_0.png" />
+<img alt="../_images/notebooks_intro_38_0.png" src="../_images/notebooks_intro_38_0.png" />
 </div>
 </div>
 </div>
 <div class="section" id="Example-3">
-<h2>Example 3<a class="headerlink" href="#Example-3" title="Permalink to this headline">¶</a></h2>
-<p>A utility function <code class="docutils literal notranslate"><span class="pre">make_grid</span></code> is included in <code class="docutils literal notranslate"><span class="pre">ospgrid</span></code>, which accepts a single string describing the grid. The string follows the grid specification described in the <code class="docutils literal notranslate"><span class="pre">make_grid()</span></code> <a class="reference internal" href="../gen/ospgrid.grid.make_grid.html#ospgrid.grid.make_grid"><span class="std std-ref">documentation</span></a>. It is useful for saving grid definitions, for example.</p>
+<h2>Example 3<a class="headerlink" href="#Example-3" title="Permalink to this heading">#</a></h2>
+<p>A utility function <code class="docutils literal notranslate"><span class="pre">make_grid</span></code> is included in <code class="docutils literal notranslate"><span class="pre">ospgrid</span></code>, which accepts a single string describing the grid. The string follows the grid specification described in the <code class="docutils literal notranslate"><span class="pre">make_grid()</span></code> <a class="reference internal" href="../gen/ospgrid.post.make_grid.html#ospgrid.post.make_grid"><span class="std std-ref">documentation</span></a>. It is useful for saving grid definitions, for example.</p>
 <p>Here, we analyze the following grid:</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>display.Image(&quot;./images/intro_ex_3.png&quot;,width=800)
@@ -803,30 +817,30 @@ grid.add_support(&quot;E&quot;, &quot;P&quot;)
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/notebooks_intro_41_0.png" class="no-scaled-link" src="../_images/notebooks_intro_41_0.png" style="width: 800px;" />
+<img alt="../_images/notebooks_intro_40_0.png" class="no-scaled-link" src="../_images/notebooks_intro_40_0.png" style="width: 800px;" />
 </div>
 </div>
 <p>Following the grid specification, this grid is encoded as:</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>grid_str = &quot;AF-5:0,BX0:-5,CN0:0,DY2:0_C0:-50:-50_AC,CD,BC&quot;
 </pre></div>
 </div>
 </div>
-<p>And we can make the grid using this string, and analyze as follows:</p>
+<p>And we can make the grid using this string, and analyze as follows, while turing off the printed values in the diagrams:</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>grid = ospg.make_grid(grid_str)
 grid.analyze()
-grid.plot_results()
+grid.plot_results(values=False)
 </pre></div>
 </div>
 </div>
@@ -834,85 +848,90 @@ grid.plot_results()
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/notebooks_intro_45_0.png" src="../_images/notebooks_intro_45_0.png" />
+<img alt="../_images/notebooks_intro_44_0.png" src="../_images/notebooks_intro_44_0.png" />
 </div>
 </div>
 <div class="nboutput docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/notebooks_intro_45_1.png" src="../_images/notebooks_intro_45_1.png" />
+<img alt="../_images/notebooks_intro_44_1.png" src="../_images/notebooks_intro_44_1.png" />
 </div>
 </div>
 <div class="nboutput docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/notebooks_intro_45_2.png" src="../_images/notebooks_intro_45_2.png" />
+<img alt="../_images/notebooks_intro_44_2.png" src="../_images/notebooks_intro_44_2.png" />
 </div>
 </div>
 <div class="nboutput docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/notebooks_intro_45_3.png" src="../_images/notebooks_intro_45_3.png" />
+<img alt="../_images/notebooks_intro_44_3.png" src="../_images/notebooks_intro_44_3.png" />
 </div>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/notebooks_intro_45_4.png" src="../_images/notebooks_intro_45_4.png" />
+<img alt="../_images/notebooks_intro_44_4.png" src="../_images/notebooks_intro_44_4.png" />
 </div>
 </div>
 </div>
 </div>
 
 
-              </div>
+              </article>
               
+
               
-              <!-- Previous / next buttons -->
+              <footer class="bd-footer-article">
+                  <!-- Previous / next buttons -->
 <div class='prev-next-area'>
-    <a class='left-prev' id="prev-link" href="../tutorials.html" title="previous page">
-        <i class="fas fa-angle-left"></i>
-        <div class="prev-next-info">
-            <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">Tutorial</p>
-        </div>
-    </a>
-    <a class='right-next' id="next-link" href="edu.html" title="next page">
-    <div class="prev-next-info">
-        <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title"><code class="docutils literal notranslate"><span class="pre">ospgrid</span></code> Educational</p>
-    </div>
-    <i class="fas fa-angle-right"></i>
-    </a>
+  <a class='left-prev' id="prev-link" href="../tutorials.html" title="previous page">
+      <i class="fas fa-angle-left"></i>
+      <div class="prev-next-info">
+          <p class="prev-next-subtitle">previous</p>
+          <p class="prev-next-title">Tutorial</p>
+      </div>
+  </a>
+  <a class='right-next' id="next-link" href="edu.html" title="next page">
+  <div class="prev-next-info">
+      <p class="prev-next-subtitle">next</p>
+      <p class="prev-next-title"><code class="docutils literal notranslate"><span class="pre">ospgrid</span></code> Educational</p>
+  </div>
+  <i class="fas fa-angle-right"></i>
+  </a>
 </div>
+              </footer>
               
-          </main>
+          </div>
           
-
       </div>
     </div>
+
   
-    <script src="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
-  <footer class="footer mt-5 mt-md-0">
-  <div class="container">
-    
-    <div class="footer-item">
-      <p class="copyright">
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/pydata-sphinx-theme.js?digest=92025949c220c2e29695"></script>
+
+<footer class="bd-footer"><div class="bd-footer__inner container">
+  
+  <div class="footer-item">
+    <p class="copyright">
     &copy; Copyright 2022, Colin Caprani.<br>
 </p>
-    </div>
-    
-    <div class="footer-item">
-      <p class="sphinx-version">
-Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.4.0.<br>
-</p>
-    </div>
-    
   </div>
+  
+  <div class="footer-item">
+    <p class="sphinx-version">
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.0.1.<br>
+</p>
+  </div>
+  
+</div>
 </footer>
   </body>
 </html>

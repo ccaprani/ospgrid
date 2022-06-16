@@ -1,0 +1,6 @@
+ospgrid.utils.bbox
+==================
+
+.. currentmodule:: ospgrid.utils
+
+.. autofunction:: bbox

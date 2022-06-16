@@ -11,4 +11,5 @@ Package Modules
 
     ospgrid.grid
     ospgrid.utils
+    ospgrid.post
 

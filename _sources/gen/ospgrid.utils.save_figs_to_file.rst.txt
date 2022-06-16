@@ -1,0 +1,6 @@
+ospgrid.utils.save\_figs\_to\_file
+==================================
+
+.. currentmodule:: ospgrid.utils
+
+.. autofunction:: save_figs_to_file

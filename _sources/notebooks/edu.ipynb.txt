@@ -15,18 +15,6 @@
   {
    "cell_type": "code",
    "execution_count": 1,
-   "id": "10ebc67d-b80c-422f-a69c-65d555761bc5",
-   "metadata": {},
-   "outputs": [],
-   "source": [
-    "# This cell not necessary once ospgrid is installed\n",
-    "import sys\n",
-    "sys.path.append(\"../../..\")"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 2,
    "id": "4de5ecdd-bda6-4ee3-9b20-f03feb3e9c73",
    "metadata": {},
    "outputs": [],
@@ -52,7 +40,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 3,
+   "execution_count": 2,
    "id": "6c4758d4-b788-4149-856d-b310a81d7b85",
    "metadata": {},
    "outputs": [
@@ -63,7 +51,7 @@
        "<IPython.core.display.Image object>"
       ]
      },
-     "execution_count": 3,
+     "execution_count": 2,
      "metadata": {
       "image/png": {
        "width": 800
@@ -86,7 +74,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 4,
+   "execution_count": 3,
    "id": "7edb750a-d5c0-4f0b-8640-7d30b3031d74",
    "metadata": {},
    "outputs": [],
@@ -138,7 +126,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 5,
+   "execution_count": 4,
    "id": "9e362654-2703-4949-9dae-32fff694a99b",
    "metadata": {},
    "outputs": [
@@ -181,7 +169,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 6,
+   "execution_count": 5,
    "id": "8aecc47c-0376-4b54-8052-a1b6517f66cf",
    "metadata": {},
    "outputs": [
@@ -215,7 +203,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 7,
+   "execution_count": 6,
    "id": "35fbf8cb-07fb-4beb-85fe-5a4332913b99",
    "metadata": {},
    "outputs": [],
@@ -233,7 +221,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 8,
+   "execution_count": 7,
    "id": "1d0b0f99-13fb-4f9c-bbf4-0bd492c13804",
    "metadata": {},
    "outputs": [
@@ -253,7 +241,7 @@
        " 'node_j']"
       ]
      },
-     "execution_count": 8,
+     "execution_count": 7,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -272,7 +260,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 9,
+   "execution_count": 8,
    "id": "a47e6cd0-a741-4d3f-92e7-304826072cfe",
    "metadata": {},
    "outputs": [
@@ -282,7 +270,7 @@
        "[10000.0, 16000.0, 2.0]"
       ]
      },
-     "execution_count": 9,
+     "execution_count": 8,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -301,7 +289,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 10,
+   "execution_count": 9,
    "id": "591c6c6e-8920-4372-b667-c1cb8bd026e9",
    "metadata": {},
    "outputs": [],
@@ -319,7 +307,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 11,
+   "execution_count": 10,
    "id": "edfe4784-155b-4a09-85b8-b0dcd697ec47",
    "metadata": {},
    "outputs": [
@@ -338,7 +326,7 @@
        " 'y']"
       ]
      },
-     "execution_count": 11,
+     "execution_count": 10,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -357,7 +345,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 12,
+   "execution_count": 11,
    "id": "b0c070ae-8699-4c33-be81-1744aa402a74",
    "metadata": {
     "tags": []
@@ -369,7 +357,7 @@
        "<Support.FIXED: [1, 1, 1, 1, 1, 1]>"
       ]
      },
-     "execution_count": 12,
+     "execution_count": 11,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -414,7 +402,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 13,
+   "execution_count": 12,
    "id": "412d20fd-674e-41d8-913a-be08e2f5089f",
    "metadata": {},
    "outputs": [
@@ -472,7 +460,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 14,
+   "execution_count": 13,
    "id": "a1d30401-b90a-4947-a903-0336bb4f6ecf",
    "metadata": {},
    "outputs": [
@@ -504,7 +492,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 15,
+   "execution_count": 14,
    "id": "7d54562f-93cd-44de-804d-e9edbb4775e3",
    "metadata": {},
    "outputs": [
@@ -540,7 +528,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 16,
+   "execution_count": 15,
    "id": "6dbed86c-5565-4224-997e-39499badc87e",
    "metadata": {},
    "outputs": [
@@ -555,7 +543,7 @@
        " 0.0]"
       ]
      },
-     "execution_count": 16,
+     "execution_count": 15,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -576,7 +564,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 17,
+   "execution_count": 16,
    "id": "42f89d3b-3126-4101-be45-dd7b8e3904d8",
    "metadata": {},
    "outputs": [
@@ -587,7 +575,7 @@
        "<IPython.core.display.Image object>"
       ]
      },
-     "execution_count": 17,
+     "execution_count": 16,
      "metadata": {
       "image/png": {
        "width": 800
@@ -610,7 +598,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 18,
+   "execution_count": 17,
    "id": "04cf655d-b82a-43fb-bdcb-a6de447546e5",
    "metadata": {},
    "outputs": [],
@@ -651,7 +639,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 19,
+   "execution_count": 18,
    "id": "47142ee7-19f4-47c1-aa3a-17212672d3d4",
    "metadata": {},
    "outputs": [
@@ -719,7 +707,7 @@
    "name": "python",
    "nbconvert_exporter": "python",
    "pygments_lexer": "ipython3",
-   "version": "3.8.11"
+   "version": "3.8.13"
   }
  },
  "nbformat": 4,

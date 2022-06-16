@@ -1,35 +1,37 @@
 
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ospgrid Educational &#8212; ospgrid 0.1 documentation</title>
-    
-    <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
-  
-    
-    <link rel="stylesheet"
-      href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
-    <link rel="preload" as="font" type="font/woff2" crossorigin
-      href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
-    <link rel="preload" as="font" type="font/woff2" crossorigin
-      href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
-  
-    
-      
-  
-    
+<script>
+  document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+  document.documentElement.dataset.theme = localStorage.getItem("theme") || "light"
+</script>
+
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=92025949c220c2e29695" rel="stylesheet">
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=92025949c220c2e29695" rel="stylesheet">
+
+
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/pydata-sphinx-theme.css" />
-    
-    <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
-  
+
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=92025949c220c2e29695">
+
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../_static/doctools.js"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
@@ -38,34 +40,41 @@
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="API Reference" href="../api.html" />
     <link rel="prev" title="Introduction to ospgrid" href="intro.html" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="docsearch:language" content="None">
-    
-
-    <!-- Google Analytics -->
-    
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="docsearch:language" content="en">
   </head>
-  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
-    
-    <div class="container-fluid" id="banner"></div>
+  
+  
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="180" data-default-mode="">
+    <div class="bd-header-announcement container-fluid" id="banner">
+      
+
+    </div>
 
     
-    <nav class="navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main"><div class="container-xl">
+    <nav class="bd-header navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main"><div class="bd-header__inner container-xl">
 
   <div id="navbar-start">
     
     
+  
 
-<a class="navbar-brand" href="../index.html">
-  <img src="../_static/ospgrid_logo.png" class="logo" alt="logo">
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+    <img src="../_static/ospgrid_logo.png" class="logo__image only-light" alt="Logo image">
+    <img src="../_static/ospgrid_logo.png" class="logo__image only-dark" alt="Logo image">
+  
+  
 </a>
-
-
     
   </div>
 
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapsible" aria-controls="navbar-collapsible" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
+    <span class="fas fa-bars"></span>
   </button>
 
   
@@ -101,6 +110,14 @@
     <div id="navbar-end">
       
       <div class="navbar-end-item">
+        <span id="theme-switch" class="btn btn-sm btn-outline-primary navbar-btn rounded-circle">
+    <a class="theme-switch" data-mode="light"><i class="fas fa-sun"></i></a>
+    <a class="theme-switch" data-mode="dark"><i class="far fa-moon"></i></a>
+    <a class="theme-switch" data-mode="auto"><i class="fas fa-adjust"></i></a>
+</span>
+      </div>
+      
+      <div class="navbar-end-item">
         <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
         <li class="nav-item">
           <a class="nav-link" href="https://github.com/ccaprani/ospgrid" rel="noopener" target="_blank" title="GitHub"><span><i class="fab fa-github-square"></i></span>
@@ -119,13 +136,13 @@
     </nav>
     
 
-    <div class="container-xl">
-      <div class="row">
+    <div class="bd-container container-xl">
+      <div class="bd-container__inner row">
           
-            
-            <!-- Only show if we have sidebars configured, else just a small margin  -->
-            <div class="col-12 col-md-3 bd-sidebar">
-              <div class="sidebar-start-items"><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+
+<!-- Only show if we have sidebars configured, else just a small margin  -->
+<div class="bd-sidebar-primary col-12 col-md-3 bd-sidebar">
+  <div class="sidebar-start-items"><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
   <i class="icon fas fa-search"></i>
   <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
 </form><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
@@ -155,20 +172,21 @@
 
   </div>
 </nav>
-              </div>
-              <div class="sidebar-end-items">
-              </div>
-            </div>
-            
-          
+  </div>
+  <div class="sidebar-end-items">
+  </div>
+</div>
+
 
           
-          <div class="d-none d-xl-block col-xl-2 bd-toc">
-            
-              
-              <div class="toc-item">
-                
-<div class="tocsection onthispage pt-5 pb-3">
+
+
+<div class="bd-sidebar-secondary d-none d-xl-block col-xl-2 bd-toc">
+  
+    
+    <div class="toc-item">
+      
+<div class="tocsection onthispage mt-5 pt-1 pb-3">
     <i class="fas fa-list"></i> On this page
 </div>
 
@@ -224,10 +242,10 @@
 </ul>
 
 </nav>
-              </div>
-              
-              <div class="toc-item">
-                
+    </div>
+    
+    <div class="toc-item">
+      
 
 <div class="tocsection editthispage">
     <a href="https://github.com/ccaprani/ospgrid/edit/main/docs/source/notebooks/edu.ipynb">
@@ -235,19 +253,17 @@
     </a>
 </div>
 
-              </div>
-              
-            
-          </div>
-          
+    </div>
+    
+  
+</div>
+
 
           
           
-            
-          
-          <main class="col-12 col-md-9 col-xl-7 py-md-5 pl-md-5 pr-md-4 bd-content" role="main">
+          <div class="bd-content col-12 col-md-9 col-xl-7">
               
-              <div>
+              <article class="bd-article" role="main">
                 
   
 <style>
@@ -464,6 +480,7 @@ div.nboutput.container div.output_area > div[class^='highlight']{
 }
 
 /* Some additional styling taken form the Jupyter notebook CSS */
+.jp-RenderedHTMLCommon table,
 div.rendered_html table {
   border: none;
   border-collapse: collapse;
@@ -472,10 +489,14 @@ div.rendered_html table {
   font-size: 12px;
   table-layout: fixed;
 }
+.jp-RenderedHTMLCommon thead,
 div.rendered_html thead {
   border-bottom: 1px solid black;
   vertical-align: bottom;
 }
+.jp-RenderedHTMLCommon tr,
+.jp-RenderedHTMLCommon th,
+.jp-RenderedHTMLCommon td,
 div.rendered_html tr,
 div.rendered_html th,
 div.rendered_html td {
@@ -487,32 +508,25 @@ div.rendered_html td {
   max-width: none;
   border: none;
 }
+.jp-RenderedHTMLCommon th,
 div.rendered_html th {
   font-weight: bold;
 }
+.jp-RenderedHTMLCommon tbody tr:nth-child(odd),
 div.rendered_html tbody tr:nth-child(odd) {
   background: #f5f5f5;
 }
+.jp-RenderedHTMLCommon tbody tr:hover,
 div.rendered_html tbody tr:hover {
   background: rgba(66, 165, 245, 0.2);
 }
 </style>
 <div class="section" id="ospgrid-Educational">
-<h1><code class="docutils literal notranslate"><span class="pre">ospgrid</span></code> Educational<a class="headerlink" href="#ospgrid-Educational" title="Permalink to this headline">¶</a></h1>
+<h1><code class="docutils literal notranslate"><span class="pre">ospgrid</span></code> Educational<a class="headerlink" href="#ospgrid-Educational" title="Permalink to this heading">#</a></h1>
 <p>This tutorial illustrates some of the features that make <code class="docutils literal notranslate"><span class="pre">ospgrid</span></code> useful for education.</p>
 <p>We start with the usual imports…</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># This cell not necessary once ospgrid is installed
-import sys
-sys.path.append(&quot;../../..&quot;)
-</pre></div>
-</div>
-</div>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Basic imports
@@ -526,10 +540,10 @@ np.set_printoptions(precision=2, suppress=True)
 </div>
 </div>
 <div class="section" id="Example-1">
-<h2>Example 1<a class="headerlink" href="#Example-1" title="Permalink to this headline">¶</a></h2>
+<h2>Example 1<a class="headerlink" href="#Example-1" title="Permalink to this heading">#</a></h2>
 <p>Here we use the <em>Example 2</em> grid from <em>CIV4280 Bridge Design &amp; Assessment</em></p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>display.Image(&quot;./images/edu_ex_1.png&quot;,width=800)
@@ -537,16 +551,16 @@ np.set_printoptions(precision=2, suppress=True)
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/notebooks_edu_4_0.png" class="no-scaled-link" src="../_images/notebooks_edu_4_0.png" style="width: 800px;" />
+<img alt="../_images/notebooks_edu_3_0.png" class="no-scaled-link" src="../_images/notebooks_edu_3_0.png" style="width: 800px;" />
 </div>
 </div>
 <p>And quickly build the grid (see the Introduction tutorial for details):</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>grid = ospg.Grid()
@@ -578,10 +592,10 @@ osp = grid.analyze()
 <p>Notice that we have now returned the <code class="docutils literal notranslate"><span class="pre">OpenSeesPy</span></code> object <code class="docutils literal notranslate"><span class="pre">osp</span></code> created during the analysis - we will return to this.</p>
 <p>Now the grid is analyzed and stored, we can examine aspects that should match the theory or a calculation.</p>
 <div class="section" id="Member-Forces">
-<h3>Member Forces<a class="headerlink" href="#Member-Forces" title="Permalink to this headline">¶</a></h3>
+<h3>Member Forces<a class="headerlink" href="#Member-Forces" title="Permalink to this heading">#</a></h3>
 <p>Rather than just working off the plots, we can get the member end forces values. The DOFs are in the order translation about the <span class="math notranslate nohighlight">\(x\)</span>-, <span class="math notranslate nohighlight">\(y\)</span>-, and <span class="math notranslate nohighlight">\(z\)</span>-axes, and rotation about the <span class="math notranslate nohighlight">\(x\)</span>-, <span class="math notranslate nohighlight">\(y\)</span>-, and <span class="math notranslate nohighlight">\(z\)</span>-axes. With 6 DOFs per node, this is a <span class="math notranslate nohighlight">\(12\times1\)</span> vector, with the <span class="math notranslate nohighlight">\(i\)</span>-node and <span class="math notranslate nohighlight">\(j\)</span>-node as created (not necessarily as passed in the tuple):</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>Fcd = grid.get_member_forces((&quot;C&quot;, &quot;D&quot;))
@@ -601,13 +615,13 @@ print(Fcd)
 <p>and as expected for grids, the forces in the <span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(y\)</span> directions, and the moment about <span class="math notranslate nohighlight">\(z\)</span> are zero at each node.</p>
 </div>
 <div class="section" id="Global-Stifness-Matrix">
-<h3>Global Stifness Matrix<a class="headerlink" href="#Global-Stifness-Matrix" title="Permalink to this headline">¶</a></h3>
+<h3>Global Stifness Matrix<a class="headerlink" href="#Global-Stifness-Matrix" title="Permalink to this heading">#</a></h3>
 <p>We can extract the reudced global stiffness matrix (i.e. after the boundary conditions have been applied). For this grid, only node <span class="math notranslate nohighlight">\(C\)</span> can move. Since <code class="docutils literal notranslate"><span class="pre">OpenSeesPy</span></code> uses a general 3D frame element, each node has 6 DOFs and so we will have a <span class="math notranslate nohighlight">\(6\times6\)</span> matrix in this instance.</p>
 <p>Again, the DOFs are in the order translation about the <span class="math notranslate nohighlight">\(x\)</span>-, <span class="math notranslate nohighlight">\(y\)</span>-, and <span class="math notranslate nohighlight">\(z\)</span>-axes, and rotation about the <span class="math notranslate nohighlight">\(x\)</span>-, <span class="math notranslate nohighlight">\(y\)</span>-, and <span class="math notranslate nohighlight">\(z\)</span>-axes.</p>
 <p>Of the 6 DOFs at node <span class="math notranslate nohighlight">\(C\)</span> here, because it is a grid, we know that the translations in <span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(y\)</span>, and the rotation about <span class="math notranslate nohighlight">\(z\)</span> will be zero.</p>
 <p>As noted, <code class="docutils literal notranslate"><span class="pre">OpenSeesPy</span></code> uses a full 3D elastic frame element for its analysis. For hand analysis, we can suppress those DOFs we already know are not relevant, and so for grids we can work off stiffness matrices and force vectors corresponding to just translation in <span class="math notranslate nohighlight">\(z\)</span>, and rotation about the <span class="math notranslate nohighlight">\(x\)</span>- and <span class="math notranslate nohighlight">\(y\)</span>-axes.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>K = grid.get_system_stiffness()
@@ -630,10 +644,10 @@ print(K)
 </div>
 </div>
 <div class="section" id="Member-&amp;-Node-Objects">
-<h3>Member &amp; Node Objects<a class="headerlink" href="#Member-&-Node-Objects" title="Permalink to this headline">¶</a></h3>
+<h3>Member &amp; Node Objects<a class="headerlink" href="#Member-&-Node-Objects" title="Permalink to this heading">#</a></h3>
 <p>While the use of the <code class="docutils literal notranslate"><span class="pre">grid</span></code> object gives access to the key outputs for an analysis, we can use the member and node objects to interrogate the underlying details. So let’s get the object for member <span class="math notranslate nohighlight">\(CD\)</span>:</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>member_CD = grid.get_member((&quot;C&quot;, &quot;D&quot;))
@@ -642,7 +656,7 @@ print(K)
 </div>
 <p>And it’s interesting to see what properties and methods are available in this object. Here we filter out the built-in methods for clarity:</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>[x for x in dir(member_CD) if not x.startswith(&#39;__&#39;)]
@@ -650,7 +664,7 @@ print(K)
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -670,7 +684,7 @@ print(K)
 </div>
 <p>And so we can retrieve some member properties:</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>[member_CD.EI, member_CD.GJ, member_CD.L]
@@ -678,7 +692,7 @@ print(K)
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -688,7 +702,7 @@ print(K)
 </div>
 <p>And get its node objects:</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>node_D = member_CD.node_j
@@ -697,7 +711,7 @@ print(K)
 </div>
 <p>which in turn have their own properties:</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>[x for x in dir(node_D) if not x.startswith(&#39;__&#39;)]
@@ -705,7 +719,7 @@ print(K)
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -724,7 +738,7 @@ print(K)
 </div>
 <p>Adn for example, we can see the type of support assigned to <code class="docutils literal notranslate"><span class="pre">node_D</span></code>:</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>node_D.support
@@ -732,7 +746,7 @@ print(K)
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -743,7 +757,7 @@ print(K)
 <p>The documentation explains <a class="reference internal" href="../api.html"><span class="doc">the complete API</span></a> in detail.</p>
 </div>
 <div class="section" id="Member-Stiffness-Matrix-(Local-Coordinates)">
-<h3>Member Stiffness Matrix (Local Coordinates)<a class="headerlink" href="#Member-Stiffness-Matrix-(Local-Coordinates)" title="Permalink to this headline">¶</a></h3>
+<h3>Member Stiffness Matrix (Local Coordinates)<a class="headerlink" href="#Member-Stiffness-Matrix-(Local-Coordinates)" title="Permalink to this heading">#</a></h3>
 <p>The member stiffness matrix in the local coordinate system for a grid element (omitting the rows and columns corresponding to translations in <span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(y\)</span> and rotation about <span class="math notranslate nohighlight">\(z\)</span>) is:</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}k =
@@ -759,7 +773,7 @@ print(K)
 \right]\end{split}\]</div>
 <p>We can retrieve this for member <span class="math notranslate nohighlight">\(CD\)</span> as follows:</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>k_eb = member_CD.get_local_stiffness()
@@ -782,7 +796,7 @@ print(k_eb)
 </div>
 </div>
 <div class="section" id="Member-Stiffness-Matrix-(Global-Coordinates)">
-<h3>Member Stiffness Matrix (Global Coordinates)<a class="headerlink" href="#Member-Stiffness-Matrix-(Global-Coordinates)" title="Permalink to this headline">¶</a></h3>
+<h3>Member Stiffness Matrix (Global Coordinates)<a class="headerlink" href="#Member-Stiffness-Matrix-(Global-Coordinates)" title="Permalink to this heading">#</a></h3>
 <p>The coordinate transformation matrix for a grid element is:</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}T =
@@ -804,7 +818,7 @@ print(k_eb)
 \[K_g = T^T K T\]</div>
 <p>Note that in the <em>Direct Stiffness Method</em>, the transofrmation matrix is not explicitly evaluated, but the resulting stiffness terms are summed with the contributions of other members to yield those in <span class="math notranslate nohighlight">\(K_g\)</span>.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>T = member_CD.get_transformation_matrix()
@@ -827,7 +841,7 @@ print(T)
 </div>
 <p>And the resulting member stiffness matrix in global coordinates is then:</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>Kg = member_CD.get_global_stiffness()
@@ -850,11 +864,11 @@ print(Kg)
 </div>
 </div>
 <div class="section" id="OpenSeesPy-object">
-<h3><code class="docutils literal notranslate"><span class="pre">OpenSeesPy</span></code> object<a class="headerlink" href="#OpenSeesPy-object" title="Permalink to this headline">¶</a></h3>
+<h3><code class="docutils literal notranslate"><span class="pre">OpenSeesPy</span></code> object<a class="headerlink" href="#OpenSeesPy-object" title="Permalink to this heading">#</a></h3>
 <p>As noted, <a class="reference internal" href="../gen/ospgrid.grid.Grid.html#ospgrid.grid.Grid.analyze"><span class="std std-ref">ospgrid.grid.analyze()</span></a> returns the <a class="reference external" href="https://openseespydoc.readthedocs.io/en/latest/">OpenSeesPy</a> object of the analysis. Any of its methods can be used to interrogate the analysis further.</p>
 <p>For example, the system’s residual force vector at the end of the first analysis step should be zero for an linear elastic and geometrical analysis, and it can be found using the <a class="reference external" href="https://openseespydoc.readthedocs.io/en/latest/src/printB.html">OpenSeesPy printB</a> command:</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>osp.printB(&#39;-ret&#39;)
@@ -862,7 +876,7 @@ print(Kg)
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -878,10 +892,10 @@ print(Kg)
 </div>
 </div>
 <div class="section" id="Example-2">
-<h2>Example 2<a class="headerlink" href="#Example-2" title="Permalink to this headline">¶</a></h2>
+<h2>Example 2<a class="headerlink" href="#Example-2" title="Permalink to this heading">#</a></h2>
 <p>Returning to <a class="reference internal" href="intro.html#Example-1"><span class="std std-ref">Example 2</span></a> from the <a class="reference internal" href="intro.html"><span class="doc">Introduction</span></a> to <code class="docutils literal notranslate"><span class="pre">ospgrid</span></code>, we will further illustrate the DOFs of the global stiffnes matrix.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>display.Image(&quot;./images/intro_ex_2.png&quot;,width=800)
@@ -889,16 +903,16 @@ print(Kg)
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/notebooks_edu_35_0.png" class="no-scaled-link" src="../_images/notebooks_edu_35_0.png" style="width: 800px;" />
+<img alt="../_images/notebooks_edu_34_0.png" class="no-scaled-link" src="../_images/notebooks_edu_34_0.png" style="width: 800px;" />
 </div>
 </div>
 <p>First, quickly create the grid:</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>grid = ospg.Grid()
@@ -928,7 +942,7 @@ osp = grid.analyze()
 </div>
 <p>Now extract the reudced global stiffness matrix (i.e. after the boundary conditions have been applied):</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>K = grid.get_system_stiffness()
@@ -972,50 +986,55 @@ print(K)
 </div>
 
 
-              </div>
+              </article>
               
-              
-              <!-- Previous / next buttons -->
-<div class='prev-next-area'>
-    <a class='left-prev' id="prev-link" href="intro.html" title="previous page">
-        <i class="fas fa-angle-left"></i>
-        <div class="prev-next-info">
-            <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">Introduction to <code class="docutils literal notranslate"><span class="pre">ospgrid</span></code></p>
-        </div>
-    </a>
-    <a class='right-next' id="next-link" href="../api.html" title="next page">
-    <div class="prev-next-info">
-        <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">API Reference</p>
-    </div>
-    <i class="fas fa-angle-right"></i>
-    </a>
-</div>
-              
-          </main>
-          
 
+              
+              <footer class="bd-footer-article">
+                  <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+  <a class='left-prev' id="prev-link" href="intro.html" title="previous page">
+      <i class="fas fa-angle-left"></i>
+      <div class="prev-next-info">
+          <p class="prev-next-subtitle">previous</p>
+          <p class="prev-next-title">Introduction to <code class="docutils literal notranslate"><span class="pre">ospgrid</span></code></p>
+      </div>
+  </a>
+  <a class='right-next' id="next-link" href="../api.html" title="next page">
+  <div class="prev-next-info">
+      <p class="prev-next-subtitle">next</p>
+      <p class="prev-next-title">API Reference</p>
+  </div>
+  <i class="fas fa-angle-right"></i>
+  </a>
+</div>
+              </footer>
+              
+          </div>
+          
       </div>
     </div>
+
   
-    <script src="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
-  <footer class="footer mt-5 mt-md-0">
-  <div class="container">
-    
-    <div class="footer-item">
-      <p class="copyright">
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/pydata-sphinx-theme.js?digest=92025949c220c2e29695"></script>
+
+<footer class="bd-footer"><div class="bd-footer__inner container">
+  
+  <div class="footer-item">
+    <p class="copyright">
     &copy; Copyright 2022, Colin Caprani.<br>
 </p>
-    </div>
-    
-    <div class="footer-item">
-      <p class="sphinx-version">
-Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.4.0.<br>
-</p>
-    </div>
-    
   </div>
+  
+  <div class="footer-item">
+    <p class="sphinx-version">
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.0.1.<br>
+</p>
+  </div>
+  
+</div>
 </footer>
   </body>
 </html>

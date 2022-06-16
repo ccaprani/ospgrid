@@ -1,0 +1,6 @@
+ospgrid.utils.crop\_to\_bbox
+============================
+
+.. currentmodule:: ospgrid.utils
+
+.. autofunction:: crop_to_bbox

@@ -15,7 +15,9 @@
       :toctree:
       :nosignatures:
    
-      save_figs
+      bbox
+      crop_to_bbox
+      save_figs_to_file
    
    
 
