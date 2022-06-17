@@ -136,7 +136,7 @@ class Member:
         self.GJ = GJ
         self.delta_x = self.node_j.x - self.node_i.x
         self.delta_y = self.node_j.y - self.node_i.y
-        self.L = np.sqrt(self.delta_x**2 + self.delta_y**2)
+        self.L = np.sqrt(self.delta_x ** 2 + self.delta_y ** 2)
 
     def get_local_stiffness(self) -> np.ndarray:
         """
@@ -150,8 +150,8 @@ class Member:
 
         """
 
-        k11 = 12 * self.EI / self.L**3
-        k13 = 6 * self.EI / self.L**2
+        k11 = 12 * self.EI / self.L ** 3
+        k13 = 6 * self.EI / self.L ** 2
         k22 = self.GJ / self.L
         k33 = 4 * self.EI / self.L
         k36 = 2 * self.EI / self.L
@@ -716,6 +716,8 @@ class Grid:
             sf_sfd = 1.0
             sf_tmd = 1.0
         else:
+            if len(scale_factor) != 4:
+                raise ValueError("The list of scale factors must have length 4.")
             sf_dsd = scale_factor[0]
             sf_bmd = scale_factor[1]
             sf_sfd = scale_factor[2]
