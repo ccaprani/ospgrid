@@ -3,6 +3,7 @@ Basic tests for ospgrid operation
 """
 
 import pytest
+import matplotlib.pyplot as plt
 import numpy as np
 import ospgrid as ospg
 
@@ -38,17 +39,17 @@ def sysK():
     Lae, Lbe, Lce, Lde, EI, GJ, P, Mx, My = params
 
     # FZ at E
-    k11 = 12 * EI / Lde**3 + 12 * EI / Lbe**3 + 12 * EI / Lce**3  # from dZ
-    k12 = -6 * EI / Lde**2 + 6 * EI / Lbe**2  # from rX
-    k13 = -6 * EI / Lce**2  # from rY
+    k11 = 12 * EI / Lde ** 3 + 12 * EI / Lbe ** 3 + 12 * EI / Lce ** 3  # from dZ
+    k12 = -6 * EI / Lde ** 2 + 6 * EI / Lbe ** 2  # from rX
+    k13 = -6 * EI / Lce ** 2  # from rY
 
     # RX at E
-    k21 = -6 * EI / Lde**2 + 6 * EI / Lbe**2  # from dZ
+    k21 = -6 * EI / Lde ** 2 + 6 * EI / Lbe ** 2  # from dZ
     k22 = 4 * EI / Lbe + 4 * EI / Lde + GJ / Lce  # from rX
     k23 = 0  # from rY
 
     # RY at E
-    k31 = -6 * EI / Lce**2  # from dZ
+    k31 = -6 * EI / Lce ** 2  # from dZ
     k32 = 0  # from rX
     k33 = 4 * EI / Lce + GJ / Lbe + GJ / Lde  # from rY
 
@@ -116,3 +117,13 @@ def test_basic_grid():
     D = np.linalg.solve(K, F)
 
     assert grid_disps == pytest.approx(D)
+
+
+def test_plotting(monkeypatch):
+    """
+    Execute a two-span beam analysis and check plots work
+    """
+
+    grid = do_ospg_analysis()
+    monkeypatch.setattr(plt, "show", lambda: None)
+    grid.plot_results()
