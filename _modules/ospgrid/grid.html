@@ -305,7 +305,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">GJ</span> <span class="o">=</span> <span class="n">GJ</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">delta_x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">node_j</span><span class="o">.</span><span class="n">x</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">node_i</span><span class="o">.</span><span class="n">x</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">delta_y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">node_j</span><span class="o">.</span><span class="n">y</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">node_i</span><span class="o">.</span><span class="n">y</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">L</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">delta_x</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">delta_y</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">L</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">delta_x</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">delta_y</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
 
 <div class="viewcode-block" id="Member.get_local_stiffness"><a class="viewcode-back" href="../../gen/ospgrid.grid.Member.html#ospgrid.grid.Member.get_local_stiffness">[docs]</a>    <span class="k">def</span> <span class="nf">get_local_stiffness</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -319,8 +319,8 @@
 
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="n">k11</span> <span class="o">=</span> <span class="mi">12</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">EI</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">L</span><span class="o">**</span><span class="mi">3</span>
-        <span class="n">k13</span> <span class="o">=</span> <span class="mi">6</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">EI</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">L</span><span class="o">**</span><span class="mi">2</span>
+        <span class="n">k11</span> <span class="o">=</span> <span class="mi">12</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">EI</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">L</span> <span class="o">**</span> <span class="mi">3</span>
+        <span class="n">k13</span> <span class="o">=</span> <span class="mi">6</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">EI</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">L</span> <span class="o">**</span> <span class="mi">2</span>
         <span class="n">k22</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GJ</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">L</span>
         <span class="n">k33</span> <span class="o">=</span> <span class="mi">4</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">EI</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">L</span>
         <span class="n">k36</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">EI</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">L</span>
@@ -885,6 +885,8 @@
             <span class="n">sf_sfd</span> <span class="o">=</span> <span class="mf">1.0</span>
             <span class="n">sf_tmd</span> <span class="o">=</span> <span class="mf">1.0</span>
         <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">scale_factor</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">4</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;The list of scale factors must have length 4.&quot;</span><span class="p">)</span>
             <span class="n">sf_dsd</span> <span class="o">=</span> <span class="n">scale_factor</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
             <span class="n">sf_bmd</span> <span class="o">=</span> <span class="n">scale_factor</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
             <span class="n">sf_sfd</span> <span class="o">=</span> <span class="n">scale_factor</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
@@ -1189,7 +1191,7 @@
   
   <div class="footer-item">
     <p class="sphinx-version">
-Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.0.1.<br>
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.0.2.<br>
 </p>
   </div>
   
