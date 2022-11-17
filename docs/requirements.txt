@@ -11,3 +11,4 @@ sphinx-autodoc-typehints
 pandoc
 MarkupSafe==2.0.1
 pygments >= 2.7
+ipython
