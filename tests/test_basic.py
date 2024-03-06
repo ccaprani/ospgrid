@@ -70,7 +70,6 @@ def getF():
 
 
 def do_ospg_analysis():
-
     params = grid_params()
     Lae, Lbe, Lce, Lde, EI, GJ, P, Mx, My = params
 
