@@ -833,10 +833,11 @@ class Grid:
             y = [n.y for n in self.nodes]
             grid_size = max(max(x) - min(x), max(y) - min(y))
 
-            # in case of very small values
-            max_disp = max(max_disp, 1e-9)
-            # target about 1/3 the dimension of the grid
-            sf = 0.33 * grid_size / max_disp
+            # in case of very small nodal values
+            max_disp = ospv.max_u_abs_from_beam_defo_interp_3d(max_disp,nep=17)
+            
+            # target about 1/4 the dimension of the grid
+            sf = 0.25 * grid_size / max_disp
             # But round to some sensible values
             mag = 10 ** int(np.ceil(np.log10(sf)))
             scale_factor = round(10 * sf / mag) * mag / 10
