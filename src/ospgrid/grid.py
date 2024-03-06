@@ -10,6 +10,7 @@ from enum import Enum
 import itertools
 from typing import Union, Tuple, List
 import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
 import openseespy.opensees as osp
 import opsvis as ospv
 import numpy as np
@@ -224,6 +225,14 @@ class Grid:
 
         """
         self.clear()
+        
+        # Set color preferences
+        ospv.fmt_undefo["color"] = "black"
+        ospv.fmt_defo["color"] = "red"
+        ospv.fmt_model["color"] = "black"
+        ospv.fmt_secforce1["color"] = "red"
+        ospv.fmt_secforce2["color"] = "red"
+        
         pass
 
     def clear(self):
@@ -784,7 +793,8 @@ class Grid:
         if figsize is None:
             figsize = self.FIGSIZE
 
-        ospv.plot_model(fig_wi_he=figsize)
+        ospv.plot_model(fig_wi_he=figsize,
+                        node_supports=False)
         fig = plt.gcf()
         fig.set_figwidth(figsize[0])
         fig.set_figheight(figsize[1])
@@ -795,6 +805,19 @@ class Grid:
             plt.gca().set_axis_off()
 
         fig.tight_layout()
+        
+    def _plot_model(self, ax):
+        """
+        Plots the background model for the section force diagrams.
+        """
+        
+        ospv.plot_model(ax=ax,
+                        node_labels=False,
+                        element_labels=False,
+                        node_supports=False,
+                        #fmt_model={"color":"k"},
+                        local_axes=False)
+
 
     def plot_dsd(
         self,
@@ -834,7 +857,7 @@ class Grid:
             grid_size = max(max(x) - min(x), max(y) - min(y))
 
             # in case of very small nodal values
-            max_disp = ospv.max_u_abs_from_beam_defo_interp_3d(max_disp,nep=17)
+            max_disp = ospv.max_u_abs_from_beam_defo_interp_3d(max_disp,nep=21)
             
             # target about 1/4 the dimension of the grid
             sf = 0.25 * grid_size / max_disp
@@ -842,7 +865,17 @@ class Grid:
             mag = 10 ** int(np.ceil(np.log10(sf)))
             scale_factor = round(10 * sf / mag) * mag / 10
 
-        ospv.plot_defo(sfac=scale_factor, endDispFlag=1)
+        
+
+        fig = plt.figure()
+        ax = fig.add_subplot(111, projection=Axes3D.name)
+        self._plot_model(ax)        
+        ospv.plot_defo(sfac=scale_factor,
+                       unDefoFlag=False,
+                       ax=ax,
+                       endDispFlag=False,
+                       node_supports=False
+                       )
         fig = plt.gcf()
         fig.set_figwidth(figsize[0])
         fig.set_figheight(figsize[1])
@@ -885,7 +918,12 @@ class Grid:
         if figsize is None:
             figsize = self.FIGSIZE
 
-        ospv.section_force_diagram_3d("My", sfac=scale_factor, end_max_values=values)
+        _,_,ax = ospv.section_force_diagram_3d("My", 
+                                      sfac=scale_factor, 
+                                      end_max_values=values,
+                                      node_supports=False,
+                                      alt_model_plot=2)
+        self._plot_model(ax)
         fig = plt.gcf()
         fig.set_figwidth(figsize[0])
         fig.set_figheight(figsize[1])
@@ -931,7 +969,12 @@ class Grid:
         if figsize is None:
             figsize = self.FIGSIZE
 
-        ospv.section_force_diagram_3d("Vz", sfac=-scale_factor, end_max_values=values)
+        _,_,ax = ospv.section_force_diagram_3d("Vz", 
+                                      sfac=-scale_factor, 
+                                      end_max_values=values,
+                                      node_supports=False,
+                                      alt_model_plot=2)
+        self._plot_model(ax)
         fig = plt.gcf()
         fig.set_figwidth(figsize[0])
         fig.set_figheight(figsize[1])
@@ -977,9 +1020,15 @@ class Grid:
         if figsize is None:
             figsize = self.FIGSIZE
 
-        ospv.section_force_diagram_3d(
-            "T", sfac=-scale_factor, dir_plt=2, end_max_values=values
-        )
+        _,_,ax = ospv.section_force_diagram_3d("T", 
+                                      sfac=-scale_factor, 
+                                      dir_plt=2, 
+                                      end_max_values=values, 
+                                      node_supports=False,
+                                      #fmt_secforce1={"color":"r"},
+                                      #fmt_secforce2={"color":"r"},
+                                      alt_model_plot=2)
+        self._plot_model(ax)
         fig = plt.gcf()
         fig.set_figwidth(figsize[0])
         fig.set_figheight(figsize[1])
