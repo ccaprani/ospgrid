@@ -47,8 +47,8 @@ def save_figs_to_file(
         "mdl",
         "dsd",
         "bmd",
-        "tmd",
         "sfd",
+        "tmd",
     ]
     use_std_ends = False
 
