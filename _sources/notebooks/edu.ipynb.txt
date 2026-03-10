@@ -156,16 +156,7 @@
    "cell_type": "markdown",
    "id": "0b26332a-575e-4090-997a-f423e560b4de",
    "metadata": {},
-   "source": [
-    "### Global Stifness Matrix\n",
-    "We can extract the reudced global stiffness matrix (i.e. after the boundary conditions have been applied). For this grid, only node $C$ can move. Since `OpenSeesPy` uses a general 3D frame element, each node has 6 DOFs and so we will have a $6\\times6$ matrix in this instance.\n",
-    "\n",
-    "Again, the DOFs are in the order translation about the $x$-, $y$-, and $z$-axes, and rotation about the $x$-, $y$-, and $z$-axes.\n",
-    "\n",
-    "Of the 6 DOFs at node $C$ here, because it is a grid, we know that the translations in $x$ and $y$, and the rotation about $z$ will be zero.\n",
-    "\n",
-    "As noted, `OpenSeesPy` uses a full 3D elastic frame element for its analysis. For hand analysis, we can suppress those DOFs we already know are not relevant, and so for grids we can work off stiffness matrices and force vectors corresponding to just translation in $z$, and rotation about the $x$- and $y$-axes."
-   ]
+   "source": "### Global Stiffness Matrix\nWe can extract the reduced global stiffness matrix (i.e. after the boundary conditions have been applied). For this grid, only node $C$ can move. Since `OpenSeesPy` uses a general 3D frame element, each node has 6 DOFs and so we will have a $6\\times6$ matrix in this instance.\n\nAgain, the DOFs are in the order translation about the $x$-, $y$-, and $z$-axes, and rotation about the $x$-, $y$-, and $z$-axes.\n\nOf the 6 DOFs at node $C$ here, because it is a grid, we know that the translations in $x$ and $y$, and the rotation about $z$ will be zero.\n\nAs noted, `OpenSeesPy` uses a full 3D elastic frame element for its analysis. For hand analysis, we can suppress those DOFs we already know are not relevant, and so for grids we can work off stiffness matrices and force vectors corresponding to just translation in $z$, and rotation about the $x$- and $y$-axes."
   },
   {
    "cell_type": "code",
@@ -633,9 +624,7 @@
    "metadata": {
     "tags": []
    },
-   "source": [
-    "Now extract the reudced global stiffness matrix (i.e. after the boundary conditions have been applied):"
-   ]
+   "source": "Now extract the reduced global stiffness matrix (i.e. after the boundary conditions have been applied):"
   },
   {
    "cell_type": "code",

@@ -1,167 +1,185 @@
 
 <!DOCTYPE html>
 
-<html lang="en">
+
+<html lang="en" data-content_root="../" >
+
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ospgrid.grid.Grid &#8212; ospgrid 0.1 documentation</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>ospgrid.grid.Grid &#8212; ospgrid 0.6.0 documentation</title>
   
   
   
   <script data-cfasync="false">
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
-    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
   </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=796348d33e8b1d947c94" rel="stylesheet">
-<link href="../_static/styles/bootstrap.css?digest=796348d33e8b1d947c94" rel="stylesheet">
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
   
-  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=796348d33e8b1d947c94" rel="stylesheet">
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2">
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2">
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2">
-
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=796348d33e8b1d947c94">
-<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=796348d33e8b1d947c94">
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-    <script src="../_static/jquery.js"></script>
-    <script src="../_static/underscore.js"></script>
-    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
-    <script src="../_static/doctools.js"></script>
-    <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/documentation_options.js?v=8fa8b3e9"></script>
+    <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'gen/ospgrid.grid.Grid';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="ospgrid.grid.Member" href="ospgrid.grid.Member.html" />
     <link rel="prev" title="ospgrid.grid" href="ospgrid.grid.html" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="docsearch:language" content="en">
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="0.6.0" />
   </head>
   
   
-  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="180" data-default-mode="">
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
 
   
   
-  <a class="skip-link" href="#main-content">Skip to main content</a>
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
 
   
-  <input type="checkbox" class="sidebar-toggle" name="__primary" id="__primary">
-  <label class="overlay overlay-primary" for="__primary"></label>
-
-  
-  <input type="checkbox" class="sidebar-toggle" name="__secondary" id="__secondary">
-  <label class="overlay overlay-secondary" for="__secondary"></label>
-
-  
-  <div class="search-button__wrapper">
-    <div class="search-button__overlay"></div>
-    <div class="search-button__search-container">
-      
-<form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
   <i class="fa-solid fa-magnifying-glass"></i>
-  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
   <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
 </form>
-    </div>
-  </div>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
 
   
-  <nav class="bd-header navbar navbar-expand-lg bd-navbar" id="navbar-main"><div class="bd-header__inner bd-page-width">
-  <label class="sidebar-toggle primary-toggle" for="__primary">
-      <span class="fa-solid fa-bars"></span>
-  </label>
-  <div id="navbar-start">
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
     
+      <div class="navbar-item">
+
+  
     
   
-
 
 <a class="navbar-brand logo" href="../index.html">
-
   
   
   
   
   
+    
+    
+      
+    
+    
+    <img src="../_static/ospgrid_logo.png" class="logo__image only-light" alt="ospgrid 0.6.0 documentation - Home"/>
+    <img src="../_static/ospgrid_logo.png" class="logo__image only-dark pst-js-only" alt="ospgrid 0.6.0 documentation - Home"/>
   
   
-
-  
-    <img src="../_static/ospgrid_logo.png" class="logo__image only-light" alt="Logo image">
-    <img src="../_static/ospgrid_logo.png" class="logo__image only-dark" alt="Logo image">
-  
-  
-</a>
+</a></div>
     
   </div>
-
   
   <div class="col-lg-9 navbar-header-items">
-    <div id="navbar-center" class="mr-auto">
+    
+    <div class="me-auto navbar-header-items__center">
       
-      <div class="navbar-center-item">
-        <nav class="navbar-nav">
-    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
-        Site Navigation
-    </p>
-    <ul id="navbar-main-elements" class="navbar-nav">
-        
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../installation.html">
-                        Installation
-                      </a>
-                    </li>
-                
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../installation.html">
+    Installation
+  </a>
+</li>
 
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../tutorials.html">
-                        Tutorial
-                      </a>
-                    </li>
-                
 
-                    <li class="nav-item current active">
-                      <a class="nav-link nav-internal" href="../api.html">
-                        API Reference
-                      </a>
-                    </li>
-                
-    </ul>
-</nav>
-      </div>
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../tutorials.html">
+    Tutorial
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../api.html">
+    API Reference
+  </a>
+</li>
+
+  </ul>
+</nav></div>
       
     </div>
-
-    <div id="navbar-end">
+    
+    
+    <div class="navbar-header-items__end">
       
-        <div class="navbar-end-item navbar-persistent--container">
+        <div class="navbar-item navbar-persistent--container">
           
-<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-toggle="tooltip">
-  <i class="fa-solid fa-magnifying-glass"></i>
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
 </button>
         </div>
       
       
-      <div class="navbar-end-item">
-        <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-toggle="tooltip">
-    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
-    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
-    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
-</button>
-      </div>
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
       
-      <div class="navbar-end-item">
-        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
         <li class="nav-item">
           
           
@@ -170,8 +188,9 @@
           
           
           
-          <a href="https://github.com/ccaprani/ospgrid" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fab fa-github-square"></i></span>
-            <label class="sr-only">GitHub</label></a>
+          
+          <a href="https://github.com/ccaprani/ospgrid" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github-square fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
         </li>
         <li class="nav-item">
           
@@ -181,94 +200,98 @@
           
           
           
-          <a href="https://twitter.com/ccaprani" title="Twitter" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fab fa-twitter-square"></i></span>
-            <label class="sr-only">Twitter</label></a>
+          
+          <a href="https://x.com/ccaprani" title="X (Twitter)" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-x-twitter fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">X (Twitter)</span></a>
         </li>
-      </ul>
-      </div>
+</ul></div>
       
     </div>
+    
   </div>
-
-
   
   
     <div class="navbar-persistent--mobile">
-<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-toggle="tooltip">
-  <i class="fa-solid fa-magnifying-glass"></i>
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
 </button>
     </div>
   
 
   
-  <label class="sidebar-toggle secondary-toggle" for="__secondary">
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
       <span class="fa-solid fa-outdent"></span>
-  </label>
+    </button>
   
-
 </div>
-  </nav>
+
+    </header>
   
 
   <div class="bd-container">
     <div class="bd-container__inner bd-page-width">
       
-      <div class="bd-sidebar-primary bd-sidebar">
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
         
+
   
   <div class="sidebar-header-items sidebar-primary__section">
     
     
       <div class="sidebar-header-items__center">
-      
-      <div class="navbar-center-item">
-        <nav class="navbar-nav">
-    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
-        Site Navigation
-    </p>
-    <ul id="navbar-main-elements" class="navbar-nav">
         
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../installation.html">
-                        Installation
-                      </a>
-                    </li>
-                
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../installation.html">
+    Installation
+  </a>
+</li>
 
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../tutorials.html">
-                        Tutorial
-                      </a>
-                    </li>
-                
 
-                    <li class="nav-item current active">
-                      <a class="nav-link nav-internal" href="../api.html">
-                        API Reference
-                      </a>
-                    </li>
-                
-    </ul>
-</nav>
-      </div>
-      
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../tutorials.html">
+    Tutorial
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../api.html">
+    API Reference
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
       </div>
     
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
 
-    
-    
-    <div class="sidebar-header-items__end">
-      
-      <div class="navbar-end-item">
-        <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-toggle="tooltip">
-    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
-    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
-    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
-</button>
-      </div>
-      
-      <div class="navbar-end-item">
-        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
         <li class="nav-item">
           
           
@@ -277,8 +300,9 @@
           
           
           
-          <a href="https://github.com/ccaprani/ospgrid" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fab fa-github-square"></i></span>
-            <label class="sr-only">GitHub</label></a>
+          
+          <a href="https://github.com/ccaprani/ospgrid" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github-square fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
         </li>
         <li class="nav-item">
           
@@ -288,92 +312,118 @@
           
           
           
-          <a href="https://twitter.com/ccaprani" title="Twitter" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fab fa-twitter-square"></i></span>
-            <label class="sr-only">Twitter</label></a>
+          
+          <a href="https://x.com/ccaprani" title="X (Twitter)" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-x-twitter fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">X (Twitter)</span></a>
         </li>
-      </ul>
+</ul></div>
+        
       </div>
-      
-    </div>
     
   </div>
-
   
-  <div class="sidebar-start-items sidebar-primary__section">
-    <div class="sidebar-start-items__item"><nav class="bd-links" id="bd-docs-nav" aria-label="Section navigation">
-  <p class="bd-links__title" role="heading" aria-level="1">
-    Section Navigation
-  </p>
-  <div class="bd-toc-item navbar-nav">
-    <ul class="current nav bd-sidenav">
-<li class="toctree-l1 current active has-children"><a class="reference internal" href="ospgrid.grid.html">ospgrid.grid</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="ospgrid.grid.html">ospgrid.grid</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">ospgrid.grid.Grid</a></li>
 <li class="toctree-l2"><a class="reference internal" href="ospgrid.grid.Member.html">ospgrid.grid.Member</a></li>
 <li class="toctree-l2"><a class="reference internal" href="ospgrid.grid.Node.html">ospgrid.grid.Node</a></li>
 <li class="toctree-l2"><a class="reference internal" href="ospgrid.grid.Support.html">ospgrid.grid.Support</a></li>
 </ul>
-</li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="ospgrid.utils.html">ospgrid.utils</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="ospgrid.utils.html">ospgrid.utils</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="ospgrid.utils.bbox.html">ospgrid.utils.bbox</a></li>
 <li class="toctree-l2"><a class="reference internal" href="ospgrid.utils.crop_to_bbox.html">ospgrid.utils.crop_to_bbox</a></li>
 <li class="toctree-l2"><a class="reference internal" href="ospgrid.utils.save_figs_to_file.html">ospgrid.utils.save_figs_to_file</a></li>
 </ul>
-</li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="ospgrid.post.html">ospgrid.post</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="ospgrid.post.html">ospgrid.post</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="ospgrid.post.make_grid.html">ospgrid.post.make_grid</a></li>
 </ul>
-</li>
+</details></li>
 </ul>
-
-  </div>
-</nav>
+</div>
+</nav></div>
     </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
   </div>
-  
 
-  
-  <div class="sidebar-end-items sidebar-primary__section">
-    <div class="sidebar-end-items__item">
-    </div>
-  </div>
-
-  
-  <div id="rtd-footer-container"></div>
 
       </div>
-      <main id="main-content" class="bd-main">
+      
+      <main id="main-content" class="bd-main" role="main">
         
         
-        <div class="bd-content">
-          <div class="bd-article-container">
-            
-            <div class="bd-header-article">
-                
-            </div>
-            
-            
-            <article class="bd-article" role="main">
+          <div class="bd-content">
+            <div class="bd-article-container">
               
-  <div class="section" id="ospgrid-grid-grid">
-<h1>ospgrid.grid.Grid<a class="headerlink" href="#ospgrid-grid-grid" title="Permalink to this heading">#</a></h1>
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../api.html" class="nav-link">API Reference</a></li>
+    
+    
+    <li class="breadcrumb-item"><a href="ospgrid.grid.html" class="nav-link">ospgrid.grid</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">ospgrid.grid.Grid</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="ospgrid-grid-grid">
+<h1>ospgrid.grid.Grid<a class="headerlink" href="#ospgrid-grid-grid" title="Link to this heading">#</a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="ospgrid.grid.Grid">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Grid</span></span><a class="reference internal" href="../_modules/ospgrid/grid.html#Grid"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ospgrid.grid.Grid" title="Permalink to this definition">#</a></dt>
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">Grid</span></span><a class="reference internal" href="../_modules/ospgrid/grid.html#Grid"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ospgrid.grid.Grid" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>A class that provides a user-friendly interface to OpenSeesPy for the analysis
 of plane elastic grids.</p>
 <p>Initialize the grid</p>
 <dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>None.</p>
 </dd>
 </dl>
 <p class="rubric">Methods</p>
-<table class="autosummary longtable table autosummary">
-<colgroup>
-<col style="width: 10%" />
-<col style="width: 90%" />
-</colgroup>
+<div class="pst-scrollable-table-container"><table class="autosummary longtable table">
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="#ospgrid.grid.Grid.add_load" title="ospgrid.grid.Grid.add_load"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_load</span></code></a></p></td>
 <td><p>Add a load to the grid.</p></td>
@@ -403,7 +453,7 @@ of plane elastic grids.</p>
 <td><p>Returns the member end forces for the indicated DOF in the global coordinate system.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#ospgrid.grid.Grid.get_node" title="ospgrid.grid.Grid.get_node"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_node</span></code></a></p></td>
-<td><p>Gets the node from an node object, id or label.</p></td>
+<td><p>Gets the node from a node object, id or label.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#ospgrid.grid.Grid.get_reactions" title="ospgrid.grid.Grid.get_reactions"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_reactions</span></code></a></p></td>
 <td><p>Returns the reactions for a node</p></td>
@@ -434,24 +484,22 @@ of plane elastic grids.</p>
 </tr>
 </tbody>
 </table>
+</div>
 <p class="rubric">Attributes</p>
-<table class="autosummary longtable table autosummary">
-<colgroup>
-<col style="width: 10%" />
-<col style="width: 90%" />
-</colgroup>
+<div class="pst-scrollable-table-container"><table class="autosummary longtable table">
 <tbody>
 <tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">FIGSIZE</span></code></p></td>
 <td><p></p></td>
 </tr>
 </tbody>
 </table>
+</div>
 <dl class="py method">
 <dt class="sig sig-object py" id="ospgrid.grid.Grid.clear">
-<span class="sig-name descname"><span class="pre">clear</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ospgrid/grid.html#Grid.clear"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ospgrid.grid.Grid.clear" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">clear</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ospgrid/grid.html#Grid.clear"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ospgrid.grid.Grid.clear" title="Link to this definition">#</a></dt>
 <dd><p>Clears any nodes or members from the grid.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>None.</p>
 </dd>
 </dl>
@@ -459,42 +507,42 @@ of plane elastic grids.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ospgrid.grid.Grid.add_node">
-<span class="sig-name descname"><span class="pre">add_node</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">label</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ospgrid/grid.html#Grid.add_node"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ospgrid.grid.Grid.add_node" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">add_node</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">label</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ospgrid/grid.html#Grid.add_node"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ospgrid.grid.Grid.add_node" title="Link to this definition">#</a></dt>
 <dd><p>Adds a node to the grid</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>label</strong> (<em>str</em>) – A user-friendly label for the node, e.g. “A”.</p></li>
 <li><p><strong>x</strong> (<em>float</em>) – The x-axis coordinate of the node.</p></li>
 <li><p><strong>y</strong> (<em>float</em>) – The y-axis coordinate of the node.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>node</strong> – DESCRIPTION.</p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>node</strong> – The created Node instance.</p>
 </dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>TYPE</p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="ospgrid.grid.Node.html#ospgrid.grid.Node" title="ospgrid.grid.Node">Node</a></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ospgrid.grid.Grid.add_member">
-<span class="sig-name descname"><span class="pre">add_member</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node_i</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">node_j</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">EI</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">GJ</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ospgrid/grid.html#Grid.add_member"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ospgrid.grid.Grid.add_member" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">add_member</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node_i</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">node_j</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">EI</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">GJ</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ospgrid/grid.html#Grid.add_member"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ospgrid.grid.Grid.add_member" title="Link to this definition">#</a></dt>
 <dd><p>Adds a member to the grid.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>node_i</strong> (<em>Union</em><em>[</em><a class="reference internal" href="ospgrid.grid.Node.html#ospgrid.grid.Node" title="ospgrid.grid.Node"><em>Node</em></a><em>,</em><em>str</em><em>,</em><em>int</em><em>]</em>) – The starting node for the member.</p></li>
-<li><p><strong>node_j</strong> (<em>Union</em><em>[</em><a class="reference internal" href="ospgrid.grid.Node.html#ospgrid.grid.Node" title="ospgrid.grid.Node"><em>Node</em></a><em>,</em><em>str</em><em>,</em><em>int</em><em>]</em>) – The ending node for the member.</p></li>
+<li><p><strong>node_i</strong> (<a class="reference internal" href="ospgrid.grid.Node.html#ospgrid.grid.Node" title="ospgrid.grid.Node"><em>Node</em></a><em> | </em><em>str</em><em> | </em><em>int</em>) – The starting node for the member.</p></li>
+<li><p><strong>node_j</strong> (<a class="reference internal" href="ospgrid.grid.Node.html#ospgrid.grid.Node" title="ospgrid.grid.Node"><em>Node</em></a><em> | </em><em>str</em><em> | </em><em>int</em>) – The ending node for the member.</p></li>
 <li><p><strong>EI</strong> (<em>float</em>) – The flexural rigidity.</p></li>
 <li><p><strong>GJ</strong> (<em>float</em>) – The torsional rigidity.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><strong>member</strong> – The member object instance.</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="ospgrid.grid.Member.html#ospgrid.grid.Member" title="ospgrid.grid.Member">Member</a></p>
 </dd>
 </dl>
@@ -502,22 +550,22 @@ of plane elastic grids.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ospgrid.grid.Grid.add_load">
-<span class="sig-name descname"><span class="pre">add_load</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Fz</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Mx</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">My</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ospgrid/grid.html#Grid.add_load"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ospgrid.grid.Grid.add_load" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">add_load</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Fz</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Mx</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">My</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ospgrid/grid.html#Grid.add_load"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ospgrid.grid.Grid.add_load" title="Link to this definition">#</a></dt>
 <dd><p>Add a load to the grid.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>node</strong> (<em>Union</em><em>[</em><a class="reference internal" href="ospgrid.grid.Node.html#ospgrid.grid.Node" title="ospgrid.grid.Node"><em>Node</em></a><em>,</em><em>str</em><em>,</em><em>int</em><em>]</em>) – Node object, label, or id</p></li>
+<li><p><strong>node</strong> (<a class="reference internal" href="ospgrid.grid.Node.html#ospgrid.grid.Node" title="ospgrid.grid.Node"><em>Node</em></a><em> | </em><em>str</em><em> | </em><em>int</em>) – Node object, label, or id</p></li>
 <li><p><strong>Fz</strong> (<em>float</em><em>, </em><em>optional</em>) – Vertical load. The default is 0.</p></li>
 <li><p><strong>Mx</strong> (<em>float</em><em>, </em><em>optional</em>) – Moment about the x-axis. The default is 0.</p></li>
 <li><p><strong>My</strong> (<em>float</em><em>, </em><em>optional</em>) – Moment about the y-axis. The default is 0.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Raises</dt>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
 <dd class="field-even"><p><strong>ValueError</strong> – If node object, label, or id not passed, or is multiple nodes match the
     label, or no node found.</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>None.</p>
 </dd>
 </dl>
@@ -525,13 +573,13 @@ of plane elastic grids.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ospgrid.grid.Grid.add_support">
-<span class="sig-name descname"><span class="pre">add_support</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">support</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ospgrid/grid.html#Grid.add_support"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ospgrid.grid.Grid.add_support" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">add_support</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">support</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ospgrid/grid.html#Grid.add_support"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ospgrid.grid.Grid.add_support" title="Link to this definition">#</a></dt>
 <dd><p>Add a support to a node in the grid.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>node</strong> (<em>Union</em><em>[</em><a class="reference internal" href="ospgrid.grid.Node.html#ospgrid.grid.Node" title="ospgrid.grid.Node"><em>Node</em></a><em>,</em><em>str</em><em>,</em><em>int</em><em>]</em>) – Node object, label, or id</p></li>
-<li><p><strong>support</strong> (<em>Union</em><em>[</em><a class="reference internal" href="ospgrid.grid.Support.html#ospgrid.grid.Support" title="ospgrid.grid.Support"><em>Support</em></a><em>,</em><em>str</em><em>]</em>) – <p>The support type, a <a class="reference internal" href="ospgrid.grid.Support.html#ospgrid.grid.Support" title="ospgrid.grid.Support"><code class="xref py py-class docutils literal notranslate"><span class="pre">ospgrid.grid.Support</span></code></a> object. Alternatively,
+<li><p><strong>node</strong> (<a class="reference internal" href="ospgrid.grid.Node.html#ospgrid.grid.Node" title="ospgrid.grid.Node"><em>Node</em></a><em> | </em><em>str</em><em> | </em><em>int</em>) – Node object, label, or id</p></li>
+<li><p><strong>support</strong> (<a class="reference internal" href="ospgrid.grid.Support.html#ospgrid.grid.Support" title="ospgrid.grid.Support"><em>Support</em></a><em> | </em><em>str</em>) – <p>The support type, a <a class="reference internal" href="ospgrid.grid.Support.html#ospgrid.grid.Support" title="ospgrid.grid.Support"><code class="xref py py-class docutils literal notranslate"><span class="pre">ospgrid.grid.Support</span></code></a> object. Alternatively,
 a single character support descriptor as a <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code> can be used as
 follows:</p>
 <blockquote>
@@ -546,7 +594,7 @@ follows:</p>
 </p></li>
 </ul>
 </dd>
-<dt class="field-even">Return type</dt>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p>None.</p>
 </dd>
 </dl>
@@ -554,17 +602,17 @@ follows:</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ospgrid.grid.Grid.get_node">
-<span class="sig-name descname"><span class="pre">get_node</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">typing.Union[ospgrid.grid.Node,</span> <span class="pre">str,</span> <span class="pre">int]</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ospgrid/grid.html#Grid.get_node"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ospgrid.grid.Grid.get_node" title="Permalink to this definition">#</a></dt>
-<dd><p>Gets the node from an node object, id or label.</p>
+<span class="sig-name descname"><span class="pre">get_node</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ospgrid/grid.html#Grid.get_node"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ospgrid.grid.Grid.get_node" title="Link to this definition">#</a></dt>
+<dd><p>Gets the node from a node object, id or label.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>node</strong> (<em>Union</em><em>[</em><a class="reference internal" href="ospgrid.grid.Node.html#ospgrid.grid.Node" title="ospgrid.grid.Node"><em>Node</em></a><em>,</em><em>str</em><em>,</em><em>int</em><em>]</em>) – Node object, label, or id</p>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>node</strong> (<a class="reference internal" href="ospgrid.grid.Node.html#ospgrid.grid.Node" title="ospgrid.grid.Node"><em>Node</em></a><em> | </em><em>str</em><em> | </em><em>int</em>) – Node object, label, or id</p>
 </dd>
-<dt class="field-even">Raises</dt>
-<dd class="field-even"><p><strong>ValueError</strong> – If node object, label, or id not passed, or is multiple nodes match the
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If node object, label, or id not passed, or multiple nodes match the
     label, or no node found.</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>Node object.</p>
 </dd>
 </dl>
@@ -572,32 +620,32 @@ follows:</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ospgrid.grid.Grid.get_member">
-<span class="sig-name descname"><span class="pre">get_member</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">member</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">typing.Union[ospgrid.grid.Member,</span> <span class="pre">int,</span> <span class="pre">typing.Tuple[str,</span> <span class="pre">str]]</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ospgrid/grid.html#Grid.get_member"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ospgrid.grid.Grid.get_member" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">get_member</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">member</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ospgrid/grid.html#Grid.get_member"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ospgrid.grid.Grid.get_member" title="Link to this definition">#</a></dt>
 <dd><p>Gets the member from a member object, id, or a tuple of node labels.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>member</strong> (<em>Union</em><em>[</em><a class="reference internal" href="ospgrid.grid.Member.html#ospgrid.grid.Member" title="ospgrid.grid.Member"><em>Member</em></a><em>,</em><em>int</em><em>, </em><em>Tuple</em><em>[</em><em>str</em><em>,</em><em>str</em><em>]</em><em>]</em><em>, </em><em>optional Member object</em><em>, </em><em>id</em><em>, </em><em>or</em>) – node labels.</p>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>member</strong> (<a class="reference internal" href="ospgrid.grid.Member.html#ospgrid.grid.Member" title="ospgrid.grid.Member"><em>Member</em></a><em> | </em><em>int</em><em> | </em><em>tuple</em><em>[</em><em>str</em><em>, </em><em>str</em><em>]</em>) – Member object, id, or a tuple of the two end-node labels (order
+does not matter).</p>
 </dd>
-<dt class="field-even">Raises</dt>
-<dd class="field-even"><p><strong>ValueError</strong> – If member object, or id not passed, or is multiple nodes match the
-    label, or no node found.</p>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If the member cannot be found.</p>
 </dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>None.</p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Member object.</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ospgrid.grid.Grid.analyze">
-<span class="sig-name descname"><span class="pre">analyze</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ospgrid/grid.html#Grid.analyze"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ospgrid.grid.Grid.analyze" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">analyze</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ospgrid/grid.html#Grid.analyze"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ospgrid.grid.Grid.analyze" title="Link to this definition">#</a></dt>
 <dd><p>Executes the analysis for the grid object using OpenSeesPy</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>osp</strong> – The OpenSeesPy instance, which can be used for querying results directly
 or otherwise manipulating the model further.</p>
 </dd>
-<dt class="field-even">Return type</dt>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p>OpenSeesPy instance</p>
 </dd>
 </dl>
@@ -605,56 +653,62 @@ or otherwise manipulating the model further.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ospgrid.grid.Grid.get_displacement">
-<span class="sig-name descname"><span class="pre">get_displacement</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">typing.Union[ospgrid.grid.Node,</span> <span class="pre">str,</span> <span class="pre">int]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dof</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ospgrid/grid.html#Grid.get_displacement"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ospgrid.grid.Grid.get_displacement" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">get_displacement</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dof</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ospgrid/grid.html#Grid.get_displacement"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ospgrid.grid.Grid.get_displacement" title="Link to this definition">#</a></dt>
 <dd><p>Returns the displacements for a node</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>node</strong> (<em>Union</em><em>[</em><a class="reference internal" href="ospgrid.grid.Node.html#ospgrid.grid.Node" title="ospgrid.grid.Node"><em>Node</em></a><em>,</em><em>str</em><em>,</em><em>int</em><em>]</em>) – Node object, label, or id</p></li>
+<li><p><strong>node</strong> (<a class="reference internal" href="ospgrid.grid.Node.html#ospgrid.grid.Node" title="ospgrid.grid.Node"><em>Node</em></a><em> | </em><em>str</em><em> | </em><em>int</em>) – Node object, label, or id</p></li>
 <li><p><strong>dof</strong> (<em>int</em><em> [</em><em>optional</em><em>]</em>) – The degree of freedom of interest. Defaults to all.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Raises</dt>
-<dd class="field-even"><p><strong>ValueError</strong> – If node object, label, or id not passed, or is multiple nodes match the
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If node object, label, or id not passed, or multiple nodes match the
     label, or no node found.</p>
 </dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>None.</p>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Displacement for the requested DOF, or all DOFs if dof=-1.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float or list</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ospgrid.grid.Grid.get_reactions">
-<span class="sig-name descname"><span class="pre">get_reactions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">typing.Union[ospgrid.grid.Node,</span> <span class="pre">str,</span> <span class="pre">int]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dof</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ospgrid/grid.html#Grid.get_reactions"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ospgrid.grid.Grid.get_reactions" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">get_reactions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dof</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ospgrid/grid.html#Grid.get_reactions"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ospgrid.grid.Grid.get_reactions" title="Link to this definition">#</a></dt>
 <dd><p>Returns the reactions for a node</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>node</strong> (<em>Union</em><em>[</em><a class="reference internal" href="ospgrid.grid.Node.html#ospgrid.grid.Node" title="ospgrid.grid.Node"><em>Node</em></a><em>,</em><em>str</em><em>,</em><em>int</em><em>]</em>) – Node object, label, or id</p></li>
+<li><p><strong>node</strong> (<a class="reference internal" href="ospgrid.grid.Node.html#ospgrid.grid.Node" title="ospgrid.grid.Node"><em>Node</em></a><em> | </em><em>str</em><em> | </em><em>int</em>) – Node object, label, or id</p></li>
 <li><p><strong>dof</strong> (<em>int</em><em> [</em><em>optional</em><em>]</em>) – The degree of freedom of interest. Defaults to all.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Raises</dt>
-<dd class="field-even"><p><strong>ValueError</strong> – If node object, label, or id not passed, or is multiple nodes match the
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If node object, label, or id not passed, or multiple nodes match the
     label, or no node found.</p>
 </dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>None.</p>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Reaction for the requested DOF, or all DOFs if dof=-1.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float or list</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ospgrid.grid.Grid.get_system_stiffness">
-<span class="sig-name descname"><span class="pre">get_system_stiffness</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ospgrid/grid.html#Grid.get_system_stiffness"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ospgrid.grid.Grid.get_system_stiffness" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">get_system_stiffness</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ospgrid/grid.html#Grid.get_system_stiffness"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ospgrid.grid.Grid.get_system_stiffness" title="Link to this definition">#</a></dt>
 <dd><p>Returns the system global stiffness matrix after the imposition of boundary
 conditions.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>K</strong> – A square numpy array of the reduced global stiffness matrix</p>
 </dd>
-<dt class="field-even">Return type</dt>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p>np.ndarray</p>
 </dd>
 </dl>
@@ -662,36 +716,41 @@ conditions.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ospgrid.grid.Grid.get_system_force">
-<span class="sig-name descname"><span class="pre">get_system_force</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ospgrid/grid.html#Grid.get_system_force"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ospgrid.grid.Grid.get_system_force" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">get_system_force</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ospgrid/grid.html#Grid.get_system_force"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ospgrid.grid.Grid.get_system_force" title="Link to this definition">#</a></dt>
 <dd><p>Returns the system global force vector after the imposition of boundary
 conditions.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p><strong>F</strong> – A numpy vector of the reduced global system force vector</p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></span></p>
 </dd>
-<dt class="field-even">Return type</dt>
-<dd class="field-even"><p>np.ndarray</p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>F</strong> (<em>np.ndarray</em>) – A numpy vector of the reduced global system force vector</p></li>
+<li><p><em>.. todo::</em> – OpenSeesPy does not currently expose a direct API for retrieving the
+assembled force vector. This method is reserved for a future release.</p></li>
+</ul>
+</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ospgrid.grid.Grid.get_member_forces">
-<span class="sig-name descname"><span class="pre">get_member_forces</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">member</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dof</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ospgrid/grid.html#Grid.get_member_forces"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ospgrid.grid.Grid.get_member_forces" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">get_member_forces</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">member</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dof</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ospgrid/grid.html#Grid.get_member_forces"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ospgrid.grid.Grid.get_member_forces" title="Link to this definition">#</a></dt>
 <dd><p>Returns the member end forces for the indicated DOF in the global coordinate
 system.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>member</strong> (<em>Union</em><em>[</em><a class="reference internal" href="ospgrid.grid.Member.html#ospgrid.grid.Member" title="ospgrid.grid.Member"><em>Member</em></a><em>, </em><em>int</em><em>, </em><em>Tuple</em><em>[</em><em>str</em><em>,</em><em>str</em><em>]</em><em>]</em>) – Member object, id, or a tuple of node labels.</p></li>
+<li><p><strong>member</strong> (<a class="reference internal" href="ospgrid.grid.Member.html#ospgrid.grid.Member" title="ospgrid.grid.Member"><em>Member</em></a><em> | </em><em>int</em><em> | </em><em>tuple</em><em>[</em><em>str</em><em>, </em><em>str</em><em>]</em>) – Member object, id, or a tuple of node labels.</p></li>
 <li><p><strong>dof</strong> (<em>int</em><em> [</em><em>optional</em><em>]</em>) – The degree of freedom of interest. Defaults to all.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><strong>F</strong> – A 12 element list: 6 DOFs for node i, and 6 DOFs for node j, in the order
 Fx, Fy, Fz, Mx, My, Mz.</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>np.array</p>
 </dd>
 </dl>
@@ -699,7 +758,7 @@ Fx, Fy, Fz, Mx, My, Mz.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ospgrid.grid.Grid.plot_results">
-<span class="sig-name descname"><span class="pre">plot_results</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">figsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axes_on</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scale_factor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axis_title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_figs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'ospgrid_results.pdf'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transparent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bbox</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pad</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">values</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ospgrid/grid.html#Grid.plot_results"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ospgrid.grid.Grid.plot_results" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">plot_results</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">figsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axes_on</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scale_factor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axis_title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_figs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'ospgrid_results.pdf'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transparent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bbox</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pad</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">values</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ospgrid/grid.html#Grid.plot_results"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ospgrid.grid.Grid.plot_results" title="Link to this definition">#</a></dt>
 <dd><dl class="simple">
 <dt>Plot the results of the grid analysis including:</dt><dd><ul class="simple">
 <li><p>the grid</p></li>
@@ -709,10 +768,10 @@ Fx, Fy, Fz, Mx, My, Mz.</p>
 </dd>
 </dl>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>axes_on</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether or not to have the axes on in the plots. The default is True.</p></li>
-<li><p><strong>scale_factor</strong> (<em>float</em><em>, </em><em>List</em><em>[</em><em>float</em><em>] </em><em>optional</em>) – If a single float: the scale of the deformations to use. When this value is
+<li><p><strong>scale_factor</strong> (<em>float</em><em> | </em><em>list</em><em>[</em><em>float</em><em>]</em><em>, </em><em>optional</em>) – If a single float: the scale of the deformations to use. When this value is
 zero, auto-scaling is done. The default is 0.
 If a list of floats of size 4, then the scale factors are applied in the order
 deformations; bending; shear; torsion.</p></li>
@@ -727,7 +786,7 @@ contents. Defaults to 20 px.</p></li>
 <li><p><strong>values</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether or not to print the salient values on the force diagrams</p></li>
 </ul>
 </dd>
-<dt class="field-even">Return type</dt>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p>None.</p>
 </dd>
 </dl>
@@ -735,17 +794,17 @@ contents. Defaults to 20 px.</p></li>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ospgrid.grid.Grid.plot_grid">
-<span class="sig-name descname"><span class="pre">plot_grid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">figsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axes_on</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axis_title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ospgrid/grid.html#Grid.plot_grid"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ospgrid.grid.Grid.plot_grid" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">plot_grid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">figsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axes_on</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axis_title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ospgrid/grid.html#Grid.plot_grid"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ospgrid.grid.Grid.plot_grid" title="Link to this definition">#</a></dt>
 <dd><p>Plot the grid, showing nodes &amp; members, and their indices.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>figsize</strong> (<em>TYPE</em><em>, </em><em>optional</em>) – The size of the figure in inches. The default is self.FIGSIZE.</p></li>
+<li><p><strong>figsize</strong> (<em>tuple</em><em>, </em><em>optional</em>) – The size of the figure in inches. The default is self.FIGSIZE.</p></li>
 <li><p><strong>axes_on</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether or not to have the axes on in the plots. The default is True.</p></li>
 <li><p><strong>axis_title</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether or not to have the axes title in the plots. The default is True.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Return type</dt>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p>None.</p>
 </dd>
 </dl>
@@ -753,19 +812,19 @@ contents. Defaults to 20 px.</p></li>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ospgrid.grid.Grid.plot_dsd">
-<span class="sig-name descname"><span class="pre">plot_dsd</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scale_factor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axes_on</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axis_title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ospgrid/grid.html#Grid.plot_dsd"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ospgrid.grid.Grid.plot_dsd" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">plot_dsd</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scale_factor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axes_on</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axis_title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ospgrid/grid.html#Grid.plot_dsd"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ospgrid.grid.Grid.plot_dsd" title="Link to this definition">#</a></dt>
 <dd><p>Plot the deflected shape diagram.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>scale_factor</strong> (<em>float</em>) – The scale of the deformations to use. When this value is zero, auto-scaling
 is done. The default is 0.</p></li>
-<li><p><strong>figsize</strong> (<em>TYPE</em><em>, </em><em>optional</em>) – The size of the figure in inches. The default is self.FIGSIZE.</p></li>
+<li><p><strong>figsize</strong> (<em>tuple</em><em>, </em><em>optional</em>) – The size of the figure in inches. The default is self.FIGSIZE.</p></li>
 <li><p><strong>axes_on</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether or not to have the axes on in the plots. The default is True.</p></li>
 <li><p><strong>axis_title</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether or not to have the axes title in the plots. The default is True.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Return type</dt>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p>None.</p>
 </dd>
 </dl>
@@ -773,19 +832,19 @@ is done. The default is 0.</p></li>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ospgrid.grid.Grid.plot_bmd">
-<span class="sig-name descname"><span class="pre">plot_bmd</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scale_factor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axes_on</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axis_title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">values</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ospgrid/grid.html#Grid.plot_bmd"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ospgrid.grid.Grid.plot_bmd" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">plot_bmd</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scale_factor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axes_on</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axis_title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">values</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ospgrid/grid.html#Grid.plot_bmd"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ospgrid.grid.Grid.plot_bmd" title="Link to this definition">#</a></dt>
 <dd><p>Plot the bending moment diagram.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>scale_factor</strong> (<em>float</em>) – The scale of the bending moment to use. The default is 1.0.</p></li>
-<li><p><strong>figsize</strong> (<em>TYPE</em><em>, </em><em>optional</em>) – The size of the figure in inches. The default is self.FIGSIZE.</p></li>
+<li><p><strong>figsize</strong> (<em>tuple</em><em>, </em><em>optional</em>) – The size of the figure in inches. The default is self.FIGSIZE.</p></li>
 <li><p><strong>axes_on</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether or not to have the axes on in the plots. The default is True.</p></li>
 <li><p><strong>axis_title</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether or not to have the axes title in the plots. The default is True.</p></li>
-<li><p><strong>values</strong> (<em>bool optional</em>) – Wether or not to print the values at the member ends</p></li>
+<li><p><strong>values</strong> (<em>bool optional</em>) – Whether or not to print the values at the member ends</p></li>
 </ul>
 </dd>
-<dt class="field-even">Return type</dt>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p>None.</p>
 </dd>
 </dl>
@@ -793,20 +852,20 @@ is done. The default is 0.</p></li>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ospgrid.grid.Grid.plot_sfd">
-<span class="sig-name descname"><span class="pre">plot_sfd</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scale_factor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axes_on</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axis_title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">values</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ospgrid/grid.html#Grid.plot_sfd"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ospgrid.grid.Grid.plot_sfd" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">plot_sfd</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scale_factor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axes_on</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axis_title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">values</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ospgrid/grid.html#Grid.plot_sfd"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ospgrid.grid.Grid.plot_sfd" title="Link to this definition">#</a></dt>
 <dd><p>Plot the shear force diagram.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>scale_factor</strong> (<em>float</em>) – The scale of the bending moment to use. The default is 1.0. A negative
+<li><p><strong>scale_factor</strong> (<em>float</em>) – The scale of the shear force to use. The default is 1.0. A negative
 sign is then applied to flip the diagram so that it appears per convention.</p></li>
-<li><p><strong>figsize</strong> (<em>TYPE</em><em>, </em><em>optional</em>) – The size of the figure in inches. The default is self.FIGSIZE.</p></li>
+<li><p><strong>figsize</strong> (<em>tuple</em><em>, </em><em>optional</em>) – The size of the figure in inches. The default is self.FIGSIZE.</p></li>
 <li><p><strong>axes_on</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether or not to have the axes on in the plots. The default is True.</p></li>
 <li><p><strong>axis_title</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether or not to have the axes title in the plots. The default is True.</p></li>
-<li><p><strong>values</strong> (<em>bool optional</em>) – Wether or not to print the values at the member ends</p></li>
+<li><p><strong>values</strong> (<em>bool optional</em>) – Whether or not to print the values at the member ends</p></li>
 </ul>
 </dd>
-<dt class="field-even">Return type</dt>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p>None.</p>
 </dd>
 </dl>
@@ -814,20 +873,20 @@ sign is then applied to flip the diagram so that it appears per convention.</p><
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ospgrid.grid.Grid.plot_tmd">
-<span class="sig-name descname"><span class="pre">plot_tmd</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scale_factor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axes_on</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axis_title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">values</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ospgrid/grid.html#Grid.plot_tmd"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ospgrid.grid.Grid.plot_tmd" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">plot_tmd</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scale_factor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axes_on</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axis_title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">values</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ospgrid/grid.html#Grid.plot_tmd"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ospgrid.grid.Grid.plot_tmd" title="Link to this definition">#</a></dt>
 <dd><p>Plot the torsion moment diagram.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>scale_factor</strong> (<em>float</em>) – The scale of the bending moment to use. The default is 1.0.  A negative
+<li><p><strong>scale_factor</strong> (<em>float</em>) – The scale of the torsion moment to use. The default is 1.0. A negative
 sign is then applied to flip the diagram so that it appears per convention.</p></li>
-<li><p><strong>figsize</strong> (<em>TYPE</em><em>, </em><em>optional</em>) – The size of the figure in inches. The default is self.FIGSIZE.</p></li>
+<li><p><strong>figsize</strong> (<em>tuple</em><em>, </em><em>optional</em>) – The size of the figure in inches. The default is self.FIGSIZE.</p></li>
 <li><p><strong>axes_on</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether or not to have the axes on in the plots. The default is True.</p></li>
 <li><p><strong>axis_title</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether or not to have the axes title in the plots. The default is True.</p></li>
-<li><p><strong>values</strong> (<em>bool optional</em>) – Wether or not to print the values at the member ends</p></li>
+<li><p><strong>values</strong> (<em>bool optional</em>) – Whether or not to print the values at the member ends</p></li>
 </ul>
 </dd>
-<dt class="field-even">Return type</dt>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p>None.</p>
 </dd>
 </dl>
@@ -835,304 +894,151 @@ sign is then applied to flip the diagram so that it appears per convention.</p><
 
 </dd></dl>
 
-</div>
+</section>
 
 
-            </article>
-            
-            
-            
-            <footer class="bd-footer-article">
-                <!-- Previous / next buttons -->
-<div class='prev-next-area'>
-  <a class='left-prev' id="prev-link" href="ospgrid.grid.html" title="previous page">
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="ospgrid.grid.html"
+       title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
-          <p class="prev-next-subtitle">previous</p>
-          <p class="prev-next-title">ospgrid.grid</p>
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">ospgrid.grid</p>
       </div>
-  </a>
-  <a class='right-next' id="next-link" href="ospgrid.grid.Member.html" title="next page">
-  <div class="prev-next-info">
-      <p class="prev-next-subtitle">next</p>
-      <p class="prev-next-title">ospgrid.grid.Member</p>
-  </div>
-  <i class="fa-solid fa-angle-right"></i>
-  </a>
+    </a>
+    <a class="right-next"
+       href="ospgrid.grid.Member.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">ospgrid.grid.Member</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
 </div>
-            </footer>
-            
-          </div>
-          
-          
-          
-            <div class="bd-sidebar-secondary bd-toc">
+                </footer>
               
-<div class="toc-item">
-  
-<div class="tocsection onthispage">
-    <i class="fa-solid fa-list"></i> On this page
-</div>
-<nav id="bd-toc-nav" class="page-toc">
-    <ul class="visible nav section-nav flex-column">
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#ospgrid.grid.Grid">
-   <code class="docutils literal notranslate">
-    <span class="pre">
-     Grid
-    </span>
-   </code>
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#ospgrid.grid.Grid.clear">
-     <code class="docutils literal notranslate">
-      <span class="pre">
-       Grid.clear()
-      </span>
-     </code>
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#ospgrid.grid.Grid.add_node">
-     <code class="docutils literal notranslate">
-      <span class="pre">
-       Grid.add_node()
-      </span>
-     </code>
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#ospgrid.grid.Grid.add_member">
-     <code class="docutils literal notranslate">
-      <span class="pre">
-       Grid.add_member()
-      </span>
-     </code>
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#ospgrid.grid.Grid.add_load">
-     <code class="docutils literal notranslate">
-      <span class="pre">
-       Grid.add_load()
-      </span>
-     </code>
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#ospgrid.grid.Grid.add_support">
-     <code class="docutils literal notranslate">
-      <span class="pre">
-       Grid.add_support()
-      </span>
-     </code>
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#ospgrid.grid.Grid.get_node">
-     <code class="docutils literal notranslate">
-      <span class="pre">
-       Grid.get_node()
-      </span>
-     </code>
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#ospgrid.grid.Grid.get_member">
-     <code class="docutils literal notranslate">
-      <span class="pre">
-       Grid.get_member()
-      </span>
-     </code>
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#ospgrid.grid.Grid.analyze">
-     <code class="docutils literal notranslate">
-      <span class="pre">
-       Grid.analyze()
-      </span>
-     </code>
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#ospgrid.grid.Grid.get_displacement">
-     <code class="docutils literal notranslate">
-      <span class="pre">
-       Grid.get_displacement()
-      </span>
-     </code>
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#ospgrid.grid.Grid.get_reactions">
-     <code class="docutils literal notranslate">
-      <span class="pre">
-       Grid.get_reactions()
-      </span>
-     </code>
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#ospgrid.grid.Grid.get_system_stiffness">
-     <code class="docutils literal notranslate">
-      <span class="pre">
-       Grid.get_system_stiffness()
-      </span>
-     </code>
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#ospgrid.grid.Grid.get_system_force">
-     <code class="docutils literal notranslate">
-      <span class="pre">
-       Grid.get_system_force()
-      </span>
-     </code>
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#ospgrid.grid.Grid.get_member_forces">
-     <code class="docutils literal notranslate">
-      <span class="pre">
-       Grid.get_member_forces()
-      </span>
-     </code>
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#ospgrid.grid.Grid.plot_results">
-     <code class="docutils literal notranslate">
-      <span class="pre">
-       Grid.plot_results()
-      </span>
-     </code>
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#ospgrid.grid.Grid.plot_grid">
-     <code class="docutils literal notranslate">
-      <span class="pre">
-       Grid.plot_grid()
-      </span>
-     </code>
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#ospgrid.grid.Grid.plot_dsd">
-     <code class="docutils literal notranslate">
-      <span class="pre">
-       Grid.plot_dsd()
-      </span>
-     </code>
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#ospgrid.grid.Grid.plot_bmd">
-     <code class="docutils literal notranslate">
-      <span class="pre">
-       Grid.plot_bmd()
-      </span>
-     </code>
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#ospgrid.grid.Grid.plot_sfd">
-     <code class="docutils literal notranslate">
-      <span class="pre">
-       Grid.plot_sfd()
-      </span>
-     </code>
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#ospgrid.grid.Grid.plot_tmd">
-     <code class="docutils literal notranslate">
-      <span class="pre">
-       Grid.plot_tmd()
-      </span>
-     </code>
-    </a>
-   </li>
-  </ul>
- </li>
-</ul>
-
-</nav>
-</div>
-
-<div class="toc-item">
-  
-<div id="searchbox"></div>
-</div>
-
-<div class="toc-item">
-  
-
-<div class="tocsection editthispage">
-    <a href="https://github.com/ccaprani/ospgrid/edit/main/docs/source/gen/ospgrid.grid.Grid.rst">
-        <i class="fa-solid fa-pencil"></i> Edit this page
-    </a>
-</div>
-
-</div>
-
-<div class="toc-item">
-  
-</div>
-
             </div>
-          
-          
-        </div>
-        <footer class="bd-footer-content">
-          <div class="bd-footer-content__inner">
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ospgrid.grid.Grid"><code class="docutils literal notranslate"><span class="pre">Grid</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ospgrid.grid.Grid.clear"><code class="docutils literal notranslate"><span class="pre">Grid.clear()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ospgrid.grid.Grid.add_node"><code class="docutils literal notranslate"><span class="pre">Grid.add_node()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ospgrid.grid.Grid.add_member"><code class="docutils literal notranslate"><span class="pre">Grid.add_member()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ospgrid.grid.Grid.add_load"><code class="docutils literal notranslate"><span class="pre">Grid.add_load()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ospgrid.grid.Grid.add_support"><code class="docutils literal notranslate"><span class="pre">Grid.add_support()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ospgrid.grid.Grid.get_node"><code class="docutils literal notranslate"><span class="pre">Grid.get_node()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ospgrid.grid.Grid.get_member"><code class="docutils literal notranslate"><span class="pre">Grid.get_member()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ospgrid.grid.Grid.analyze"><code class="docutils literal notranslate"><span class="pre">Grid.analyze()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ospgrid.grid.Grid.get_displacement"><code class="docutils literal notranslate"><span class="pre">Grid.get_displacement()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ospgrid.grid.Grid.get_reactions"><code class="docutils literal notranslate"><span class="pre">Grid.get_reactions()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ospgrid.grid.Grid.get_system_stiffness"><code class="docutils literal notranslate"><span class="pre">Grid.get_system_stiffness()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ospgrid.grid.Grid.get_system_force"><code class="docutils literal notranslate"><span class="pre">Grid.get_system_force()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ospgrid.grid.Grid.get_member_forces"><code class="docutils literal notranslate"><span class="pre">Grid.get_member_forces()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ospgrid.grid.Grid.plot_results"><code class="docutils literal notranslate"><span class="pre">Grid.plot_results()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ospgrid.grid.Grid.plot_grid"><code class="docutils literal notranslate"><span class="pre">Grid.plot_grid()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ospgrid.grid.Grid.plot_dsd"><code class="docutils literal notranslate"><span class="pre">Grid.plot_dsd()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ospgrid.grid.Grid.plot_bmd"><code class="docutils literal notranslate"><span class="pre">Grid.plot_bmd()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ospgrid.grid.Grid.plot_sfd"><code class="docutils literal notranslate"><span class="pre">Grid.plot_sfd()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ospgrid.grid.Grid.plot_tmd"><code class="docutils literal notranslate"><span class="pre">Grid.plot_tmd()</span></code></a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+
+  
+  <div class="tocsection editthispage">
+    <a href="https://github.com/ccaprani/ospgrid/edit/main/docs/source/gen/ospgrid.grid.Grid.rst">
+      <i class="fa-solid fa-pencil"></i>
+      
+      
+        
+          Edit on GitHub
+        
+      
+    </a>
+  </div>
+</div>
+
+</div></div>
+              
             
           </div>
-        </footer>
+          <footer class="bd-footer-content">
+            
+          </footer>
         
       </main>
     </div>
   </div>
-
   
-    
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../_static/scripts/bootstrap.js?digest=796348d33e8b1d947c94"></script>
-<script src="../_static/scripts/pydata-sphinx-theme.js?digest=796348d33e8b1d947c94"></script>
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
 
-  <footer class="bd-footer"><div class="bd-footer__inner container">
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
   
-  <div class="footer-item">
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
     
-<p class="copyright">
-
-    &copy; Copyright 2022, Colin Caprani.<br>
-
-</p>
-
-  </div>
-  
-  <div class="footer-item">
-    <p class="theme-version">
-    Built with the
-    <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">
-        PyData Sphinx Theme
-    </a>
-    0.12.0.
-</p>
-  </div>
-  
-  <div class="footer-item">
+      © Copyright 2024, Colin Caprani.
+      <br/>
     
-<p class="sphinx-version">
-Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.3.0.<br>
-</p>
+  </p>
+</div>
+      
+        <div class="footer-item">
 
-  </div>
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 9.0.4.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+</p></div>
+      
+    </div>
   
 </div>
+
   </footer>
   </body>
 </html>
