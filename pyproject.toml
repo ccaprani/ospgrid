@@ -30,7 +30,7 @@ dependencies = [
     "numpy",
     "Pillow",
     "openseespy>=3.3",
-    "opsvis>=1.0.12",
+    "opsvis>=1.3.4",
 ]
 
 [project.readme]
