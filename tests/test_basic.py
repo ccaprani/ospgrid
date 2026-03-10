@@ -15,17 +15,18 @@ import ospgrid as ospg
 # Shared helpers
 # ---------------------------------------------------------------------------
 
+
 def grid_params():
     """Return parameters for the standard 4-member star grid test case."""
-    Lae = 2.0    # m
-    Lbe = 4.75   # m
-    Lce = 4.0    # m
-    Lde = 4.0    # m
-    EI  = 25e3   # kNm²
-    GJ  = 15e3   # kNm²
-    P   = -50    # kN
-    Mx  =  25    # kNm
-    My  =  15    # kNm
+    Lae = 2.0  # m
+    Lbe = 4.75  # m
+    Lce = 4.0  # m
+    Lde = 4.0  # m
+    EI = 25e3  # kNm²
+    GJ = 15e3  # kNm²
+    P = -50  # kN
+    Mx = 25  # kNm
+    My = 15  # kNm
     return [Lae, Lbe, Lce, Lde, EI, GJ, P, Mx, My]
 
 
@@ -46,9 +47,7 @@ def sysK():
     k32 = 0
     k33 = 4 * EI / Lce + GJ / Lbe + GJ / Lde
 
-    return np.array([[k11, k12, k13],
-                     [k21, k22, k23],
-                     [k31, k32, k33]])
+    return np.array([[k11, k12, k13], [k21, k22, k23], [k31, k32, k33]])
 
 
 def getF():
@@ -62,11 +61,11 @@ def do_ospg_analysis():
     Lae, Lbe, Lce, Lde, EI, GJ, P, Mx, My = grid_params()
 
     grid = ospg.Grid()
-    grid.add_node("A", -Lae,  0.0)
-    grid.add_node("B",  0.0,  Lbe)
-    grid.add_node("C",  Lce,  0.0)
-    grid.add_node("D",  0.0, -Lde)
-    grid.add_node("E",  0.0,  0.0)
+    grid.add_node("A", -Lae, 0.0)
+    grid.add_node("B", 0.0, Lbe)
+    grid.add_node("C", Lce, 0.0)
+    grid.add_node("D", 0.0, -Lde)
+    grid.add_node("E", 0.0, 0.0)
 
     grid.add_member("A", "E", EI, GJ)
     grid.add_member("B", "E", EI, GJ)
@@ -87,6 +86,7 @@ def do_ospg_analysis():
 # Numerical correctness
 # ---------------------------------------------------------------------------
 
+
 def test_basic_grid():
     """
     Analyse a 4-member star grid and verify node-E displacements match the
@@ -100,7 +100,7 @@ def test_basic_grid():
 
     delta_E = grid.get_displacement("E", 3)
     theta_E = grid.get_displacement("E", 4)
-    phi_E   = grid.get_displacement("E", 5)
+    phi_E = grid.get_displacement("E", 5)
 
     K = sysK()
     F = getF()
@@ -143,7 +143,7 @@ def test_member_forces_equilibrium():
         Mx_sum += f[9]
         My_sum += f[10]
 
-    assert Fz_sum == pytest.approx(P,  rel=1e-5)
+    assert Fz_sum == pytest.approx(P, rel=1e-5)
     assert Mx_sum == pytest.approx(Mx, rel=1e-5)
     assert My_sum == pytest.approx(My, rel=1e-5)
 
@@ -166,24 +166,25 @@ def test_system_stiffness_shape_and_symmetry():
 # Member object methods
 # ---------------------------------------------------------------------------
 
+
 def test_member_local_stiffness():
     """Local stiffness matrix entries match the grid beam-element formula."""
-    EI = 25e3   # kNm²
-    GJ = 15e3   # kNm²
-    L  =  4.0   # m
+    EI = 25e3  # kNm²
+    GJ = 15e3  # kNm²
+    L = 4.0  # m
 
     grid = ospg.Grid()
     grid.add_node("i", 0.0, 0.0)
-    grid.add_node("j",   L, 0.0)   # member along x-axis
+    grid.add_node("j", L, 0.0)  # member along x-axis
     m = grid.add_member("i", "j", EI, GJ)
 
     k = m.get_local_stiffness()
 
     assert k[0, 0] == pytest.approx(12 * EI / L**3)
     assert k[1, 1] == pytest.approx(GJ / L)
-    assert k[2, 2] == pytest.approx(4  * EI / L)
-    assert k[2, 5] == pytest.approx(2  * EI / L)
-    assert k[0, 2] == pytest.approx(6  * EI / L**2)
+    assert k[2, 2] == pytest.approx(4 * EI / L)
+    assert k[2, 5] == pytest.approx(2 * EI / L)
+    assert k[0, 2] == pytest.approx(6 * EI / L**2)
 
     # Matrix must be symmetric
     assert k == pytest.approx(k.T)
@@ -208,9 +209,7 @@ def test_member_transformation_matrix_skewed():
     m = grid.add_member("i", "j", 1.0, 1.0)
 
     c = s = 1.0 / np.sqrt(2)
-    T_expected = np.kron(np.eye(2), np.array([[1, 0, 0],
-                                               [0, c, s],
-                                               [0, -s, c]]))
+    T_expected = np.kron(np.eye(2), np.array([[1, 0, 0], [0, c, s], [0, -s, c]]))
     assert m.get_transformation_matrix() == pytest.approx(T_expected)
 
 
@@ -218,11 +217,11 @@ def test_member_global_stiffness_aligned():
     """For an axis-aligned member, global stiffness equals local stiffness."""
     EI = 10e3
     GJ = 5e3
-    L  = 3.0
+    L = 3.0
 
     grid = ospg.Grid()
     grid.add_node("i", 0.0, 0.0)
-    grid.add_node("j",   L, 0.0)
+    grid.add_node("j", L, 0.0)
     m = grid.add_member("i", "j", EI, GJ)
 
     assert m.get_global_stiffness() == pytest.approx(m.get_local_stiffness())
@@ -232,12 +231,13 @@ def test_member_global_stiffness_aligned():
 # Grid helper methods
 # ---------------------------------------------------------------------------
 
+
 def test_get_member_by_tuple():
     """get_member accepts a (label, label) tuple independent of order."""
     grid = do_ospg_analysis()
 
-    m_ae  = grid.get_member(("A", "E"))
-    m_ea  = grid.get_member(("E", "A"))
+    m_ae = grid.get_member(("A", "E"))
+    m_ea = grid.get_member(("E", "A"))
     assert m_ae is m_ea
     assert {m_ae.node_i.label, m_ae.node_j.label} == {"A", "E"}
 
@@ -259,7 +259,7 @@ def test_get_member_not_found():
     """get_member raises ValueError when no matching member exists."""
     grid = do_ospg_analysis()
     with pytest.raises(ValueError):
-        grid.get_member(("A", "C"))   # no direct member between A and C
+        grid.get_member(("A", "C"))  # no direct member between A and C
 
 
 def test_get_node_errors():
@@ -300,13 +300,17 @@ def test_get_system_force_not_implemented():
 # Support string shortcuts
 # ---------------------------------------------------------------------------
 
-@pytest.mark.parametrize("char,enum_val", [
-    ("F", ospg.Support.FIXED),
-    ("X", ospg.Support.PINNED_X),
-    ("Y", ospg.Support.PINNED_Y),
-    ("P", ospg.Support.PROP),
-    ("V", ospg.Support.FIXED_V_ROLLER),
-])
+
+@pytest.mark.parametrize(
+    "char,enum_val",
+    [
+        ("F", ospg.Support.FIXED),
+        ("X", ospg.Support.PINNED_X),
+        ("Y", ospg.Support.PINNED_Y),
+        ("P", ospg.Support.PROP),
+        ("V", ospg.Support.FIXED_V_ROLLER),
+    ],
+)
 def test_support_string_shortcuts(char, enum_val):
     """Single-character support strings map to the correct Support enum value."""
     grid = ospg.Grid()
@@ -319,12 +323,13 @@ def test_support_string_shortcuts(char, enum_val):
 # make_grid (post.py)
 # ---------------------------------------------------------------------------
 
+
 def test_make_grid_topology():
     """make_grid parses node positions, supports, loads, and connectivity."""
     grid_str = "AF-5:0,BX0:-5,CN0:0,DY2:0_C0:-50:-50_AC,CD,BC"
     grid = ospg.make_grid(grid_str)
 
-    assert len(grid.nodes)   == 4
+    assert len(grid.nodes) == 4
     assert len(grid.members) == 3
 
     node_A = grid.get_node("A")
@@ -345,18 +350,19 @@ def test_make_grid_analyzable():
     """A grid built via make_grid can be analysed without error."""
     grid_str = "AF-5:0,BX0:-5,CN0:0,DY2:0_C0:-50:-50_AC,CD,BC"
     grid = ospg.make_grid(grid_str)
-    grid.analyze()   # must not raise
+    grid.analyze()  # must not raise
 
 
 def test_make_grid_invalid_member():
     """make_grid raises ValueError when a member references an undefined node."""
     with pytest.raises(ValueError):
-        ospg.make_grid("AF0:0,BX1:0_A0:0:0_AZ")   # Z is not defined
+        ospg.make_grid("AF0:0,BX1:0_A0:0:0_AZ")  # Z is not defined
 
 
 # ---------------------------------------------------------------------------
 # Plotting
 # ---------------------------------------------------------------------------
+
 
 def test_plotting(monkeypatch):
     """plot_results completes without error (plt.show suppressed)."""
@@ -371,8 +377,13 @@ def test_individual_plot_methods(monkeypatch):
     grid = do_ospg_analysis()
     monkeypatch.setattr(plt, "show", lambda: None)
 
-    for method in (grid.plot_grid, grid.plot_dsd,
-                   grid.plot_bmd, grid.plot_sfd, grid.plot_tmd):
+    for method in (
+        grid.plot_grid,
+        grid.plot_dsd,
+        grid.plot_bmd,
+        grid.plot_sfd,
+        grid.plot_tmd,
+    ):
         method()
         plt.close("all")
 

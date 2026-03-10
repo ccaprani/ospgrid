@@ -339,9 +339,7 @@ class Grid:
         the_node = self.get_node(node)
         the_node.set_load(Fz, Mx, My)
 
-    def add_support(
-        self, node: "Node | str | int", support: "Support | str" = None
-    ):
+    def add_support(self, node: "Node | str | int", support: "Support | str" = None):
         """
         Add a support to a node in the grid.
 
@@ -491,7 +489,7 @@ class Grid:
         # Steel values are used here to keep the derived I and J numerically
         # well-conditioned for the linear solver.
         E = 200e9  # nominal (Pa); value does not affect results (see above)
-        G = 80e9   # nominal (Pa); value does not affect results (see above)
+        G = 80e9  # nominal (Pa); value does not affect results (see above)
 
         # define materials
         osp.uniaxialMaterial("Elastic", 1, E)
@@ -503,12 +501,12 @@ class Grid:
         # define elements
         # tag   *[ndI ndJ]  A  E  G  Jx  Iy   Iz  transfTag
         for m in self.members:
-            I = m.EI / E          # second moment of area derived from EI
-            J = m.GJ / G          # torsion constant derived from GJ
+            I = m.EI / E  # second moment of area derived from EI
+            J = m.GJ / G  # torsion constant derived from GJ
             # A and Iz do not affect the grid solution (no axial/in-plane bending);
             # nominal values are used only to satisfy the OpenSeesPy API.
-            A = I / 1e6           # nominal cross-sectional area
-            Iz = 0.1 * I          # nominal weak-axis second moment of area
+            A = I / 1e6  # nominal cross-sectional area
+            Iz = 0.1 * I  # nominal weak-axis second moment of area
             osp.element(
                 "elasticBeamColumn",
                 m.idx,
@@ -801,8 +799,7 @@ class Grid:
         if figsize is None:
             figsize = self.FIGSIZE
 
-        ospv.plot_model(fig_wi_he=figsize,
-                        node_supports=False)
+        ospv.plot_model(fig_wi_he=figsize, node_supports=False)
         fig = plt.gcf()
         fig.set_figwidth(figsize[0])
         fig.set_figheight(figsize[1])
@@ -819,11 +816,13 @@ class Grid:
         Plots the background model for the section force diagrams.
         """
 
-        ospv.plot_model(ax=ax,
-                        node_labels=False,
-                        element_labels=False,
-                        node_supports=False,
-                        local_axes=False)
+        ospv.plot_model(
+            ax=ax,
+            node_labels=False,
+            element_labels=False,
+            node_supports=False,
+            local_axes=False,
+        )
 
     def plot_dsd(
         self,
@@ -872,14 +871,15 @@ class Grid:
             scale_factor = round(10 * sf / mag) * mag / 10
 
         fig = plt.figure()
-        ax = fig.add_subplot(111, projection='3d')
+        ax = fig.add_subplot(111, projection="3d")
         self._plot_model(ax)
-        ospv.plot_defo(sfac=scale_factor,
-                       unDefoFlag=False,
-                       ax=ax,
-                       endDispFlag=False,
-                       node_supports=False
-                       )
+        ospv.plot_defo(
+            sfac=scale_factor,
+            unDefoFlag=False,
+            ax=ax,
+            endDispFlag=False,
+            node_supports=False,
+        )
         fig = plt.gcf()
         fig.set_figwidth(figsize[0])
         fig.set_figheight(figsize[1])
@@ -922,11 +922,13 @@ class Grid:
         if figsize is None:
             figsize = self.FIGSIZE
 
-        _, _, ax = ospv.section_force_diagram_3d("My",
-                                                 sfac=scale_factor,
-                                                 end_max_values=values,
-                                                 node_supports=False,
-                                                 alt_model_plot=2)
+        _, _, ax = ospv.section_force_diagram_3d(
+            "My",
+            sfac=scale_factor,
+            end_max_values=values,
+            node_supports=False,
+            alt_model_plot=2,
+        )
         self._plot_model(ax)
         fig = plt.gcf()
         fig.set_figwidth(figsize[0])
@@ -973,11 +975,13 @@ class Grid:
         if figsize is None:
             figsize = self.FIGSIZE
 
-        _, _, ax = ospv.section_force_diagram_3d("Vz",
-                                                 sfac=-scale_factor,
-                                                 end_max_values=values,
-                                                 node_supports=False,
-                                                 alt_model_plot=2)
+        _, _, ax = ospv.section_force_diagram_3d(
+            "Vz",
+            sfac=-scale_factor,
+            end_max_values=values,
+            node_supports=False,
+            alt_model_plot=2,
+        )
         self._plot_model(ax)
         fig = plt.gcf()
         fig.set_figwidth(figsize[0])
@@ -1024,12 +1028,14 @@ class Grid:
         if figsize is None:
             figsize = self.FIGSIZE
 
-        _, _, ax = ospv.section_force_diagram_3d("T",
-                                                 sfac=-scale_factor,
-                                                 dir_plt=2,
-                                                 end_max_values=values,
-                                                 node_supports=False,
-                                                 alt_model_plot=2)
+        _, _, ax = ospv.section_force_diagram_3d(
+            "T",
+            sfac=-scale_factor,
+            dir_plt=2,
+            end_max_values=values,
+            node_supports=False,
+            alt_model_plot=2,
+        )
         self._plot_model(ax)
         fig = plt.gcf()
         fig.set_figwidth(figsize[0])
