@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "ospgrid"
-dynamic = ["version"]
+version = "0.6.0"
 description = "2D grid analysis wrapper for OpenSeesPy"
 license = {text = "GNU General Public License v3.0"}
 keywords = ["grid","finite element","bridge"]
@@ -50,9 +50,6 @@ test = ["pytest >= 7.0", "pytest-cov >= 4.0"]  # pytest-cov for local coverage c
 platforms = ["any"]
 include-package-data = true
 license-files = ["LICENSE"]
-
-[tool.setuptools.dynamic]
-version = {attr = "ospgrid.__version__"}
 
 [tool.aliases]
 test = "pytest"

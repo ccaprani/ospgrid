@@ -2,7 +2,12 @@
 ospgrid - A plane grid elastic analysis wrapper for OpenSeesPy
 """
 
-__version__ = "0.6.0"
+from importlib.metadata import version, PackageNotFoundError
+
+try:
+    __version__ = version("ospgrid")
+except PackageNotFoundError:  # package not installed (e.g. running from source)
+    __version__ = "unknown"
 
 from .grid import *
 from .utils import *
