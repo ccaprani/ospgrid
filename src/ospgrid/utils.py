@@ -8,15 +8,16 @@ Created on Mon Feb 21 22:35:20 2022
 
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_pdf import PdfPages
-from typing import List
 import numpy as np
 from PIL import Image
+
+__all__ = ["save_figs_to_file", "crop_to_bbox"]
 
 
 def save_figs_to_file(
     filename: str,
     transparent: bool = False,
-    figs: List[plt.Figure] = None,
+    figs: list[plt.Figure] = None,
     bbox: bool = False,
     pad: int = 20,
     std_names: bool = True,
@@ -58,10 +59,9 @@ def save_figs_to_file(
     if std_names and len(figs) == 5:
         use_std_ends = True
 
-    ext = ".pdf"
     if "." in filename:
-        stem, ext = filename.split(".")
-        if ext == ".pdf":
+        stem, ext = filename.rsplit(".", 1)
+        if ext == "pdf":
             pp = PdfPages(filename)
             for fig in figs:
                 fig.savefig(pp, format="pdf", transparent=transparent)

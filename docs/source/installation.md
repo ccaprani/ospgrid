@@ -3,11 +3,12 @@ Installation
 
 Required Dependencies
 ---------------------
-- Python 3.8 or later
+- Python 3.10 or later
 - OpenSeesPy
 - opsvis
 - numpy
 - matplotlib
+- Pillow
 
 Instructions
 ------------
@@ -28,7 +29,7 @@ Anaconda
 It's best to install OpenSeesPy into its own environment, due to its dependencies, and potential clashes with other packages.
 So in turn, execute: ::
 
-    conda create --name ospgrid python=3.8  
+    conda create --name ospgrid python=3.10
 
 And then install as above.
 

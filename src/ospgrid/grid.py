@@ -7,14 +7,13 @@ Created on Mon Feb 21 20:25:38 2022
 """
 
 from enum import Enum
-import itertools
-from typing import Union, Tuple, List
 import matplotlib.pyplot as plt
-from mpl_toolkits.mplot3d import Axes3D
 import openseespy.opensees as osp
 import opsvis as ospv
 import numpy as np
 from .utils import save_figs_to_file
+
+__all__ = ["Support", "Node", "Member", "Grid"]
 
 
 class Support(Enum):
@@ -105,7 +104,7 @@ class Node:
 
 class Member:
     """
-    Object encapsulating the proeprties for a grid member
+    Object encapsulating the properties for a grid member
     """
 
     def __init__(self, idx: int, node_i: Node, node_j: Node, EI: float, GJ: float):
@@ -121,7 +120,7 @@ class Member:
         node_j : Node
             The end node of the member.
         EI : float
-            The flexural rigitidy.
+            The flexural rigidity.
         GJ : float
             The torsional rigidity.
 
@@ -171,7 +170,7 @@ class Member:
 
     def get_transformation_matrix(self) -> np.ndarray:
         """
-        Gives the transformation matrix relating the member dgrees of freedom from
+        Gives the transformation matrix relating the member degrees of freedom from
         local to global coordinate system.
 
         It considers only the grid member DOFs, per :func:`get_local_stiffness`
@@ -179,7 +178,7 @@ class Member:
         Returns
         -------
         T : np.ndarray
-            Tranformation matrix
+            Transformation matrix
 
         """
         c = self.delta_x / self.L
@@ -225,15 +224,13 @@ class Grid:
 
         """
         self.clear()
-        
+
         # Set color preferences
         ospv.fmt_undefo["color"] = "black"
         ospv.fmt_defo["color"] = "red"
         ospv.fmt_model["color"] = "black"
         ospv.fmt_secforce1["color"] = "red"
         ospv.fmt_secforce2["color"] = "red"
-        
-        pass
 
     def clear(self):
         """
@@ -264,8 +261,8 @@ class Grid:
 
         Returns
         -------
-        node : TYPE
-            DESCRIPTION.
+        node : Node
+            The created Node instance.
 
         """
         self.no_nodes += 1
@@ -275,8 +272,8 @@ class Grid:
 
     def add_member(
         self,
-        node_i: Union[Node, str, int],
-        node_j: Union[Node, str, int],
+        node_i: "Node | str | int",
+        node_j: "Node | str | int",
         EI: float,
         GJ: float,
     ):
@@ -285,9 +282,9 @@ class Grid:
 
         Parameters
         ----------
-        node_i : Union[Node,str,int]
+        node_i : Node | str | int
             The starting node for the member.
-        node_j : Union[Node,str,int]
+        node_j : Node | str | int
             The ending node for the member.
         EI : float
             The flexural rigidity.
@@ -309,7 +306,7 @@ class Grid:
 
     def add_load(
         self,
-        node: Union[Node, str, int],
+        node: "Node | str | int",
         Fz: float = 0,
         Mx: float = 0,
         My: float = 0,
@@ -319,7 +316,7 @@ class Grid:
 
         Parameters
         ----------
-        node : Union[Node,str,int]
+        node : Node | str | int
             Node object, label, or id
         Fz : float, optional
             Vertical load. The default is 0.
@@ -343,16 +340,16 @@ class Grid:
         the_node.set_load(Fz, Mx, My)
 
     def add_support(
-        self, node: Union[Node, str, int], support: Union[Support, str] = None
+        self, node: "Node | str | int", support: "Support | str" = None
     ):
         """
         Add a support to a node in the grid.
 
         Parameters
         ----------
-        node : Union[Node,str,int]
+        node : Node | str | int
             Node object, label, or id
-        support : Union[Support,str]
+        support : Support | str
             The support type, a :class:`ospgrid.grid.Support` object. Alternatively,
             a single character support descriptor as a :class:`str` can be used as
             follows:
@@ -383,19 +380,19 @@ class Grid:
         else:
             the_node.set_support(support)
 
-    def get_node(self, node=Union[Node, str, int]):
+    def get_node(self, node: "Node | str | int"):
         """
-        Gets the node from an node object, id or label.
+        Gets the node from a node object, id or label.
 
         Parameters
         ----------
-        node : Union[Node,str,int]
+        node : Node | str | int
             Node object, label, or id
 
         Raises
         ------
         ValueError
-            If node object, label, or id not passed, or is multiple nodes match the
+            If node object, label, or id not passed, or multiple nodes match the
             label, or no node found.
 
         Returns
@@ -421,24 +418,24 @@ class Grid:
         # We should never get here
         raise ValueError("Either node object, label, or node id must be passed")
 
-    def get_member(self, member=Union[Member, int, Tuple[str, str]]):
+    def get_member(self, member: "Member | int | tuple[str, str]"):
         """
         Gets the member from a member object, id, or a tuple of node labels.
 
         Parameters
         ----------
-        member : Union[Member,int, Tuple[str,str]], optional Member object, id, or
-            node labels.
+        member : Member | int | tuple[str, str]
+            Member object, id, or a tuple of the two end-node labels (order
+            does not matter).
 
         Raises
         ------
         ValueError
-            If member object, or id not passed, or is multiple nodes match the
-            label, or no node found.
+            If the member cannot be found.
 
         Returns
         -------
-        None.
+        Member object.
 
         """
         if isinstance(member, Member):
@@ -448,25 +445,16 @@ class Grid:
             return self.members[member]
 
         if isinstance(member, tuple):
-            node_i_lbl = [m.node_i.label for m in self.members]
-            node_j_lbl = [m.node_j.label for m in self.members]
-            for n_comb in itertools.product(node_i_lbl, node_j_lbl):
-                if sorted(member) == sorted(n_comb):
-                    # The combination exists, so now let's find the member
-                    the_member = [
-                        m
-                        for m in self.members
-                        if (m.node_i.label == member[0] and m.node_j.label == member[1])
-                        or (m.node_i.label == member[1] and m.node_j.label == member[0])
-                    ]
-                    return the_member[0]
-
+            target = set(member)
+            for m in self.members:
+                if {m.node_i.label, m.node_j.label} == target:
+                    return m
             raise ValueError(
                 f"Member with nodes {member[0]} and {member[1]} could not be found."
             )
 
         # We should never get here
-        raise ValueError("Either member object or id must be passed")
+        raise ValueError("Either member object, id, or node label tuple must be passed")
 
     def analyze(self) -> osp:
         """
@@ -491,9 +479,19 @@ class Grid:
             if n.support is not None:
                 osp.fix(n.idx, *n.support.value)
 
-        # Nominal E and G
-        E = 200e9  # GPa
-        G = 80e9  # GPa
+        # E and G are nominal values that cancel algebraically:
+        #   I  = EI / E   →   E * I  = EI   (bending stiffness terms use E*I)
+        #   J  = GJ / G   →   G * J  = GJ   (torsion stiffness terms use G*J)
+        # Consequently, every entry in the assembled stiffness matrix equals
+        # the hand-calculation result (e.g. 12·EI/L³), expressed in the same
+        # unit system the caller used for EI/GJ and node coordinates.
+        # For example, with EI in kNm² and lengths in m, get_system_stiffness()
+        # returns values in kN/m, kN, and kNm — matching a direct stiffness
+        # hand calculation. Any non-zero E and G pair would give identical results.
+        # Steel values are used here to keep the derived I and J numerically
+        # well-conditioned for the linear solver.
+        E = 200e9  # nominal (Pa); value does not affect results (see above)
+        G = 80e9   # nominal (Pa); value does not affect results (see above)
 
         # define materials
         osp.uniaxialMaterial("Elastic", 1, E)
@@ -503,11 +501,14 @@ class Grid:
         osp.geomTransf("Linear", 1, *vecxz)
 
         # define elements
-        # tag   *[ndI ndJ]  A  E  G  Jx  Iy   Iz  transfOBJs
+        # tag   *[ndI ndJ]  A  E  G  Jx  Iy   Iz  transfTag
         for m in self.members:
-            I = m.EI / E
-            J = m.GJ / G
-            A = I / 1e6  # rough
+            I = m.EI / E          # second moment of area derived from EI
+            J = m.GJ / G          # torsion constant derived from GJ
+            # A and Iz do not affect the grid solution (no axial/in-plane bending);
+            # nominal values are used only to satisfy the OpenSeesPy API.
+            A = I / 1e6           # nominal cross-sectional area
+            Iz = 0.1 * I          # nominal weak-axis second moment of area
             osp.element(
                 "elasticBeamColumn",
                 m.idx,
@@ -518,7 +519,7 @@ class Grid:
                 G,
                 J,
                 I,
-                0.1 * I,
+                Iz,
                 1,
             )
 
@@ -565,13 +566,13 @@ class Grid:
 
         return osp
 
-    def get_displacement(self, node=Union[Node, str, int], dof: int = -1):
+    def get_displacement(self, node: "Node | str | int", dof: int = -1):
         """
         Returns the displacements for a node
 
         Parameters
         ----------
-        node : Union[Node,str,int]
+        node : Node | str | int
             Node object, label, or id
         dof : int [optional]
             The degree of freedom of interest. Defaults to all.
@@ -579,24 +580,25 @@ class Grid:
         Raises
         ------
         ValueError
-            If node object, label, or id not passed, or is multiple nodes match the
+            If node object, label, or id not passed, or multiple nodes match the
             label, or no node found.
 
         Returns
         -------
-        None.
+        float or list
+            Displacement for the requested DOF, or all DOFs if dof=-1.
 
         """
         the_node = self.get_node(node)
         return osp.nodeDisp(the_node.idx, dof)
 
-    def get_reactions(self, node=Union[Node, str, int], dof: int = -1):
+    def get_reactions(self, node: "Node | str | int", dof: int = -1):
         """
         Returns the reactions for a node
 
         Parameters
         ----------
-        node : Union[Node,str,int]
+        node : Node | str | int
             Node object, label, or id
         dof : int [optional]
             The degree of freedom of interest. Defaults to all.
@@ -604,12 +606,13 @@ class Grid:
         Raises
         ------
         ValueError
-            If node object, label, or id not passed, or is multiple nodes match the
+            If node object, label, or id not passed, or multiple nodes match the
             label, or no node found.
 
         Returns
         -------
-        None.
+        float or list
+            Reaction for the requested DOF, or all DOFs if dof=-1.
 
         """
         the_node = self.get_node(node)
@@ -640,12 +643,17 @@ class Grid:
         F : np.ndarray
             A numpy vector of the reduced global system force vector
 
+        .. todo::
+            OpenSeesPy does not currently expose a direct API for retrieving the
+            assembled force vector. This method is reserved for a future release.
+
         """
-        #
+        # TODO: OpenSeesPy does not currently provide a public API equivalent to
+        # printA for the force vector. Implement once upstream support is available.
         raise NotImplementedError("Functionality not yet available")
 
     def get_member_forces(
-        self, member: Union[Member, int, Tuple[str, str]], dof: int = -1
+        self, member: "Member | int | tuple[str, str]", dof: int = -1
     ) -> np.ndarray:
         """
         Returns the member end forces for the indicated DOF in the global coordinate
@@ -653,7 +661,7 @@ class Grid:
 
         Parameters
         ----------
-        member : Union[Member, int, Tuple[str,str]]
+        member : Member | int | tuple[str, str]
             Member object, id, or a tuple of node labels.
         dof : int [optional]
             The degree of freedom of interest. Defaults to all.
@@ -672,7 +680,7 @@ class Grid:
         self,
         figsize=None,
         axes_on: bool = True,
-        scale_factor: Union[float, List[float]] = 0.0,
+        scale_factor: "float | list[float]" = 0.0,
         axis_title: bool = True,
         save_figs: bool = False,
         filename: str = "ospgrid_results.pdf",
@@ -691,7 +699,7 @@ class Grid:
         ----------
         axes_on : bool, optional
             Whether or not to have the axes on in the plots. The default is True.
-        scale_factor : float, List[float] optional
+        scale_factor : float | list[float], optional
             If a single float: the scale of the deformations to use. When this value is
             zero, auto-scaling is done. The default is 0.
             If a list of floats of size 4, then the scale factors are applied in the order
@@ -719,7 +727,7 @@ class Grid:
 
         """
 
-        if type(scale_factor) == float:
+        if isinstance(scale_factor, float):
             sf_dsd = scale_factor
             sf_bmd = 1.0
             sf_sfd = 1.0
@@ -778,7 +786,7 @@ class Grid:
 
         Parameters
         ----------
-        figsize : TYPE, optional
+        figsize : tuple, optional
             The size of the figure in inches. The default is self.FIGSIZE.
         axes_on : bool, optional
             Whether or not to have the axes on in the plots. The default is True.
@@ -805,19 +813,17 @@ class Grid:
             plt.gca().set_axis_off()
 
         fig.tight_layout()
-        
+
     def _plot_model(self, ax):
         """
         Plots the background model for the section force diagrams.
         """
-        
+
         ospv.plot_model(ax=ax,
                         node_labels=False,
                         element_labels=False,
                         node_supports=False,
-                        #fmt_model={"color":"k"},
                         local_axes=False)
-
 
     def plot_dsd(
         self,
@@ -834,7 +840,7 @@ class Grid:
         scale_factor : float
             The scale of the deformations to use. When this value is zero, auto-scaling
             is done. The default is 0.
-        figsize : TYPE, optional
+        figsize : tuple, optional
             The size of the figure in inches. The default is self.FIGSIZE.
         axes_on : bool, optional
             Whether or not to have the axes on in the plots. The default is True.
@@ -857,19 +863,17 @@ class Grid:
             grid_size = max(max(x) - min(x), max(y) - min(y))
 
             # in case of very small nodal values
-            max_disp = ospv.max_u_abs_from_beam_defo_interp_3d(max_disp,nep=21)
-            
+            max_disp = ospv.max_u_abs_from_beam_defo_interp_3d(max_disp, nep=21)
+
             # target about 1/4 the dimension of the grid
             sf = 0.25 * grid_size / max_disp
             # But round to some sensible values
             mag = 10 ** int(np.ceil(np.log10(sf)))
             scale_factor = round(10 * sf / mag) * mag / 10
 
-        
-
         fig = plt.figure()
-        ax = fig.add_subplot(111, projection=Axes3D.name)
-        self._plot_model(ax)        
+        ax = fig.add_subplot(111, projection='3d')
+        self._plot_model(ax)
         ospv.plot_defo(sfac=scale_factor,
                        unDefoFlag=False,
                        ax=ax,
@@ -901,14 +905,14 @@ class Grid:
         ----------
         scale_factor : float
             The scale of the bending moment to use. The default is 1.0.
-        figsize : TYPE, optional
+        figsize : tuple, optional
             The size of the figure in inches. The default is self.FIGSIZE.
         axes_on : bool, optional
             Whether or not to have the axes on in the plots. The default is True.
         axis_title : bool, optional
             Whether or not to have the axes title in the plots. The default is True.
         values : bool optional
-            Wether or not to print the values at the member ends
+            Whether or not to print the values at the member ends
 
         Returns
         -------
@@ -918,11 +922,11 @@ class Grid:
         if figsize is None:
             figsize = self.FIGSIZE
 
-        _,_,ax = ospv.section_force_diagram_3d("My", 
-                                      sfac=scale_factor, 
-                                      end_max_values=values,
-                                      node_supports=False,
-                                      alt_model_plot=2)
+        _, _, ax = ospv.section_force_diagram_3d("My",
+                                                 sfac=scale_factor,
+                                                 end_max_values=values,
+                                                 node_supports=False,
+                                                 alt_model_plot=2)
         self._plot_model(ax)
         fig = plt.gcf()
         fig.set_figwidth(figsize[0])
@@ -950,16 +954,16 @@ class Grid:
         Parameters
         ----------
         scale_factor : float
-            The scale of the bending moment to use. The default is 1.0. A negative
+            The scale of the shear force to use. The default is 1.0. A negative
             sign is then applied to flip the diagram so that it appears per convention.
-        figsize : TYPE, optional
+        figsize : tuple, optional
             The size of the figure in inches. The default is self.FIGSIZE.
         axes_on : bool, optional
             Whether or not to have the axes on in the plots. The default is True.
         axis_title : bool, optional
             Whether or not to have the axes title in the plots. The default is True.
         values : bool optional
-            Wether or not to print the values at the member ends
+            Whether or not to print the values at the member ends
 
         Returns
         -------
@@ -969,11 +973,11 @@ class Grid:
         if figsize is None:
             figsize = self.FIGSIZE
 
-        _,_,ax = ospv.section_force_diagram_3d("Vz", 
-                                      sfac=-scale_factor, 
-                                      end_max_values=values,
-                                      node_supports=False,
-                                      alt_model_plot=2)
+        _, _, ax = ospv.section_force_diagram_3d("Vz",
+                                                 sfac=-scale_factor,
+                                                 end_max_values=values,
+                                                 node_supports=False,
+                                                 alt_model_plot=2)
         self._plot_model(ax)
         fig = plt.gcf()
         fig.set_figwidth(figsize[0])
@@ -1001,16 +1005,16 @@ class Grid:
         Parameters
         ----------
         scale_factor : float
-            The scale of the bending moment to use. The default is 1.0.  A negative
+            The scale of the torsion moment to use. The default is 1.0. A negative
             sign is then applied to flip the diagram so that it appears per convention.
-        figsize : TYPE, optional
+        figsize : tuple, optional
             The size of the figure in inches. The default is self.FIGSIZE.
         axes_on : bool, optional
             Whether or not to have the axes on in the plots. The default is True.
         axis_title : bool, optional
             Whether or not to have the axes title in the plots. The default is True.
         values : bool optional
-            Wether or not to print the values at the member ends
+            Whether or not to print the values at the member ends
 
         Returns
         -------
@@ -1020,14 +1024,12 @@ class Grid:
         if figsize is None:
             figsize = self.FIGSIZE
 
-        _,_,ax = ospv.section_force_diagram_3d("T", 
-                                      sfac=-scale_factor, 
-                                      dir_plt=2, 
-                                      end_max_values=values, 
-                                      node_supports=False,
-                                      #fmt_secforce1={"color":"r"},
-                                      #fmt_secforce2={"color":"r"},
-                                      alt_model_plot=2)
+        _, _, ax = ospv.section_force_diagram_3d("T",
+                                                 sfac=-scale_factor,
+                                                 dir_plt=2,
+                                                 end_max_values=values,
+                                                 node_supports=False,
+                                                 alt_model_plot=2)
         self._plot_model(ax)
         fig = plt.gcf()
         fig.set_figwidth(figsize[0])

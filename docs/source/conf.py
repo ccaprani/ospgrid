@@ -90,9 +90,9 @@ html_theme_options = {
             "icon": "fab fa-github-square",
         },
         {
-            "name": "Twitter",
-            "url": "https://twitter.com/ccaprani",
-            "icon": "fab fa-twitter-square",
+            "name": "X (Twitter)",
+            "url": "https://x.com/ccaprani",
+            "icon": "fa-brands fa-x-twitter",
         },
     ],
     "use_edit_page_button": True,

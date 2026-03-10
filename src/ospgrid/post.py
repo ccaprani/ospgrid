@@ -8,6 +8,8 @@ Created on Fri Mar 18 10:38:15 2022
 
 from .grid import Grid
 
+__all__ = ["make_grid"]
+
 
 def make_grid(grid_str: str) -> Grid:
     r"""
@@ -117,8 +119,8 @@ def make_grid(grid_str: str) -> Grid:
     for m in mbr:
         try:
             grid.add_member(m[0], m[1], EI, GJ)
-        except Exception:
-            raise ValueError(f"Node letters {m}, member definition error")
+        except Exception as e:
+            raise ValueError(f"Node letters {m}, member definition error") from e
 
     load = loads.split(",")
     for ld in load:
